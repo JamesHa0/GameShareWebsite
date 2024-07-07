@@ -16,9 +16,9 @@ import crf.system.entity.UserBean;
 
 public class LoginDaoImpl implements LoginDao{
 	String driver = "com.mysql.jdbc.Driver";
-	String url="jdbc:mysql://127.0.0.1:3306/aaa?characterEncoding=utf-8";
+	String url="jdbc:mysql://127.0.0.1:3306/Game?characterEncoding=utf-8";
 	String username="root";
-	String password="22023237";
+	String password="root";
 	//获得连接
 	public Connection getConnection() throws Exception {
 		Class.forName(driver);
