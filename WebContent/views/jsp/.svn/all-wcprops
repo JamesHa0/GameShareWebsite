@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/crf_invest_app/!svn/ver/2412/trunk/crf_invest_web/WebRoot/views/jsp
+END
+error.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/crf_invest_app/!svn/ver/1222/trunk/crf_invest_web/WebRoot/views/jsp/error.jsp
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/index.html
+END
+index.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/crf_invest_app/!svn/ver/2412/trunk/crf_invest_web/WebRoot/views/jsp/index.jsp
+END
+success.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/success.jsp
+END

@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svn/crf_invest_app/!svn/ver/2061/trunk/crf_invest_web/src/crf/system/entity
+END
+UserBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/crf_invest_app/!svn/ver/2061/trunk/crf_invest_web/src/crf/system/entity/UserBean.java
+END
+DimNode.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/crf_invest_app/!svn/ver/2061/trunk/crf_invest_web/src/crf/system/entity/DimNode.java
+END
+Operation.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/crf_invest_app/!svn/ver/2061/trunk/crf_invest_web/src/crf/system/entity/Operation.java
+END
+ActorButton.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/crf_invest_app/!svn/ver/2061/trunk/crf_invest_web/src/crf/system/entity/ActorButton.java
+END
+DimTree.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/crf_invest_app/!svn/ver/2061/trunk/crf_invest_web/src/crf/system/entity/DimTree.java
+END
+OnlineUsers.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/crf_invest_app/!svn/ver/2061/trunk/crf_invest_web/src/crf/system/entity/OnlineUsers.java
+END
+Actor.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/crf_invest_app/!svn/ver/2061/trunk/crf_invest_web/src/crf/system/entity/Actor.java
+END

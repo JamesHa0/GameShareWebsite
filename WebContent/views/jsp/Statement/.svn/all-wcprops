@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/crf_invest_app/!svn/ver/1938/trunk/crf_invest_web/WebRoot/views/jsp/Statement
+END
+dj_list.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/crf_invest_app/!svn/ver/1938/trunk/crf_invest_web/WebRoot/views/jsp/Statement/dj_list.jsp
+END
+statement_list.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/crf_invest_app/!svn/ver/1689/trunk/crf_invest_web/WebRoot/views/jsp/Statement/statement_list.jsp
+END
+watermelon_list_table.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/crf_invest_app/!svn/ver/1686/trunk/crf_invest_web/WebRoot/views/jsp/Statement/watermelon_list_table.jsp
+END
+watermelon_list.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/crf_invest_app/!svn/ver/1687/trunk/crf_invest_web/WebRoot/views/jsp/Statement/watermelon_list.jsp
+END
+dj_list_table.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/crf_invest_app/!svn/ver/1937/trunk/crf_invest_web/WebRoot/views/jsp/Statement/dj_list_table.jsp
+END

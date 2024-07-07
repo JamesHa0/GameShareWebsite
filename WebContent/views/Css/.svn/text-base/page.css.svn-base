@@ -1,0 +1,33 @@
+.pages {
+	width: 100.5%;
+	text-align: right;
+	padding: 10px 0;
+	clear: both;
+}
+
+.pages span,.pages a,.pages b {
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0 2px;
+}
+
+.pages span font {
+	color: #f00;
+	font-size: 12px;
+}
+
+.pages a,.pages b {
+	border: 1px solid #5FA623;
+	background: #fff;
+	padding: 2px 6px;
+	text-decoration: none
+}
+
+.pages span {
+	padding-right: 10px
+}
+
+.pages b,.pages a:hover {
+	background: #7AB63F;
+	color: #fff;
+}

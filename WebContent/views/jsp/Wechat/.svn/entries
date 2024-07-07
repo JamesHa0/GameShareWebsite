@@ -1,0 +1,46 @@
+10
+
+dir
+2414
+https://119.2.6.24:8443/svn/crf_invest_app/trunk/crf_invest_web/WebRoot/views/jsp/Wechat
+https://119.2.6.24:8443/svn/crf_invest_app
+
+
+
+2015-08-24T03:28:24.471855Z
+1370
+wanghao
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+42841d37-d036-084c-93df-853934f197f4
+
+Attention
+dir
+
+GsRecord
+dir
+
+Kf
+dir
+
+Material
+dir
+
+Record
+dir
+
+Report
+dir
+

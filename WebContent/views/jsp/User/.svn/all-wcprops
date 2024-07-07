@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/crf_invest_app/!svn/ver/1091/trunk/crf_invest_web/WebRoot/views/jsp/User
+END
+allotRoles.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/User/allotRoles.jsp
+END
+addOrUpdateUser.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/User/addOrUpdateUser.jsp
+END
+userlist_table.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/User/userlist_table.jsp
+END
+userlist.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/crf_invest_app/!svn/ver/1091/trunk/crf_invest_web/WebRoot/views/jsp/User/userlist.jsp
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/User/index.html
+END
+add.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/User/add.html
+END
+updateUserInfo.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/User/updateUserInfo.jsp
+END
+userlist_bak.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/User/userlist_bak.jsp
+END
+edit.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/User/edit.html
+END

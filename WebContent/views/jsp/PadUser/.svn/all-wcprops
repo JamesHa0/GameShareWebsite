@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/PadUser
+END
+PadUserlist_table.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/PadUser/PadUserlist_table.jsp
+END
+PadUserlist.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/PadUser/PadUserlist.jsp
+END
+addOrUpdatePadUser.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/PadUser/addOrUpdatePadUser.jsp
+END

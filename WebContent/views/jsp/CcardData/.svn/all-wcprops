@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/CcardData
+END
+CcardDatalist_table.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/CcardData/CcardDatalist_table.jsp
+END
+CcardDatalist.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/CcardData/CcardDatalist.jsp
+END
+addOrUpdateCcardData.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/CcardData/addOrUpdateCcardData.jsp
+END
+allocaCcardData.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/crf_invest_app/!svn/ver/1073/trunk/crf_invest_web/WebRoot/views/jsp/CcardData/allocaCcardData.jsp
+END
