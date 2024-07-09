@@ -29,7 +29,7 @@ public class QueryUserServlet extends HttpServlet {
 		String uemal =request.getParameter("uemail");
 		
 		try {
-			User stu=new UserDaoImpl().
+			User user=new UserDaoImpl().queryUserByUid(uid);
 			if(stu==null )
 				System.out.println("servlet：query:查找该学生返回为空。");
 			request.setAttribute("stu", stu);
