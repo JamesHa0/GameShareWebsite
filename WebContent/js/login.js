@@ -9,12 +9,9 @@ $(function (){
 	// 表单验证
 	$(".register").validate({
 		rules:{
-			// 绑定的是 name 
-			username:{
+			utel:{
 				required: true,
-			},
-			user_id:{
-				required: true,
+				rangelength:[11,11],
 			},
 			password:{
 				required: true,
@@ -23,27 +20,14 @@ $(function (){
 			second_pwd:{
 				required: true,
 				rangelength:[8,20],
-				equalTo:"#pwd",
-			},
-			email:{
-				required: true,
-				email:true,
-			},
-			birth:{
-				required: true,
-				dateISO:true,
-			},
-			phone:{
-				required: true,
-				minlength:11,
-			},
-			address:{
-				required: true,
-			},
+				equalTo:"#upsw",
+			}
 		},
 		messages:{
-			username:'请输入用户名',
-			user_id:'请输入账号',
+			utel:{
+				required:"手机号码不能为空",
+				rangelength:"请输入正确的手机号",
+			},
 			password:{
 				required:'密码不能为空',
 				rangelength:"密码长度在8~20位",
@@ -53,39 +37,22 @@ $(function (){
 				rangelength:"密码长度在8~20位",
 				equalTo:'两次密码不同',
 			},
-			email:{
-				required:'请输入电子邮箱',
-				email:'请输入正确的邮箱格式',
-			},
-			birth:{
-				required: '请输入您的生日',
-				dateISO:'输入正确格式的日期',
-			},
-			phone:{
-				required:"手机号码不能为空",
-				minlength:"手机号应为11位",
-			},
-			address:{
-				required:'请留下您的收货地址',
-			},
 		}
 	});
 	$(".sign").validate({
 		rules:{
-			username:{
+			utel:{
 				required: true,
+				rangelength:[11,11],
 			},
-			user_id:{
-				required: true,
-			},
-			password:{
+			upsw:{
 				required: true,
 				rangelength:[8,20],
 			},
 		},
 		messages:{
-			user_id:'请输入账号',
-			password:{
+			utel:'请输入手机号',
+			upsw:{
 				required:'密码不能为空',
 				rangelength:"密码长度在8~20位",
 			},

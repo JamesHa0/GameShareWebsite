@@ -159,33 +159,32 @@ button.ghost {
     transform:translateY(-50%);
 }
 
-/* Move signin to right 鍚戝彸绉诲姩鐧诲綍 */
+/* Move signin to right */
 .dowebok.right-panel-active .sign-in {
     transform:translateY(100%);
 }
-/* Move overlay to left 鐧诲綍钂欑増鍚戝乏绉诲姩鍙犲姞灞� */
+/* Move overlay to left */
 .dowebok.right-panel-active .overlay-container {
     transform:translateX(-100%);
 }
-/* Bring signup over signin 閫氳繃鐧诲綍杩涜娉ㄥ唽 */
+/* Bring signup over signin */
 .dowebok.right-panel-active .sign-up {
     transform:translateX(100%);
     opacity:1;
     z-index:5;
 }
-/* Move overlay back to right 灏嗗彔鍔犲眰绉诲洖鍙充晶 */
+/* Move overlay back to right */
 .dowebok.right-panel-active .overlay {
     transform:translateX(50%);
 }
-/* Bring back the text to center 浣挎枃鏈洖鍒颁腑蹇� */
+/* Bring back the text to center */
 .dowebok.right-panel-active .mask-left {
     transform:translateY(0);
 }
-/* Same effect for right 鍙充晶鏁堟灉鐩稿悓 */
+/* Same effect for right */
 .dowebok.right-panel-active .mask-right {
     transform:translateY(50%);
 }
-/* 鎻愮ず璇殑棰滆壊璁剧疆 */
 .error{
     color: #ff0000;
 }

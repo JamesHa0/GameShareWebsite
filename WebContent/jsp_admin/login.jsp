@@ -10,9 +10,9 @@
 <html>
 <head>
 <title>欢迎登录后台管理系统</title>
-<link href="views/Css/login/style.css" rel="stylesheet" type="text/css" />
-<script language="JavaScript" src="views/Js/login/jquery.js"></script>
-<script src="views/Js/login/cloud.js" type="text/javascript"></script>
+<link href="../views/Css/login/style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript" src="../views/Js/login/jquery.js"></script>
+<script src="../views/Js/login/cloud.js" type="text/javascript"></script>
 <script language="javascript">
 	$(function() {
 		$('.loginbox').css({

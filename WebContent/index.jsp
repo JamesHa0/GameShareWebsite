@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<title>商城首页</title>
+<title>GameShareWebsite</title>
 <link rel="stylesheet" type="text/css" href="css/public.css" />
 <link rel="stylesheet" type="text/css" href="css/index.css" />
 <script src="js/jquery-3.6.0.js" type="text/javascript" charset="utf-8"></script>
@@ -82,6 +82,39 @@
 			</ul>
 		</div>
 		<div class="content">
+		<div class="box_tit w">
+				<h2 class="title">&emsp;本站游戏</h2>
+				<div class="content_pohot">
+					<ul>
+						<li class="game_tu"><a href="./detail.do?id=phone01">
+								<div class="ph">
+									<img src="images/game/Horizon/1.png">
+								</div>
+								<div class="na">待定</div>
+						</a></li>
+
+						<li class="game_tu"><a href="./detail.do?id=phone02">
+								<div class="ph">
+									<img src="images/game/elden/1.jpg">
+								</div>
+								<div class="na">待定</div>
+						</a></li>
+
+						<li class="game_tu"><a href="./detail.do?id=phone03">
+								<div class="ph">
+									<img src="images/game/palworld/1.jpg">
+								</div>
+								<div class="na">待定</div>
+						</a></li>
+						<li class="game_tu"><a href="./detail.do?id=phone04">
+								<div class="ph">
+									<img src="images/game/wukong/1.jpg">
+								</div>
+								<div class="na">待定</div>
+						</a></li>
+					</ul>
+				</div>
+			</div>
 			<div class="box_tit w">
 				<h2 class="title">&emsp;近期推荐</h2>
 				<div class="content_pohot">

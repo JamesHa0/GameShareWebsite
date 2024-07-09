@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>在线商城注册页面</title>
+        <title>登录注册</title>
         <link rel="stylesheet" type="text/css" href="css/public.css"/>
         <link rel="stylesheet" type="text/css" href="css/login.css"/>
         <script src="js/jquery-3.6.0.js" type="text/javascript" charset="utf-8"></script>
@@ -13,7 +13,7 @@
     <body>
         <div class="head">
             <div class="shouye_head">
-                <a href="first.jsp">商城首页</a>
+                <a href="index.jsp">返回首页</a>
             </div>
         </div>
         <div class="dowebok" id="dowebok">
@@ -29,22 +29,22 @@
        
                     <input type="password" id="second_pwd" name="second_pwd" placeholder="请再次输入密码" />
        
-                    <input type="email" id="uemail" name="uemail" placeholder="请输入正确的邮箱格式">
+                    <input type="email" id="uemail" name="uemail" placeholder="邮箱地址">
                     
-                    <input id="man" type="radio" checked="checked" name="ugender"/>男<input type="radio" id="woman" name="ugender">女
+                    <!-- <input type="radio" id="man" checked="checked" name="ugender"/>男<input type="radio" id="woman" name="ugender">女
                     
-                    <input type="text" id="uaddress" name="uaddress" placeholder="地址" />
+                    <input type="text" id="uaddress" name="uaddress" placeholder="地址" /> -->
        
                     <button>注册</button>
                 </form>
             </div>
             <!-- 登录 -->
             <div class="form-container sign-in">
-                <form action="login.do" method="post" class="sign">
+                <form action="loginServlet.do" method="post" class="sign">
                     <h1>登录</h1>
-                    <input type="text" name="user_id" placeholder="账号">
-                    <input type="password"  name="password" placeholder="密码">
-                    <a href="###">忘记密码？</a>
+                    <input type="text" name="utel" placeholder="手机号">
+                    <input type="password"  name="upsw" placeholder="密码">
+                    <a href="jsp_admin/login.jsp">管理员登录</a>
                     <button>登录</button>
                 </form>
             </div>
@@ -54,7 +54,7 @@
                     <!-- 登录蒙版 -->
                     <div class="overlay-panel mask-left">
                         <h1>已有帐号？</h1>
-                        <p>请使用您的帐号进行登录</p>
+                        <p>请使用您的手机号进行登录</p>
                         <button class="ghost" id="signIn">登录</button>
                     </div>
                     <!-- 注册蒙版 -->
