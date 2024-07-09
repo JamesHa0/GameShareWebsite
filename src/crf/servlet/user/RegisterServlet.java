@@ -54,23 +54,28 @@ public class RegisterServlet extends HttpServlet {
 		} else {
 			
 			//验证码通过：
-			UserDaoImpl userdao =new UserDaoImpl();
-			String uid=(String)session.getAttribute("uid");
 			try {
-				if(userdao.queryUserByUtel(utel) !=null) {
+				UserDaoImpl userdao =new UserDaoImpl();
+				User user_test=userdao.queryUserByUtel(utel);
+				if(user_test !=null) {
 					request.setAttribute("msg", "注册失败：该User已存在。");
 					request.setAttribute("path", "LR.jsp");
 					request.getRequestDispatcher("error.jsp").forward(request, response);
 				}
 				else {//insert数据入库：
-					User user=new User(uname, utel, uemail, urole, ugender, uaddress, upsw);
-					if(userdao.insertUser(user) <=0) {
+					User user_new=new User(uname, utel, uemail, urole, ugender, uaddress, upsw);
+					if(userdao.insertUser(user_new) <=0) {//user_new还没有uid值
 						System.out.println("！插入学生记录失败！");
 					}
 					//注册成功，则跳转：
-					System.out.println("----当前用户："+session.getAttribute("uid"));
-					if(session.getAttribute("uid") == null)//未登录状态
-						session.setAttribute("uid", uid);
+					if(session.getAttribute("Login_uid") == null) {//若为未登录状态
+						User user=userdao.queryUserByUtel(utel);
+						String uid=user.getUid();
+						session.setAttribute("Login_uid", uid);//*********************************************session填入登录信息
+						session.setAttribute("Login_user", user);
+						System.out.println("----当前用户："+session.getAttribute("Login_uid"));
+					}
+						
 					request.getRequestDispatcher("index.jsp").forward(request, response);
 				}
 			} catch (Exception e) {

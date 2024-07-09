@@ -37,13 +37,12 @@ public class LoginServlet extends HttpServlet {
 			System.out.println("servlet:login:Md5异常");
 		}
 		
-		/*
-		System.out.println("登录页传来的数据为：\n电话："+utel
-				+"，\n邮箱："+uemail
-				+"，\n验证码："+checkinput
-				+"，\n密码（加密后）："+upsw
-				);   
-		*/
+		
+System.out.println("登录页传来的数据为：\n电话："+utel
+		+"，\n验证码："+checkinput
+		+"，\n密码（加密后）："+upsw
+		);   
+		
 
 		
 		// 验证码部分：
@@ -63,10 +62,6 @@ public class LoginServlet extends HttpServlet {
 					request.setAttribute("path", "LR.jsp");
 					request.getRequestDispatcher("error.jsp").forward(request, response);
 				}else {
-				//**************************把uid和user对象存入session：***********************************************************
-				String uid=user.getUid();
-				session.setAttribute("uid", uid);
-				session.setAttribute("user", user);
 				
 					String psw=user.getUpsw();//数据库中MD5加密的密码
 					System.out.println("用户输入密码："+upsw+"\n应输入的密码："+psw);
@@ -76,7 +71,9 @@ public class LoginServlet extends HttpServlet {
 						request.getRequestDispatcher("error.jsp").forward(request, response);
 					}else {//密码正确
 						System.out.println("登录成功。");
-						session.setAttribute("uid", uid);//session标记为登录状态，记录登录用户名
+						String uid=user.getUid();
+						session.setAttribute("Login_uid", uid);//session标记为登录状态，记录登录用户名和user对象***********************************
+						session.setAttribute("Login_user", user);
 						response.sendRedirect("index.jsp");
 					}
 				}

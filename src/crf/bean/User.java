@@ -3,6 +3,17 @@ package crf.bean;
  * User实体类
  */
 
+/*
+uid     
+uname   
+utel    
+uemail  
+urole   
+ugender 
+uaddress
+upsw    
+*/
+
 public class User {
 	private String uid;
 	private String uname; 
