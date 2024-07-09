@@ -11,6 +11,6 @@
 		session.invalidate();
 		request.setAttribute("userLogin_msg", "您已登出！请重新登录");
 	%>
-	<jsp:forward page="L_R.jsp" />
+	<jsp:forward page="LR.jsp" />
 </body>
 </html>

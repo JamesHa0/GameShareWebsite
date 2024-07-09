@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>登录注册</title>
         <link rel="stylesheet" type="text/css" href="css/public.css"/>
-        <link rel="stylesheet" type="text/css" href="css/login.css"/>
+        <link rel="stylesheet" type="text/css" href="css/LR.css"/>
         <script src="js/jquery-3.6.0.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="js/login.js" type="text/javascript" charset="utf-8"></script>

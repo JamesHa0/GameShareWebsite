@@ -55,19 +55,19 @@
 			<div class="picture-area">
 				<ul id="item">
 					<li class="item">
-						<a href="#"><img src="images/game/2077/1.jpg" ></a>
+						<a href="game/2077.jsp"><img src="images/game/2077/1.jpg" ></a>
 					</li>
 					<li class="item">
-						<a href="#"><img src="images/game/BG/1.jpg" ></a>
+						<a href="game/BG.jsp"><img src="images/game/BG/1.jpg" ></a>
 					</li>
 					<li class="item">
-						<a href="#"><img src="images/game/elden/1.jpg" ></a>
+						<a href="game/elden.jsp"><img src="images/game/elden/1.jpg" ></a>
 					</li>
 					<li class="item">
-						<a href="#"><img src="images/game/redemption/1.jpg" ></a>
+						<a href="game/redemption.jsp"><img src="images/game/redemption/1.jpg" ></a>
 					</li>
 					<li class="item">
-						<a href="#"><img src="images/game/wukong/1.jpg" ></a>
+						<a href="game/wukong.jsp"><img src="images/game/wukong/1.jpg" ></a>
 					</li>
 				</ul>
 			</div>
