@@ -1,22 +1,26 @@
 package crf.dao;
 
 import java.util.List;
-import java.util.Map;
 
-import crf.system.entity.UserBean;
+import crf.bean.User;
 
-public interface UserDao {
-	public long getUserListCount(Map<String,Object> map)throws Exception;
+public interface UserDao extends Dao{
+	//查询所有用户
+	public List<User> queryAllUser()throws Exception;
+	
+	//查询单个用户（三种方式）
+	public User queryUserByUid(String uid)throws Exception;			//by uid
+	public User queryUserByUtel(String utel)throws Exception;		//by utel
+	public User queryUserByUemail(String uemail)throws Exception;	//by uemail
 
-	public List<UserBean> queryUserListTable(Map<String, Object> map)throws Exception;
-
-	public UserBean queryUserByUsername(String username)throws Exception;
-
-	public int insertUser(Map<String, Object> map)throws Exception;
-
-	public int update(Map<String, Object> map)throws Exception;
-
-	public int deleteUser(String username)throws Exception;
+	//插入用户
+	public int insertUser(User user)throws Exception;
+	
+	//更新用户信息
+	public int updateUserByUid(User user)throws Exception;
+	
+	//删除用户
+	public int deleteUser(String uid)throws Exception;
 
 
 }
