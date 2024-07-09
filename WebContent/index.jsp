@@ -20,12 +20,23 @@
 				<a href="info.jsp"><img src="images/info.png" height="28px"></a>
 			</div>
 			<div class="login">
+				<%
+					String userName = (String)session.getAttribute("uname");
+					if(userName == null){
+				%>
 				<div>
-					<a href="LR.jsp">登录</a>
+					<a href="LR.jsp">登录&注册</a>
 				</div>
+				<%
+					} else {
+				%>
 				<div>
-					<a href="LR.jsp">注册</a>
+					<p>欢迎您，${sessionScope.uname}</p>
 				</div>
+				<div><a href="logout.jsp">登出</a></div>
+				<%
+					}
+				%>
 			</div>
 
 		</div>
@@ -40,289 +51,105 @@
 		</div>
 	</div>
 	<div class="shop">
-		<div class="lunbo">
-			<span class="right" id="right"></span> <span class="left" id="left"></span>
-			<div id="lunbo">
-				<div>
-					<a href="#"><img src="images/game/2077.jpg"></a>
-				</div>
-				<div>
-					<a href="#"><img src="images/game/BG.jpg"></a>
-				</div>
-				<div>
-					<a href="#"><img
-						src="images/game/elden.jpg"></a>
-				</div>
-				<div>
-					<a href="#"><img
-						src="images/game/redemption.jpg"></a>
-				</div>
-				<div>
-					<a href="#"><img
-						src="images/game/wukong.jpg"></a>
-				</div>
+		<div class="picture">
+			<div class="picture-area">
+				<ul id="item">
+					<li class="item">
+						<a href="#"><img src="images/game/2077/1.jpg" ></a>
+					</li>
+					<li class="item">
+						<a href="#"><img src="images/game/BG/1.jpg" ></a>
+					</li>
+					<li class="item">
+						<a href="#"><img src="images/game/elden/1.jpg" ></a>
+					</li>
+					<li class="item">
+						<a href="#"><img src="images/game/redemption/1.jpg" ></a>
+					</li>
+					<li class="item">
+						<a href="#"><img src="images/game/wukong/1.jpg" ></a>
+					</li>
+				</ul>
 			</div>
+			<div id="btn-left"><</div>
+			<div id="btn-right">></div>
+			<ul id="circle">
+				<li class="circle"></li>
+				<li class="circle"></li>
+				<li class="circle"></li>
+				<li class="circle"></li>
+				<li class="circle"></li>
+			</ul>
 		</div>
 		<div class="content">
 			<div class="box_tit w">
-				<h2 class="title">手机</h2>
+				<h2 class="title">&emsp;近期推荐</h2>
 				<div class="content_pohot">
 					<ul>
-						<li class="phone_tu"><a href="./detail.do?id=phone01">
+						<li class="game_tu"><a href="./detail.do?id=phone01">
 								<div class="ph">
-									<img src="images/phone/63e15f377e87212d460592b4a1369ccd.jpg">
+									<img src="images/game/Horizon/1.png">
 								</div>
-								<div class="na">Xiaomi 12X</div>
-								<p>￥3199</p>
+								<div class="na">地平线：西之绝境</div>
 						</a></li>
 
-						<li class="phone_tu"><a href="./detail.do?id=phone02">
+						<li class="game_tu"><a href="./detail.do?id=phone02">
 								<div class="ph">
-									<img src="images/phone/a7382271e3a677bf188679ca38d68a42.jpg">
+									<img src="images/game/elden/1.jpg">
 								</div>
-								<div class="na">Xiaomi 12 Pro</div>
-								<p>￥4699</p>
+								<div class="na">艾尔登法环</div>
 						</a></li>
 
-						<li class="phone_tu"><a href="./detail.do?id=phone03">
+						<li class="game_tu"><a href="./detail.do?id=phone03">
 								<div class="ph">
-									<img src="images/phone/0d4b362431de4bdda03315ffdbc7b32a.jpg">
+									<img src="images/game/palworld/1.jpg">
 								</div>
-								<div class="na">Xiaomi 11 青春活力版</div>
-								<p>￥1999</p>
+								<div class="na">幻兽帕鲁</div>
 						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=phone04">
+						<li class="game_tu"><a href="./detail.do?id=phone04">
 								<div class="ph">
-									<img src="images/phone/6d0a3e7acc3e91e2cfd83dbbe1d1c029.jpg">
+									<img src="images/game/wukong/1.jpg">
 								</div>
-								<div class="na">Redmi Note 11 Pro系列</div>
-								<p>￥1799</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=book01">
-								<div class="ph">
-									<img src="images/carts/f84ce8d17e55cf74.jpg">
-								</div>
-								<div class="na">Vue.js全家桶零基础入门到进阶项目实战</div>
-								<p>￥99.20</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=book02">
-								<div class="ph">
-									<img src="images/carts/8e7d4ce45fdacb89.jpg">
-								</div>
-								<div class="na">CSS新世界</div>
-								<p>￥108.80</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=book03">
-								<div class="ph">
-									<img src="images/188b8e81859a3051.jpg">
-								</div>
-								<div class="na">CSS世界(异步图书出品)</div>
-								<p>￥57.80</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=phone04">
-								<div class="ph">
-									<img src="images/phone/6d0a3e7acc3e91e2cfd83dbbe1d1c029.jpg">
-								</div>
-								<div class="na">Redmi Note 11 Pro系列</div>
-								<p>￥1799</p>
+								<div class="na">黑神话：悟空</div>
 						</a></li>
 					</ul>
 				</div>
 			</div>
 			<div class="box_tit w">
-				<h2 class="title">电脑</h2>
-				<div class="nei_pohot">
+				<h2 class="title">&emsp;高分神作</h2>
+				<div class="content_pohot">
 					<ul>
-						<li class="phone_tu"><a href="./detail.do?id=com01">
+						<li class="game_tu"><a href="./detail.do?id=com01">
 								<div class="ph">
-									<img src="images/computer/dbeee1b261367546.jpg">
+									<img src="images/game/dishonored/1.jpg">
 								</div>
-								<div class="na">微星(MSI)PRO 电脑主板</div>
-								<p>￥3629</p>
+								<div class="na">耻辱系列</div>
 						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=com02">
+						<li class="game_tu"><a href="./detail.do?id=com02">
 								<div class="ph">
-									<img src="images/computer/8079c5b8a20b6eb7.jpg">
+									<img src="images/game/danganronpa/1.jpg">
 								</div>
-								<div class="na">新品英特尔酷睿12代</div>
-								<p>￥1999</p>
+								<div class="na">弹丸论破系列</div>
 						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=com03">
+						<li class="game_tu"><a href="./detail.do?id=com03">
 								<div class="ph">
 									<img
-										src="images/computer/O1CN01XdmjpR1IOuqoGgg5r_!!2616970884.jpg">
+										src="images/game/borderlands2/1.jpg">
 								</div>
-								<div class="na">笔记本电脑小新Air14 银</div>
-								<p>￥4399</p>
+								<div class="na">无主之地2</div>
 						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=com04">
+						<li class="game_tu"><a href="./detail.do?id=com04">
 								<div class="ph">
-									<img src="images/computer/f063016c41fa50de.jpg">
+									<img src="images/game/evilwithin/1.jpg">
 								</div>
-								<div class="na">索尼（SONY）playstation5</div>
-								<p>￥5099</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=com01">
-								<div class="ph">
-									<img src="images/computer/dbeee1b261367546.jpg">
-								</div>
-								<div class="na">微星(MSI)PRO 电脑主板</div>
-								<p>￥3629</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=com02">
-								<div class="ph">
-									<img src="images/computer/8079c5b8a20b6eb7.jpg">
-								</div>
-								<div class="na">新品英特尔酷睿12代</div>
-								<p>￥1999</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=com03">
-								<div class="ph">
-									<img
-										src="images/computer/O1CN01XdmjpR1IOuqoGgg5r_!!2616970884.jpg">
-								</div>
-								<div class="na">笔记本电脑小新Air14 银</div>
-								<p>￥4399</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=com04">
-								<div class="ph">
-									<img src="images/computer/f063016c41fa50de.jpg">
-								</div>
-								<div class="na">索尼（SONY）playstation5</div>
-								<p>￥5099</p>
-						</a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="box_tit w">
-				<h2 class="title">家用电器</h2>
-				<div class="nei_pohot">
-					<ul>
-						<li class="phone_tu"><a href="./detail.do?id=home01">
-								<div class="ph">
-									<img src="images/home/181a74dccd6f4a71.jpg">
-								</div>
-								<div class="na">西门子（SIEMENS）蒸烤箱一体机嵌入式</div>
-								<p>￥7999</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=home02">
-								<div class="ph">
-									<img src="images/home/c7c15101f2c8a652a4a0d069501d1e53.jpg">
-								</div>
-								<div class="na">小米电视6 至尊版 65英寸</div>
-								<p>￥7999</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=home03">
-								<div class="ph">
-									<img src="images/home/cf71655746411c0f.jpg!cc_320x320.webp">
-								</div>
-								<div class="na">亿田（entive）D2ZK 集成灶蒸烤一体</div>
-								<p>￥13800</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=home04">
-								<div class="ph">
-									<img src="images/home/33508813f3a5059d.jpg">
-								</div>
-								<div class="na">卡萨帝（Casarte）635升四开门十字对开门冰箱</div>
-								<p>￥12499</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=home01">
-								<div class="ph">
-									<img src="images/home/181a74dccd6f4a71.jpg">
-								</div>
-								<div class="na">西门子（SIEMENS）蒸烤箱一体机嵌入式</div>
-								<p>￥7999</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=home02">
-								<div class="ph">
-									<img src="images/home/c7c15101f2c8a652a4a0d069501d1e53.jpg">
-								</div>
-								<div class="na">小米电视6 至尊版 65英寸</div>
-								<p>￥7999</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=home03">
-								<div class="ph">
-									<img src="images/home/cf71655746411c0f.jpg!cc_320x320.webp">
-								</div>
-								<div class="na">亿田（entive）D2ZK 集成灶蒸烤一体</div>
-								<p>￥13800</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=home04">
-								<div class="ph">
-									<img src="images/home/33508813f3a5059d.jpg">
-								</div>
-								<div class="na">卡萨帝（Casarte）635升四开门十字对开门冰箱</div>
-								<p>￥12499</p>
-						</a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="box_tit w">
-				<h2 class="title">服饰</h2>
-				<div class="nei_pohot">
-					<ul>
-						<li class="phone_tu"><a href="./detail.do?id=clothes01">
-								<div class="ph">
-									<img src="images/clothes/16fea7d7bb3f9144.jpg">
-								</div>
-								<div class="na">梵希蔓垂感卡其色西装外套女</div>
-								<p>￥299</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=clothes02">
-								<div class="ph">
-									<img src="images/clothes/7ea39f5f4878b162.jpg">
-								</div>
-								<div class="na">海青蓝时尚通勤小西服女</div>
-								<p>￥358</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=clothes03">
-								<div class="ph">
-									<img src="images/clothes/703d1f6c28d1c818.jpg">
-								</div>
-								<div class="na">森马卫衣男2021秋新款oversize创意图案</div>
-								<p>￥139</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=clothes04">
-								<div class="ph">
-									<img src="images/clothes/4cc75617291b3b63.jpg">
-								</div>
-								<div class="na">Lilbetter情侣重磅卫衣男加绒</div>
-								<p>￥215</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=clothes01">
-								<div class="ph">
-									<img src="images/clothes/16fea7d7bb3f9144.jpg">
-								</div>
-								<div class="na">梵希蔓垂感卡其色西装外套女</div>
-								<p>￥299</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=clothes02">
-								<div class="ph">
-									<img src="images/clothes/7ea39f5f4878b162.jpg">
-								</div>
-								<div class="na">海青蓝时尚通勤小西服女</div>
-								<p>￥358</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=clothes03">
-								<div class="ph">
-									<img src="images/clothes/703d1f6c28d1c818.jpg">
-								</div>
-								<div class="na">森马卫衣男2021秋新款oversize创意图案</div>
-								<p>￥139</p>
-						</a></li>
-						<li class="phone_tu"><a href="./detail.do?id=clothes04">
-								<div class="ph">
-									<img src="images/clothes/4cc75617291b3b63.jpg">
-								</div>
-								<div class="na">Lilbetter情侣重磅卫衣男加绒</div>
-								<p>￥215</p>
+								<div class="na">恶灵附身</div>
 						</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="nav">
+	<!-- <div class="nav">
 		<ul>
 			<li class="current">手机</li>
 			<li>电脑</li>
@@ -330,55 +157,39 @@
 			<li>服饰</li>
 			<div class="back">返回顶部</div>
 		</ul>
-	</div>
+	</div> -->
 
 	<div class="footer">
 		<div class="translate">
 			<div class="footer-links">
-				<h5>购物指南</h5>
+				<h5>官方网站</h5>
 				<ul>
-					<li><a href="#">购物流程</a></li>
-					<li><a href="#">会员介绍</a></li>
-					<li><a href="#">生活旅行</a></li>
-					<li><a href="#">常见问题</a></li>
-					<li><a href="#">联系客服</a></li>
+					<li><a href="https://store.steampowered.com">steam官网</a></li>
+					<li><a href="https://www.epicgames.com/site/zh-CN/home">Epic官网</a></li>
+					<li><a href="https://www.origin.com">Origin官网</a></li>
+					<li><a href="https://www.ubisoft.com/zh-tw">Ubisoft官网</a></li>
+					<li><a href="https://www.wegame.com.cn">Wegame官网</a></li>
 				</ul>
 			</div>
 			<div class="footer-links">
-				<h5>支付方式</h5>
+				<h5>游戏攻略</h5>
 				<ul>
-					<li><a href="#">信用卡</a></li>
-					<li><a href="#">货到付款</a></li>
-					<li><a href="#">在线付款</a></li>
-					<li><a href="#">分期付款</a></li>
+					<li><a href="https://www.3dmgame.com">3DM游戏网站</a></li>
+					<li><a href="https://www.gamersky.com">游民星空</a></li>
+					<li><a href="https://www.ucg.cn">游戏机实用技术</a></li>
+					<li><a href="https://www.vgtime.com">游戏时光</a></li>
+					<li><a href="https://nga.178.com">NGA</a></li>
+					<li><a href="https://gl.ali213.net">游侠攻略</a></li>
 				</ul>
 			</div>
 			<div class="footer-links">
-				<h5>售后服务</h5>
+				<h5>游戏MOD</h5>
 				<ul>
-					<li><a href="#">售后政策</a></li>
-					<li><a href="#">退款说明</a></li>
-					<li><a href="#">返修/退换货</a></li>
-				</ul>
-			</div>
-			<div class="footer-links">
-				<h5>帮助中心</h5>
-				<ul>
-					<li><a href="#">账户管理</a></li>
-					<li><a href="#">自助服务</a></li>
-					<li><a href="#">订单操作</a></li>
-					<li><a href="#">服务网点</a></li>
-					<li><a href="#">授权体验店/专区</a></li>
-				</ul>
-			</div>
-			<div class="footer-links">
-				<h5>关于我们</h5>
-				<ul>
-					<li><a href="#">新浪微博</a></li>
-					<li><a href="#">官方微信</a></li>
-					<li><a href="#">联系我们</a></li>
-					<li><a href="#">加入我们</a></li>
-					<li><a href="#">公益基金会</a></li>
+					<li><a href="https://www.nexusmods.com">Nexus Mods</a></li>
+					<li><a href="https://steamcommunity.com/workshop">steam创意工坊</a></li>
+					<li><a href="https://mod.3dmgame.com">3DM Mod站</a></li>
+					<li><a href="https://down.gamersky.com/oth/mod">游民星空下载站</a></li>
+					<li><a href="https://patch.ali213.net/">游侠补丁</a></li>
 				</ul>
 			</div>
 		</div>

@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 123
-  Date: 2022/1/4
-  Time: 12:10
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
@@ -26,16 +19,22 @@
         <div class="dowebok" id="dowebok">
             <!-- 注册 -->
             <div class="form-container sign-up">
-                <form action="<%=request.getContextPath() %>/register.do" method="post" class="register">
+                <form action="<%=request.getContextPath() %>/registServlet.do" method="post" class="register">
                     <h1>注册</h1>
-                    <input type="text"  id="username" name="username" placeholder="请输入用户名" />
-                    <input type="text"  id="user_id" name="user_id" placeholder="账号" />
-                    <input type="password" id="pwd" name="password" placeholder="请输入密码" />
+                    <input type="text"  id="uname" name="uname" placeholder="用户名" />
+        
+                    <input type="text"  id="utel" name="utel" placeholder="手机号（必填）" />
+       
+                    <input type="password" id="upsw" name="upsw" placeholder="请输入密码" />
+       
                     <input type="password" id="second_pwd" name="second_pwd" placeholder="请再次输入密码" />
-                    <input id="email" id="email" name="email" type="email" placeholder="请输入正确的邮箱格式">
-                    <input type="text" id="birth" name="birth" placeholder="出生日期 以YYYY-MM-DD格式" />
-                    <input type="text" id="phone" name="phone" placeholder="手机号码" />
-                    <input type="text" id="address" name="address" placeholder="收货地址" />
+       
+                    <input type="email" id="uemail" name="uemail" placeholder="请输入正确的邮箱格式">
+                    
+                    <input id="man" type="radio" checked="checked" name="ugender"/>男<input type="radio" id="woman" name="ugender">女
+                    
+                    <input type="text" id="uaddress" name="uaddress" placeholder="地址" />
+       
                     <button>注册</button>
                 </form>
             </div>

@@ -159,33 +159,33 @@ button.ghost {
     transform:translateY(-50%);
 }
 
-/* Move signin to right 向右移动登录 */
+/* Move signin to right 鍚戝彸绉诲姩鐧诲綍 */
 .dowebok.right-panel-active .sign-in {
     transform:translateY(100%);
 }
-/* Move overlay to left 登录蒙版向左移动叠加层 */
+/* Move overlay to left 鐧诲綍钂欑増鍚戝乏绉诲姩鍙犲姞灞� */
 .dowebok.right-panel-active .overlay-container {
     transform:translateX(-100%);
 }
-/* Bring signup over signin 通过登录进行注册 */
+/* Bring signup over signin 閫氳繃鐧诲綍杩涜娉ㄥ唽 */
 .dowebok.right-panel-active .sign-up {
     transform:translateX(100%);
     opacity:1;
     z-index:5;
 }
-/* Move overlay back to right 将叠加层移回右侧 */
+/* Move overlay back to right 灏嗗彔鍔犲眰绉诲洖鍙充晶 */
 .dowebok.right-panel-active .overlay {
     transform:translateX(50%);
 }
-/* Bring back the text to center 使文本回到中心 */
+/* Bring back the text to center 浣挎枃鏈洖鍒颁腑蹇� */
 .dowebok.right-panel-active .mask-left {
     transform:translateY(0);
 }
-/* Same effect for right 右侧效果相同 */
+/* Same effect for right 鍙充晶鏁堟灉鐩稿悓 */
 .dowebok.right-panel-active .mask-right {
     transform:translateY(50%);
 }
-/* 提示语的颜色设置 */
+/* 鎻愮ず璇殑棰滆壊璁剧疆 */
 .error{
     color: #ff0000;
 }
