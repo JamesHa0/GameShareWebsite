@@ -34,7 +34,7 @@
 				<td>${user.urole }</td>
 				<td>${user.ugender }</td>
 				<td>${user.uaddress }</td>
-				<td><button onclick="confirmDelete()">删除</button></td>
+				<td><button onclick="confirmDelete2()">删除</button></td>
 				<td><button onclick="confirmUpdate()">修改</button></td>
 			</tr>
 		</c:forEach>
@@ -57,7 +57,7 @@
             // 创建一个XMLHttpRequest对象
             var xhr = new XMLHttpRequest();
             // 配置请求类型、URL及异步处理方式
-            xhr.open("GET", "/path/to/your/servlet", true);
+            xhr.open("GET", "../x?uid="+"${user.uid}", true);
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     alert('删除成功');
