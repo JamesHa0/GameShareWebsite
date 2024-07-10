@@ -18,6 +18,17 @@ a{
 img{
 	border: none;
 }
+
+.error{
+	text-align: center;
+}
 .errorImg{
-	width:400px;
+	width:600px;
+	margin: 0 auto;
+}
+.errorMsg{
+	color:red;
+	font-family:宋体;
+	font-size:50px;
+	font-weight:bold;
 }

@@ -22,14 +22,20 @@
 	<% String message = (String) request.getAttribute("msg");
 		if("gamenotfound".equals(message)){ 
 	%>
-	<img class="errorImg" src="images/gameNotFound.png">
-	游戏不见了！
-	<% } %>
+	<div class="error">
+		<br/><br/>
+		<img class="errorImg" src="images/gameNotFound.png" />
+		<br/><br/>
+		<span class="errorMsg">游戏不见了！</span>
+	</div>
+	<% } else {%>
+	
 	${msg }
 	游戏id：${game.gid}
 	游戏名称：${game.gname}
 	游戏价格：${game.gprice}
 	
+	<% }%>
 	</div>
 
 	<div class="footer">
