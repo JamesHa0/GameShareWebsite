@@ -1,4 +1,4 @@
-package crf.servlet.admin;
+package game.servlet.admin;
 
 import java.io.IOException;
 
@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import crf.bean.User;
-import crf.dao.UserDaoImpl;
+import game.bean.User;
+import game.dao.UserDaoImpl;
 
 
 

@@ -1,4 +1,4 @@
-package crf.bean;
+package game.bean;
 /**
  * Game实体类
  */

@@ -1,4 +1,4 @@
-package crf.dao;
+package game.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import crf.bean.User;
+import game.bean.User;
 
 public class UserDaoImpl implements UserDao{
 	

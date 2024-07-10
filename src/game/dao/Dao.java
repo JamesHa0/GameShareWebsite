@@ -1,4 +1,4 @@
-package crf.dao;
+package game.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

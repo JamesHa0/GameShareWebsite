@@ -1,4 +1,4 @@
-package crf.servlet.user;
+package game.servlet.user;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import crf.bean.User;
-import crf.dao.UserDaoImpl;
-import crf.other.MD5;
+import game.bean.User;
+import game.dao.UserDaoImpl;
+import game.other.MD5;
 
 @WebServlet("/LoginServlet.do")
 public class LoginServlet extends HttpServlet {

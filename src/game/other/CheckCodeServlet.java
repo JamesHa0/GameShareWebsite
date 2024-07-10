@@ -1,4 +1,4 @@
-package crf.other;
+package game.other;
 
 import java.awt.Color;
 import java.awt.Graphics;

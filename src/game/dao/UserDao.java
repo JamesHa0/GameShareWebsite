@@ -1,8 +1,8 @@
-package crf.dao;
+package game.dao;
 
 import java.util.List;
 
-import crf.bean.User;
+import game.bean.User;
 
 public interface UserDao extends Dao{
 	//查询所有用户

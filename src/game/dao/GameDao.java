@@ -1,8 +1,8 @@
-package crf.dao;
+package game.dao;
 
 import java.util.List;
 
-import crf.bean.Game;
+import game.bean.Game;
 
 public interface GameDao extends Dao{
 	//查询所有游戏

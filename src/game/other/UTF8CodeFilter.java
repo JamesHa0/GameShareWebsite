@@ -1,4 +1,4 @@
-package crf.other;
+package game.other;
 
 import java.io.IOException;
 import javax.servlet.Filter;
