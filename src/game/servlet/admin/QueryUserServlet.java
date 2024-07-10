@@ -41,7 +41,7 @@ public class QueryUserServlet extends HttpServlet {
 			}
 			
 			if(user==null) {
-				System.out.println("!见鬼：servlet：query:user=空。");
+				System.out.println("QueryUserServlet：user=空。数据库里没有该用户。");
 			}else {
 				System.out.println("QueryUserServlet:成功获取user。");
 			}
