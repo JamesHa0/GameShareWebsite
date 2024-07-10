@@ -44,7 +44,7 @@
                     <h1>登录</h1>
                     <input type="text" name="utel" placeholder="手机号">
                     <input type="password"  name="upsw" placeholder="密码">
-                    <a href="jsp_admin/login.jsp">管理员登录</a>
+                    <a href="jsp_admin/admin_login.jsp">管理员登录</a>
                     <button>登录</button>
                 </form>
             </div>
