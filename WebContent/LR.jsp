@@ -19,7 +19,7 @@
         <div class="dowebok" id="dowebok">
             <!-- 注册 -->
             <div class="form-container sign-up">
-                <form action="<%=request.getContextPath() %>/registServlet.do" method="post" class="register">
+                <form action="<%=request.getContextPath() %>/RegistServlet.do" method="post" class="register">
                     <h1>注册</h1>
                     <input type="text"  id="uname" name="uname" placeholder="用户名" />
         
@@ -40,11 +40,11 @@
             </div>
             <!-- 登录 -->
             <div class="form-container sign-in">
-                <form action="loginServlet.do" method="post" class="sign">
+                <form action="LoginServlet.do" method="post" class="sign">
                     <h1>登录</h1>
                     <input type="text" name="utel" placeholder="手机号">
                     <input type="password"  name="upsw" placeholder="密码">
-                    <a href="jsp_admin/login.jsp">管理员登录</a>
+                    <a href="jsp_admin/admin_login.jsp">管理员登录</a>
                     <button>登录</button>
                 </form>
             </div>
