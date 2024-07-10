@@ -1,3 +1,11 @@
+window.onload = function() {
+	var img = document.getElementById("checkinput");
+	img.onclick = function() {
+		var date = new Date().getTime();
+		img.src = "CheckCodeServlet?" + date;
+	}
+}
+
 $(function (){
 	
     $("#signUp").click(function() {
