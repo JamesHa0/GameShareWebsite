@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="../css/admin_query.css">
 </head>
 <body>
-	<form action="../QueryStudentServlet" method="post">
+	<form action="..//QueryUserServlet.do" method="post">
 		请输入该用户的id、手机号或邮箱：（填写一项即可） <br>
 		<select name="select" onchange="changeNameOfInput(this)"><!-- this指此select元素 -->
             <option value="1" selected="selected">id</option>

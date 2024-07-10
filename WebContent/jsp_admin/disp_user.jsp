@@ -29,6 +29,6 @@
 			<td>${user.uaddress }</td>
 		</tr>
 	</table>
-	<a href="admin.jsp">回主页</a>
+	<a href="jsp_admin/admin_query.jsp">返回</a>
 </body>
 </html>

@@ -42,11 +42,13 @@ public class QueryUserServlet extends HttpServlet {
 			
 			if(user==null) {
 				System.out.println("!见鬼：servlet：query:user=空。");
+			}else {
+				System.out.println("QueryUserServlet:成功获取user。");
 			}
 			
 			//装载：
 			request.setAttribute("user", user);
-			request.getRequestDispatcher("jsp/disp_user.jsp").include(request, response);
+			request.getRequestDispatcher("jsp_admin/disp_user.jsp").forward(request, response);
 		} catch (Exception e) {
 			System.out.println("!Servlet：query:User查询报错。");
 		}

@@ -38,7 +38,7 @@
         <h2>Login Page</h2>
     </div>
     <form class="InputAndButton" action="../AdminServlet.do" method="post">
-        <label for="utel">学号：</label>
+        <label for="utel">用户名：</label>
         <input type="text" id="utel" name="utel" 
         	value="${param.UserName}" required>
 
