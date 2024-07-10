@@ -43,8 +43,14 @@
                 <form action="LoginServlet.do" method="post" class="sign">
                     <h1>登录</h1>
                     <input type="text" name="utel" placeholder="手机号">
+                    
                     <input type="password"  name="upsw" placeholder="密码">
+                    
+                    <input name="checkinput" placeholder="点击下方图片刷新" value="" class="checkinput">
+					<img id="checkinput" src="CheckCodeServlet" />
+                    
                     <a href="jsp_admin/admin_login.jsp">管理员登录</a>
+                    
                     <button>登录</button>
                 </form>
             </div>
