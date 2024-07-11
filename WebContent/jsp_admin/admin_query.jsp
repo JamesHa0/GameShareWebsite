@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>查询页面</title>
-<link rel="stylesheet" type="text/css" href="css/admin_query.css">
+<link rel="stylesheet" type="text/css" href="../css/admin_query.css">
 </head>
 <body>
 	<form action="QueryUserServlet.do" method="post">

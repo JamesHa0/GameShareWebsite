@@ -39,6 +39,7 @@ public class AdminServlet extends HttpServlet {
 		
 System.out.println("login页面前端传递的参数："	//测试用
 		+ "\n	 utel:"+utel
+		+ "\n	 checkinput:"+checkinput
 		+ "\n	 upsw:"+upsw);
 		
 		// 检查验证码是否正确：
@@ -52,20 +53,20 @@ System.out.println("login页面前端传递的参数："	//测试用
 			// 验证码正确，检查用户是否存在：
 			try {
 				UserDaoImpl userdao=new UserDaoImpl();
-				User user_test=userdao.queryUserByUtel(utel);
-				if(user_test == null) {//用户不存在
+				User user=userdao.queryUserByUtel(utel);
+				if(user == null) {//用户不存在
 					request.setAttribute("msg", "您尚未注册。");
 					request.setAttribute("path", "jsp_admin/admin_login.jsp");
 					request.getRequestDispatcher("error.jsp").forward(request, response);
 				}else {
 					//用户存在，检查角色是否为管理员：
-					if(!("admin".equals(user_test.getUrole())) ) {//不是管理员
+					if(!("admin".equals(user.getUrole())) ) {//不是管理员
 						request.setAttribute("msg", "请使用管理员账号登录。");
 						request.setAttribute("path", "jsp_admin/admin_login.jsp");
 						request.getRequestDispatcher("error.jsp").forward(request, response);
 					}else {
 						//是管理员，检查密码是否正确：
-						String psw=user_test.getUpsw();//数据库中MD5加密的密码
+						String psw=user.getUpsw();//数据库中MD5加密的密码
 						System.out.println("用户输入密码：\t"+upsw+"\n应输入的密码：\t"+psw);
 						if(!upsw.equals(psw)){//密码错误
 							request.setAttribute("msg", "密码错误。");
@@ -73,13 +74,11 @@ System.out.println("login页面前端传递的参数："	//测试用
 							request.getRequestDispatcher("error.jsp").forward(request, response);
 						}else {
 								//密码正确，登录成功：
-								//**************************把uid和user对象存入session：***********************************************************
-								String uid=user_test.getUid();
-								session.setAttribute("uid", uid);
-								session.setAttribute("user", user_test);
+								String uid=user.getUid();
 								System.out.println("登录成功。");
-								session.setAttribute("uid", uid);//session标记为登录状态，记录登录用户名
-								response.sendRedirect("jsp_admin/admin_login.jsp");
+								session.setAttribute("uid", uid);//session标记为登录状态，把uid和user对象存入session：***********************************************************
+								session.setAttribute("user", user);
+								response.sendRedirect("jsp_admin/admin.jsp");
 						}
 					}
 				}

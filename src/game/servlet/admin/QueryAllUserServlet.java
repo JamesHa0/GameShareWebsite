@@ -21,17 +21,24 @@ public class QueryAllUserServlet extends HttpServlet {
 			throws ServletException, IOException {
 		UserDaoImpl userdao=new UserDaoImpl();
 		
+		String path=(String) request.getAttribute("path");
+		System.out.println("path="+path);
+		
 		try {
 			List<User> li =userdao.queryAllUser();
 			if(li.isEmpty()) {
 				System.out.println("!servlet-queryAll:li是空的。");
+				response.setStatus(400);
+				return;
 			}else {
 				System.out.println("servlet-queryAll:li成功获取数据。");
 			}
 			request.setAttribute("allUsers", li);
-			request.getRequestDispatcher("jsp_admin/disp_allUsers.jsp").forward(request, response);
+			response.setStatus(200);//200
+			request.getRequestDispatcher("jsp_admin/"+path).forward(request, response);
 		} catch (Exception e) {
 			System.out.println("!servlet:queryAllUser报错。");
+			response.setStatus(500);
 		}
 		
 		

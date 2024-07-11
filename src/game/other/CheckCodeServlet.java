@@ -30,7 +30,7 @@ public class CheckCodeServlet extends HttpServlet {
 		g.fillRect(0, 0, width, height);
 		g.setColor(Color.BLUE);
 		g.drawRect(0, 0, width - 1, height - 1);
-		String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+		String str = "1234567890";//ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 		Random ran = new Random();
 		String str1 = "";
 		for (int i = 1; i <= 4; i++) {
