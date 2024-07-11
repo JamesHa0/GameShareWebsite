@@ -25,10 +25,10 @@ public class DetailServlet extends HttpServlet {
 		}
 		if(game==null) {
 			request.setAttribute("msg", "gamenotfound");
-			request.getRequestDispatcher("game/detail.jsp").forward(request, response);
+			request.getRequestDispatcher("detail.jsp").forward(request, response);
 		}
 		request.setAttribute("game", game);
-		request.getRequestDispatcher("game/detail.jsp").forward(request, response);
+		request.getRequestDispatcher("detail.jsp").forward(request, response);
 		
 		
 	}
