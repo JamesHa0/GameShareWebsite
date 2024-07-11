@@ -5,17 +5,16 @@
 <head>
 <meta charset="UTF-8">
 <title>查询页面</title>
-<link rel="stylesheet" type="text/css" href="../css/admin_query.css">
+<link rel="stylesheet" type="text/css" href="css/admin_query.css">
 </head>
 <body>
 	<form action="QueryUserServlet.do" method="post">
-		请输入该用户的id、手机号或邮箱：（填写一项即可） <br>
 		<select name="select" onchange="changeNameOfInput(this)"><!-- this指此select元素 -->
-            <option value="1" selected="selected">id</option>
+            <option value="1" selected="selected" >id</option>
             <option value="2">手机号</option>
             <option value="3">邮箱</option>
         </select>
-        <input name="uid" id="val">
+        <input name="uid" id="admin_query_jsp_input" placeholder="请输入待查询用户的id、手机号或邮箱：（填写一项即可）">
         
 		<script>
         function changeNameOfInput(select) {
@@ -30,7 +29,7 @@
         }
     	</script>
 		
-		<input type="submit" value="提交">
+		<input class="querySubmit" type="submit" value="提交" >
 	</form>
 </body>
 </html>

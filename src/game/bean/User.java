@@ -31,36 +31,7 @@ public class User {
 		super();
 	}
 	
-	public User(String uid, String uname, String utel, String uemail, String urole, String ugender, String uaddress,
-			String upsw) {
-		super();
-		this.uid = uid;
-		this.uname = uname;
-		this.utel = utel;
-		this.uemail = uemail;
-		this.urole = urole;
-		this.ugender = ugender;
-		this.uaddress = uaddress;
-		this.upsw = upsw;
-	}
-	
-	//不带uid参数：（用于数据库自增）
-	public User(String uname, String utel, String uemail, String urole, String ugender, String uaddress,
-			String upsw) {
-		super();
-		this.uname = uname;
-		this.utel = utel;
-		this.uemail = uemail;
-		this.urole = urole;
-		this.ugender = ugender;
-		this.uaddress = uaddress;
-		this.upsw = upsw;
-	}
-	
-	
-	
-	
-	//全9字段，用于更新页面
+	//9参（queryAllservlet）
 	public User(String uid, String uname, String utel, String uemail, String urole, String ugender, String uaddress,
 			String upsw, String upoint) {
 		super();
@@ -73,6 +44,47 @@ public class User {
 		this.uaddress = uaddress;
 		this.upsw = upsw;
 		this.upoint = upoint;
+	}
+
+
+	//8参，除upoint
+	public User(String uid, String uname, String utel, String uemail, String urole, String ugender, String uaddress,
+			String upsw) {
+		super();
+		this.uid = uid;
+		this.uname = uname;
+		this.utel = utel;
+		this.uemail = uemail;
+		this.urole = urole;
+		this.ugender = ugender;
+		this.uaddress = uaddress;
+		this.upsw = upsw;	//8
+	}
+	
+	//7参，除uid,upoint
+	public User(String uname, String utel, String uemail, String urole, String ugender, String uaddress,
+			String upsw) {
+		super();
+		this.uname = uname;
+		this.utel = utel;
+		this.uemail = uemail;
+		this.urole = urole;
+		this.ugender = ugender;
+		this.uaddress = uaddress;
+		this.upsw = upsw;	//7
+	}
+	
+	
+	
+	//6参,除uid,upoint,urole -管理员插入数据时调用：
+	public User(String uname, String utel, String uemail, String ugender, String uaddress, String upsw) {
+		super();
+		this.uname = uname;
+		this.utel = utel;
+		this.uemail = uemail;
+		this.ugender = ugender;
+		this.uaddress = uaddress;
+		this.upsw = upsw;	//6
 	}
 
 	public String getUid() {

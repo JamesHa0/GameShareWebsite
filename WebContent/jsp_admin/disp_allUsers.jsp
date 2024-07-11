@@ -12,7 +12,7 @@
   <script type="text/javascript" src="js/jquery-3.6.0.js"></script>
   <script type="text/javascript" src="js/disp_allUsers.js"></script>
   <style>
-  .editing { 
+  table input{ 
      border: none; 
      padding: 0; 
      height:30px; 
@@ -21,6 +21,9 @@
      font-family: Arial, sans-serif;  
      font-size: 16px; 
    } 
+   .hidden{
+   		display:none;
+   }
    .read-only {
   		cursor: not-allowed;
 	}
@@ -31,6 +34,7 @@
 
 <body>
 	
+	<button id="addBtn" onclick="addBtn(this)">增添记录</button>
 	
 	
   <table border="" style="border-collapse: collapse; border: 1px solid black;">
@@ -48,8 +52,21 @@
       <th>修改操作</th>
     </tr>
     
-	
-	
+    <!-- 增添栏 -->
+    <tr class="hidden" id="addRow">
+	  <th>——</th>   
+      <th><input class="hidden" name="uname" 	>	</th>       
+      <th><input class="hidden" name="utel"  	required>	</th>        
+      <th><input class="hidden" name="uemail" >	</th>      
+      <th>——</th>       
+      <th><input class="hidden" name="ugender">	</th>  
+      <th><input class="hidden" name="uaddress">	</th>  
+      <th><input class="hidden" name="upsw"  type="password" maxlengh="18" 	required >	</th>        
+      <th>——</th>
+      <th>——</th>
+      <th>——</th>
+	</tr>
+    	
     <c:forEach items="${allUsers}" var="user">
       <tr>
         <td><input class="editing" readonly name="uid"  		value="${user.uid}"    ></td>
@@ -59,7 +76,7 @@
         <td><input class="editing" readonly name="urole"  	value="${user.urole}"  ></td>
         <td><input class="editing" readonly name="ugender"  	value="${user.ugender}" ></td>   
         <td><input class="editing" readonly name="uaddress" 	value="${user.uaddress}"></td> 
-        <td><input class="editing" readonly name="upsw"  	value="${user.upsw}"  ></td> 
+        <td><input class="editing" readonly name="upsw"  	value="${user.upsw}"  type="password"></td> 
         <td><input class="editing" readonly name="upoint"  	value="${user.upoint}" 	></td>
         <td>  <button class="updateBtn" onclick="enableEditing(this.parentNode.parentNode)">修改</button></td>
         <td>  <button class="deleteBtn" onclick="confirmDelete('${user.uid}')">删除</button></td>

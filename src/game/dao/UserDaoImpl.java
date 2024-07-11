@@ -173,15 +173,14 @@ public class UserDaoImpl implements UserDao{
 
         try {
             conn = getConnection();
-            String sql = "INSERT INTO userinfo(uname, utel, uemail, urole, ugender, uaddress ,upsw) VALUES (?, ?, ?, ?, ?, ?, ?)"; 	//注意这里不填uid和upoint
+            String sql = "INSERT INTO userinfo(uname, utel, uemail, ugender, uaddress ,upsw) VALUES (?, ?, ?, ?, ?, ?)"; 	//注意这里不填uid、urole和upoint，合计6条数据
             ps = conn.prepareStatement(sql);
             ps.setString(1, user.getUname());
             ps.setString(2, user.getUtel());
             ps.setString(3, user.getUemail());
-            ps.setString(4, user.getUrole());
-            ps.setString(5, user.getUgender());
-            ps.setString(6, user.getUaddress());
-            ps.setString(7, user.getUpsw());
+            ps.setString(4, user.getUgender());
+            ps.setString(5, user.getUaddress());
+            ps.setString(6, user.getUpsw());
 
             affectedRows = ps.executeUpdate();
         }catch (Exception e) {

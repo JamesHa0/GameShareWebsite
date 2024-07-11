@@ -26,8 +26,6 @@
 </head>
 <body>
 	
-	<table border="" style="border-collapse: collapse; border: 1px solid black;">
-		
 		<tr>
 			<th>id2</th>
 			<th>昵称</th>

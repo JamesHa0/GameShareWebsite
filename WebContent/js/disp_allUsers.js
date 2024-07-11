@@ -1,12 +1,72 @@
-/*function confirmDelete_备用(uid) {
-        var result = confirm("是否删除？");
-        if (result) {
-            console.log("x?uid="+uid);
-            window.location.href = "x?uid="+uid;//携带uid参数 
+//**********************************************************************
+//**********************************************************************
+//**********************************************************************
+//**********************************************************************
+//**********************************************************************
+//****************************************【增添记录】模块： */
+//****************************************【增添记录】模块： */
+//****************************************【增添记录】模块： */
+function addBtn(button){
+	//取消hidden：（包括tr和input）
+	var tr_and_inputs=Array.from(document.getElementsByClassName('hidden')) ;
+	tr_and_inputs.forEach(function(input) {
+        input.classList.remove('hidden')
+    });
+    //改变按钮：
+      button.innerHTML = '提交'; //改为提交按钮
+      button.setAttribute('onclick', 'submitAdds()');//修改点击函数
+}
+
+//点击【提交按钮】触发该函数：
+function submitAdds() {
+console.log('点击了提交按钮。');
+	var row=document.getElementById("addRow");
+    var inputs = row.querySelectorAll('input');
+    var data = new URLSearchParams();
+    inputs.forEach(function(input) {
+        data.append(input.name, input.value);
+    });
+    fetch('InsertUserServlet.do', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded' 
+        },
+        body: data 
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('网络响应错误');
         }
-    }
-*/
-//************************************添加【只读禁止光标】（初始化）： */
+        return response.text();
+    })
+    .then(result => {
+        console.log('服务器发来的响应数据：', result);
+    })
+    .catch(error => {
+        console.error('请求失败：', error);
+        alert('请求失败：' + error.message);
+    })
+    .finally(()=>{
+        // 重置【修改按钮】
+        var button =document.getElementById("addBtn");
+        button.innerText = '修改';
+        button.onclick = function() { addBtn(row); };
+	});
+}
+
+
+
+
+
+//**********************************************************************
+//**********************************************************************
+//**********************************************************************
+//**********************************************************************
+//************************************【修改记录】模块：
+//************************************【修改记录】模块：
+//************************************【修改记录】模块：
+//***添加【只读禁止光标】（初始化）： */
+
 window.onload=function readonly_cursor(){
     // 获取所有具有 readonly 属性的 input 元素
     var readonlyInputs = document.querySelectorAll('input[readonly]');
@@ -41,16 +101,6 @@ window.onload=function readonly_cursor(){
 //}
 
 
-
-//*************************************************【修改按钮】模块：  
-
-//function enableEditing(cell) {//点击按钮后，取消只读
-//    var inputs = cell.getElementsByClassName('editing');
-//    for (var i = 0; i < inputs.length; i++) {
-//        inputs[i].removeAttribute('readonly');
-//        inputs[i].focus();
-//    }
-//}
 
 //点击【修改按钮】触发该函数：
 function enableEditing(row) {//row=td,td子节点为input
@@ -131,8 +181,13 @@ console.log('点击了提交按钮。');
 
 
 
-    
-//********************************************************【删除按钮】模块： */    
+
+//**********************************************************************
+//**********************************************************************
+//**********************************************************************
+//***************************************【删除按钮】模块： */    
+//***************************************【删除按钮】模块： */    
+//***************************************【删除按钮】模块： */    
     
     function confirmDelete(uid) {
         var isDelete = confirm("您确定要删除吗？");

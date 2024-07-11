@@ -1,7 +1,6 @@
 package game.servlet.admin;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.ServletException;
