@@ -61,7 +61,7 @@
       <th>——</th>       
       <th><input class="hidden" name="ugender">	</th>  
       <th><input class="hidden" name="uaddress">	</th>  
-      <th><input class="hidden" name="upsw"  type="password" maxlengh="18" 	required >	</th>        
+      <th><input class="hidden" name="upsw"  type="password" maxlength="18" 	required >	</th>        
       <th>——</th>
       <th>——</th>
       <th>——</th>

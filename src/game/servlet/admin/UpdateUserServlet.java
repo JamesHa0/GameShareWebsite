@@ -31,11 +31,11 @@ public class UpdateUserServlet extends HttpServlet {
         String uname = request.getParameter("uname");
         String utel = request.getParameter("utel");
         String uemail = request.getParameter("uemail");
-        String urole = request.getParameter("urole");
+        String urole = request.getParameter("urole_"+uid);
         String ugender = request.getParameter("ugender");
         String uaddress = request.getParameter("uaddress");
         String upsw = request.getParameter("upsw");
-        String upoint = request.getParameter("upoint");
+        String upoint = request.getParameter("upoint");	//9
         
 User tmp=new User(uid, uname, utel, uemail, urole, ugender, uaddress, upsw, upoint);
 System.out.println(tmp);
@@ -52,12 +52,14 @@ System.out.println(tmp);
         try {
             int updateResult = daoImp.updateUserByUid(user); 
             if(updateResult<=0) {
+            	System.out.println("!插入失败。");
             	response.setStatus(500);//500了
             } else {
             	response.setStatus(200);//200万岁
             }
         } catch (Exception e) {
-            System.out.println("Servlet:update时报错。");
+            System.out.println("!Servlet:update时报错。");
+            response.setStatus(500);
             e.printStackTrace();
         }
     }

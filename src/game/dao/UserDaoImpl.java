@@ -207,9 +207,11 @@ public class UserDaoImpl implements UserDao{
             ps.setString(1, user.getUname());
             ps.setString(2, user.getUtel());
             ps.setString(3, user.getUemail());
+            
             ps.setString(4, user.getUrole());
             ps.setString(5, user.getUgender());
             ps.setString(6, user.getUaddress());
+            
             ps.setString(7, user.getUpsw());
             ps.setString(8, user.getUpoint());
             ps.setString(9, user.getUid());
