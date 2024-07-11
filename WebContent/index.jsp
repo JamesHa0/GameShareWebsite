@@ -55,19 +55,19 @@
 			<div class="picture-area">
 				<ul id="item">
 					<li class="item">
-						<a href=""><img src="images/game/2077/1.jpg" ></a>
+						<img src="images/game/1091500/1.jpg" >
 					</li>
 					<li class="item">
-						<a href=""><img src="images/game/BG/1.jpg" ></a>
+						<img src="images/game/1086940/1.jpg" >
 					</li>
 					<li class="item">
-						<a href=""><img src="images/game/elden/1.jpg" ></a>
+						<img src="images/game/1245620/1.jpg" >
 					</li>
 					<li class="item">
-						<a href=""><img src="images/game/redemption/1.jpg" ></a>
+						<img src="images/game/1174180/1.jpg" >
 					</li>
 					<li class="item">
-						<a href="DetailServlet?gid=100"><img src="images/game/wukong/1.jpg" ></a>
+						<img src="images/game/2358720/1.jpg" >
 					</li>
 				</ul>
 			</div>
@@ -86,29 +86,29 @@
 				<h2 class="title">&emsp;本站游戏</h2>
 				<div class="content_pohot">
 					<ul>
-						<li class="game_tu"><a href="./detail.do?id=phone01">
+						<li class="game_tu"><a href="DetailServlet?gid=phone01">
 								<div class="ph">
-									<img src="images/game/Horizon/1.png">
+									<img src="images/gameNotFound.png">
 								</div>
 								<div class="na">待定</div>
 						</a></li>
 
-						<li class="game_tu"><a href="./detail.do?id=phone02">
+						<li class="game_tu"><a href="DetailServlet?gid=phone02">
 								<div class="ph">
-									<img src="images/game/elden/1.jpg">
+									<img src="images/gameNotFound.png">
 								</div>
 								<div class="na">待定</div>
 						</a></li>
 
-						<li class="game_tu"><a href="./detail.do?id=phone03">
+						<li class="game_tu"><a href="DetailServlet?gid=phone03">
 								<div class="ph">
-									<img src="images/game/palworld/1.jpg">
+									<img src="images/gameNotFound.png">
 								</div>
 								<div class="na">待定</div>
 						</a></li>
-						<li class="game_tu"><a href="./detail.do?id=phone04">
+						<li class="game_tu"><a href="DetailServlet?gid=phone04">
 								<div class="ph">
-									<img src="images/game/wukong/1.jpg">
+									<img src="images/gameNotFound.png">
 								</div>
 								<div class="na">待定</div>
 						</a></li>
@@ -119,29 +119,29 @@
 				<h2 class="title">&emsp;近期推荐</h2>
 				<div class="content_pohot">
 					<ul>
-						<li class="game_tu"><a href="./detail.do?id=phone01">
+						<li class="game_tu"><a href="DetailServlet?gid=2420110">
 								<div class="ph">
-									<img src="images/game/Horizon/1.png">
+									<img src="images/game/2420110/1.jpg">
 								</div>
 								<div class="na">地平线：西之绝境</div>
 						</a></li>
 
-						<li class="game_tu"><a href="./detail.do?id=phone02">
+						<li class="game_tu"><a href="DetailServlet?gid=1245620">
 								<div class="ph">
-									<img src="images/game/elden/1.jpg">
+									<img src="images/game/1245620/1.jpg">
 								</div>
 								<div class="na">艾尔登法环</div>
 						</a></li>
 
-						<li class="game_tu"><a href="./detail.do?id=phone03">
+						<li class="game_tu"><a href="DetailServlet?gid=1623730">
 								<div class="ph">
-									<img src="images/game/palworld/1.jpg">
+									<img src="images/game/1623730/1.jpg">
 								</div>
 								<div class="na">幻兽帕鲁</div>
 						</a></li>
-						<li class="game_tu"><a href="./detail.do?id=phone04">
+						<li class="game_tu"><a href="DetailServlet?gid=2358720">
 								<div class="ph">
-									<img src="images/game/wukong/1.jpg">
+									<img src="images/game/2358720/1.jpg">
 								</div>
 								<div class="na">黑神话：悟空</div>
 						</a></li>
@@ -152,28 +152,28 @@
 				<h2 class="title">&emsp;高分神作</h2>
 				<div class="content_pohot">
 					<ul>
-						<li class="game_tu"><a href="./detail.do?id=com01">
+						<li class="game_tu"><a href="DetailServlet?gid=205100">
 								<div class="ph">
-									<img src="images/game/dishonored/1.jpg">
+									<img src="images/game/205100/1.jpg">
 								</div>
 								<div class="na">耻辱系列</div>
 						</a></li>
-						<li class="game_tu"><a href="./detail.do?id=com02">
+						<li class="game_tu"><a href="DetailServlet?gid=413410">
 								<div class="ph">
-									<img src="images/game/danganronpa/1.jpg">
+									<img src="images/game/413410/1.jpg">
 								</div>
 								<div class="na">弹丸论破系列</div>
 						</a></li>
-						<li class="game_tu"><a href="./detail.do?id=com03">
+						<li class="game_tu"><a href="DetailServlet?gid=49520">
 								<div class="ph">
 									<img
-										src="images/game/borderlands2/1.jpg">
+										src="images/game/49520/1.jpg">
 								</div>
 								<div class="na">无主之地2</div>
 						</a></li>
-						<li class="game_tu"><a href="./detail.do?id=com04">
+						<li class="game_tu"><a href="DetailServlet?gid=268050">
 								<div class="ph">
-									<img src="images/game/evilwithin/1.jpg">
+									<img src="images/game/268050/1.jpg">
 								</div>
 								<div class="na">恶灵附身</div>
 						</a></li>

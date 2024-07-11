@@ -1,18 +1,13 @@
 package game.servlet.user;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.jmx.snmp.SnmpStringFixed;
-
 import game.bean.Game;
-import game.dao.GameDao;
 import game.dao.GameDaoImpl;
 
 @WebServlet("/DetailServlet")

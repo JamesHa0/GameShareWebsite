@@ -11,13 +11,14 @@ public class Game {
 	private String grelease_date;
 	private String gdescription;
 	private String gzhname;
+	private String gtag;
 	
 	public Game() {
 		super();
 	}
 
 	public Game(String gid, String gname, String gprice, String gdeveloper, String gpublisher, String grelease_date,
-			String gdescription, String gzhname) {
+			String gdescription, String gzhname, String gtag) {
 		super();
 		this.gid = gid;
 		this.gname = gname;
@@ -27,7 +28,10 @@ public class Game {
 		this.grelease_date = grelease_date;
 		this.gdescription = gdescription;
 		this.gzhname = gzhname;
+		this.gtag = gtag;
 	}
+
+
 
 
 	public String getGid() {
@@ -79,6 +83,14 @@ public class Game {
 
 	public void setGzhname(String gzhname) {
 		this.gzhname = gzhname;
+	}
+
+	public String getGtag() {
+		return gtag;
+	}
+
+	public void setGtag(String gtag) {
+		this.gtag = gtag;
 	}
 	
 	
