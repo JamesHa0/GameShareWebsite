@@ -1,3 +1,4 @@
+<%@page import="sun.security.util.Length"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="game.bean.Game" %>
 <html>
@@ -38,11 +39,18 @@
 		<img src="images/game/${game.gid }/1.jpg"/>
 		<table border="0">
 			<tr><td>游戏名：</td><td>${game.gname}</td></tr>
+			<tr><td>游戏类型：</td><td>${game.gtag}</td></tr>
 			<tr><td>价格：</td><td>${game.gprice}RMB</td></tr>
 			<tr><td>制造商：</td><td>${game.gdeveloper }</td></tr>
 			<tr><td>发行商：</td><td>${game.gpublisher }</td></tr>
-			<tr><td>游戏发行日期：</td><td>${game.grelease_date }</td></tr>
+			<tr><td>发行日期：</td><td>${game.grelease_date }</td></tr>
+			<% 	Game game = (Game)request.getAttribute("game");
+				String gid=game.getGid();
+				if (gid.length() < 9 ){ %>
 			<tr><td>在steam上购买：</td><td><div id="steam"><a href="https://store.steampowered.com/app/${game.gid }"><img  src="images/steam.png"/></a></div></td></tr>
+			<% }else{%>
+			<tr><td>使用积分兑换：</td><td><div id="steam"><a href=#"><img  src="images/steam.png"/></a></div></td></tr>
+			<% }%>
 		</table>
 	</div>
 	<div class="gdescription">
