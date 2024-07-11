@@ -72,7 +72,9 @@ System.out.println("登录页传来的数据为：\n电话："+utel
 					}else {//密码正确
 						System.out.println("登录成功。");
 						String uid=user.getUid();
-						session.setAttribute("Login_uid", uid);//session标记为登录状态，记录登录用户名和user对象***********************************
+						String uname=user.getUname();
+						session.setAttribute("Login_uname", uname);//session标记为登录状态，记录登录用户名和user对象***********************************
+						session.setAttribute("Login_uid", uid);
 						session.setAttribute("Login_user", user);
 						response.sendRedirect("index.jsp");
 					}

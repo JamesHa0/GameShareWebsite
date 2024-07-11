@@ -8,9 +8,6 @@
 <script src="js/front_page.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-	<%
-		String user_id = request.getParameter("user_id");
-	%>
 	<div class="head">
 		<div class="head_zi">
 			<div class="huan">
@@ -21,24 +18,23 @@
 			</div>
 			<div class="login">
 				<%
-					String userName = (String)session.getAttribute("uname");
+					String userName = (String)session.getAttribute("Login_uname");
 					if(userName == null){
 				%>
-				<div>
+				<div class="login2">
 					<a href="LR.jsp">登录&注册</a>
 				</div>
 				<%
 					} else {
 				%>
-				<div>
-					<p>欢迎您，${sessionScope.uname}</p>
+				<div class="ulogin">
+					<p>欢迎您，${sessionScope.Login_uname}</p>
 				</div>
-				<div><a href="logout.jsp">登出</a></div>
+				<div class="login2"><a href="logout.jsp">登出</a></div>
 				<%
 					}
 				%>
 			</div>
-
 		</div>
 	</div>
 	<!--搜索框-->
@@ -86,11 +82,11 @@
 				<h2 class="title">&emsp;本站游戏</h2>
 				<div class="content_pohot">
 					<ul>
-						<li class="game_tu"><a href="DetailServlet?gid=phone01">
+						<li class="game_tu"><a href="DetailServlet?gid=100000001">
 								<div class="ph">
-									<img src="images/gameNotFound.png">
+									<img src="images/game/100000001/1.jpg">
 								</div>
-								<div class="na">待定</div>
+								<div class="na">植物大战僵尸</div>
 						</a></li>
 
 						<li class="game_tu"><a href="DetailServlet?gid=phone02">

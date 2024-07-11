@@ -21,10 +21,13 @@
     line-height: 45px;
     font-size: 15px;
 }
-.login div{
-    margin-right: 10px;
+.ulogin{
+	margin-right: 10px;
+    width: 200px;
+    text-align: center;
 }
-.login div{
+.login2{
+    margin-right: 10px;
     width: 100px;
     text-align: center;
 }

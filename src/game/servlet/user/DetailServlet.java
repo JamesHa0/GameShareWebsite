@@ -6,8 +6,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.mysql.cj.Session;
 
 import game.bean.Game;
+import game.bean.User;
 import game.dao.GameDaoImpl;
 
 @WebServlet("/DetailServlet")
@@ -15,6 +19,12 @@ public class DetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		User user = new User();
+		user = (User)session.getAttribute("Login_user");
+		if (user==null) {
+			request.getRequestDispatcher("LR.jsp").forward(request, response);
+		}
 		String gid = request.getParameter("gid");
 		Game game = new Game();
 		GameDaoImpl GameImp = new GameDaoImpl();
