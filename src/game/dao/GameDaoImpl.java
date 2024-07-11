@@ -28,7 +28,13 @@ public class GameDaoImpl implements GameDao{
                 String gid = rs.getString("gid");
                 String gname = rs.getString("gname");
                 String gprice = rs.getString("gprice");
-                Game game = new Game(gid, gname, gprice);
+                String gdeveloper = rs.getString("gdeveloper");
+                String gpublisher = rs.getString("gpublisher");
+                String grelease_date = rs.getString("grelease_date");
+                String gdescription = rs.getString("gdescription");
+                String gzhname = rs.getString("gzhname");
+                
+                Game game = new Game(gid, gname, gprice, gdeveloper, gpublisher, grelease_date, gdescription, gzhname);
                 list.add(game);
             }
         } finally {
@@ -60,7 +66,12 @@ public class GameDaoImpl implements GameDao{
             if (rs.next()) {
                 String gname = rs.getString("gname");
                 String gprice = rs.getString("gprice");
-                game = new Game(gid, gname, gprice);
+                String gdeveloper = rs.getString("gdeveloper");
+                String gpublisher = rs.getString("gpublisher");
+                String grelease_date = rs.getString("grelease_date");
+                String gdescription = rs.getString("gdescription");
+                String gzhname = rs.getString("gzhname");
+                game = new Game(gid, gname, gprice, gdeveloper, gpublisher, grelease_date, gdescription, gzhname);
             }
         } finally {
             if (rs != null) rs.close();
@@ -88,7 +99,12 @@ public class GameDaoImpl implements GameDao{
             if (rs.next()) {
                 String gid = rs.getString("gid");
                 String gprice = rs.getString("gprice");
-                game = new Game(gid, gname, gprice);
+                String gdeveloper = rs.getString("gdeveloper");
+                String gpublisher = rs.getString("gpublisher");
+                String grelease_date = rs.getString("grelease_date");
+                String gdescription = rs.getString("gdescription");
+                String gzhname = rs.getString("gzhname");
+                game = new Game(gid, gname, gprice, gdeveloper, gpublisher, grelease_date, gdescription, gzhname);
             }
         } finally {
             if (rs != null) rs.close();
@@ -110,11 +126,16 @@ public class GameDaoImpl implements GameDao{
 
         try {
             conn = getConnection();
-            String sql = "insert into Game(gid,gname, gprice) values (?, ?, ?)";
+            String sql = "insert into Game(gid,gname,gprice,gdeveloper,gpublisher,grelease_date,gdescription,gzhname) values (?, ?, ?, ?, ?, ?, ?, ?)";
             ps = conn.prepareStatement(sql);
             ps.setString(1, game.getGid());
             ps.setString(2, game.getGname());
             ps.setString(3, game.getGprice());
+            ps.setString(4, game.getGdeveloper());
+            ps.setString(5, game.getGpublisher());
+            ps.setString(6, game.getGrelease_date());
+            ps.setString(7, game.getGdescription());
+            ps.setString(8, game.getGzhname());
             affectedRows = ps.executeUpdate();
         } finally {
             if (ps != null) ps.close();
@@ -133,11 +154,16 @@ public class GameDaoImpl implements GameDao{
 
         try {
             conn = getConnection();
-            String sql = "update Game set gname=?, gprice=? where gid=?";
+            String sql = "update Game set gname=?, gprice=?, gdeveloper=?, gpublisher=?, grelease_date=?, gdescription=?, gzhname where gid=?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, game.getGid());
             ps.setString(2, game.getGname());
             ps.setString(3, game.getGprice());
+            ps.setString(4, game.getGdeveloper());
+            ps.setString(5, game.getGpublisher());
+            ps.setString(6, game.getGrelease_date());
+            ps.setString(7, game.getGdescription());
+            ps.setString(8, game.getGzhname());
             affectedRows = ps.executeUpdate();
         } finally {
             if (ps != null) ps.close();
