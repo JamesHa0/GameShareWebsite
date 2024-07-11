@@ -12,6 +12,7 @@ urole
 ugender 
 uaddress
 upsw    
+upoint
 */
 
 public class User {
@@ -23,6 +24,7 @@ public class User {
 	private String ugender;
 	private String uaddress;
 	private String upsw;
+	private String upoint;
 	
 	
 	public User() {
@@ -53,6 +55,24 @@ public class User {
 		this.ugender = ugender;
 		this.uaddress = uaddress;
 		this.upsw = upsw;
+	}
+	
+	
+	
+	
+	//全9字段，用于更新页面
+	public User(String uid, String uname, String utel, String uemail, String urole, String ugender, String uaddress,
+			String upsw, String upoint) {
+		super();
+		this.uid = uid;
+		this.uname = uname;
+		this.utel = utel;
+		this.uemail = uemail;
+		this.urole = urole;
+		this.ugender = ugender;
+		this.uaddress = uaddress;
+		this.upsw = upsw;
+		this.upoint = upoint;
 	}
 
 	public String getUid() {
@@ -102,6 +122,20 @@ public class User {
 	}
 	public void setUpsw(String upsw) {
 		this.upsw = upsw;
+	}
+
+	public String getUpoint() {
+		return upoint;
+	}
+
+	public void setUpoint(String upoint) {
+		this.upoint = upoint;
+	}
+
+	@Override
+	public String toString() {
+		return "User [uid=" + uid + ", uname=" + uname + ", utel=" + utel + ", uemail=" + uemail + ", urole=" + urole
+				+ ", ugender=" + ugender + ", uaddress=" + uaddress + ", upsw=" + upsw + ", upoint=" + upoint + "]";
 	}
 	
 	

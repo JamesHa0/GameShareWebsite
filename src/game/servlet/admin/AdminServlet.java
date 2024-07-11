@@ -59,7 +59,7 @@ System.out.println("login页面前端传递的参数："	//测试用
 					request.getRequestDispatcher("error.jsp").forward(request, response);
 				}else {
 					//用户存在，检查角色是否为管理员：
-					if("user".equals(user_test.getUrole()) ) {//不是管理员
+					if(!("admin".equals(user_test.getUrole())) ) {//不是管理员
 						request.setAttribute("msg", "请使用管理员账号登录。");
 						request.setAttribute("path", "jsp_admin/admin_login.jsp");
 						request.getRequestDispatcher("error.jsp").forward(request, response);

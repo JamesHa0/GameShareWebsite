@@ -33,8 +33,10 @@ public class UserDaoImpl implements UserDao{
                 String urole = rs.getString("urole");
                 String ugender = rs.getString("ugender");
                 String uaddress = rs.getString("uaddress");
+                String upsw = rs.getString("upsw");
+                String upoint = rs.getString("upoint");
 
-                User user = new User(uid, uname, utel, uemail, urole, ugender, uaddress,null);	//注意这里密码填了null
+                User user = new User(uid, uname, utel, uemail, urole, ugender, uaddress,upsw,upoint);	
                 userList.add(user);
             }
         }catch (Exception e) {
@@ -71,8 +73,9 @@ public class UserDaoImpl implements UserDao{
                 String ugender = rs.getString("ugender");
                 String uaddress = rs.getString("uaddress");
                 String upsw = rs.getString("upsw");
+                String upoint = rs.getString("upoint");
 
-                user = new User(uid, uname, utel, uemail, urole, ugender, uaddress,upsw);
+                user = new User(uid, uname, utel, uemail, urole, ugender, uaddress,upsw,upoint);
             }
         }catch (Exception e) {
 			System.out.println("！userdaoimpl:查询 by uid");
@@ -106,8 +109,9 @@ public class UserDaoImpl implements UserDao{
                 String ugender = rs.getString("ugender");
                 String uaddress = rs.getString("uaddress");
                 String upsw = rs.getString("upsw");
+                String upoint = rs.getString("upoint");
 
-                user = new User(uid, uname, utel, uemail, urole, ugender, uaddress,upsw);
+                user = new User(uid, uname, utel, uemail, urole, ugender, uaddress,upsw,upoint);
             }
         }catch (Exception e) {
 			System.out.println("！userdaoimpl:查询 by utel");
@@ -141,8 +145,9 @@ public class UserDaoImpl implements UserDao{
                 String ugender = rs.getString("ugender");
                 String uaddress = rs.getString("uaddress");
                 String upsw = rs.getString("upsw");
+                String upoint = rs.getString("upoint");
 
-                user = new User(uid, uname, utel, uemail, urole, ugender, uaddress,upsw);
+                user = new User(uid, uname, utel, uemail, urole, ugender, uaddress,upsw,upoint);
             }
         }catch (Exception e) {
 			System.out.println("！userdaoimpl:查询 by uemail");
@@ -168,7 +173,7 @@ public class UserDaoImpl implements UserDao{
 
         try {
             conn = getConnection();
-            String sql = "INSERT INTO User(uname, utel, uemail, urole, ugender, uaddress ,upsw) VALUES (?, ?, ?, ?, ?, ?, ?)"; 	//注意这里不填uid
+            String sql = "INSERT INTO userinfo(uname, utel, uemail, urole, ugender, uaddress ,upsw) VALUES (?, ?, ?, ?, ?, ?, ?)"; 	//注意这里不填uid和upoint
             ps = conn.prepareStatement(sql);
             ps.setString(1, user.getUname());
             ps.setString(2, user.getUtel());
@@ -198,7 +203,7 @@ public class UserDaoImpl implements UserDao{
 
         try {
             conn = getConnection();
-            String sql = "UPDATE User SET uname=?, utel=?, uemail=?, urole=?, ugender=?, uaddress=?, upsw=? WHERE uid=?";
+            String sql = "UPDATE userinfo SET uname=?, utel=?, uemail=?, urole=?, ugender=?, uaddress=?, upsw=?, upoint=? WHERE uid=?";
             ps = conn.prepareStatement(sql);
             ps.setString(1, user.getUname());
             ps.setString(2, user.getUtel());
@@ -207,7 +212,8 @@ public class UserDaoImpl implements UserDao{
             ps.setString(5, user.getUgender());
             ps.setString(6, user.getUaddress());
             ps.setString(7, user.getUpsw());
-            ps.setString(8, user.getUid());
+            ps.setString(8, user.getUpoint());
+            ps.setString(9, user.getUid());
 
             affectedRows = ps.executeUpdate();
         }catch (Exception e) {

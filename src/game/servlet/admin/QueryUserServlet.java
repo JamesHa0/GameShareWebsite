@@ -1,6 +1,8 @@
 package game.servlet.admin;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,13 +33,14 @@ public class QueryUserServlet extends HttpServlet {
 		
 		
 		try {
-			User user=null;
+			UserDaoImpl userdao=new UserDaoImpl();
+			User user=new User();
 			if(uid!=null) {
-				user=new UserDaoImpl().queryUserByUid(uid);
+				user=userdao.queryUserByUid(uid);
 			}else if(utel !=null) {
-				user=new UserDaoImpl().queryUserByUtel(utel);
+				user=userdao.queryUserByUtel(utel);
 			}else if(uemail!=null) {
-				user=new UserDaoImpl().queryUserByUemail(uemail);
+				user=userdao.queryUserByUemail(uemail);
 			}
 			
 			if(user==null) {
@@ -47,8 +50,16 @@ public class QueryUserServlet extends HttpServlet {
 			}
 			
 			//装载：
-			request.setAttribute("user", user);
-			request.getRequestDispatcher("jsp_admin/disp_user.jsp").forward(request, response);
+			List<User> li = new ArrayList<User>();
+			li.add(user);
+			if (li == null || li.isEmpty()) {
+			    li = new ArrayList<>(); // 确保 li 不为空，避免 NullPointerException
+			    System.out.println("!servlet-query: li 是空的。");
+			} else {
+			    System.out.println("servlet-query: li 成功获取数据。");
+			}
+			request.setAttribute("allUsers", li);
+			request.getRequestDispatcher("jsp_admin/disp_allUsers.jsp").forward(request, response);
 		} catch (Exception e) {
 			System.out.println("!Servlet：query:User查询报错。");
 		}
