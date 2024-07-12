@@ -1,7 +1,5 @@
 package game.bean;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import game.dao.*;
@@ -35,7 +33,13 @@ public class UserLog implements Dao{
         this.logSuccess = success;
 
         // 保存日志到数据库
-        saveLogToDatabase(this);
+        UserLogDaoImpl logdao=new UserLogDaoImpl();
+        try {
+			logdao.saveLogToDatabase(this);
+		} catch (Exception e) {
+			System.out.println("500:UserLog");
+			e.printStackTrace();
+		}
     }
 
 	

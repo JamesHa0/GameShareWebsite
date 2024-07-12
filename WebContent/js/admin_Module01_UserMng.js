@@ -26,7 +26,7 @@ console.log('点击了提交按钮。');
     inputs.forEach(function(input) {
         data.append(input.name, input.value);
     });
-    fetch('InsertUserServlet.do', {
+    fetch('../InsertUserServlet.do', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded' 
@@ -35,7 +35,7 @@ console.log('点击了提交按钮。');
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('网络响应错误');
+            throw new Error('增添失败');
         }
         return response.text();
     })
@@ -131,39 +131,31 @@ console.log('点击了修改按钮。');
 function submitChanges(row) {
 console.log('点击了提交按钮。');
     // 【提交数据到服务器：（使用 fetch API）】
-//    var inputs = row.querySelectorAll('input');
-//    var formData = new FormData();
-//    inputs.forEach(function(input) {
-//        formData.append(input.name, input.value);
-//		input.classList.add('read-only');//取消光标css
-//    });
     var inputs = row.querySelectorAll('input');
     var data = new URLSearchParams(); // 使用 URLSearchParams 来构建键值对
     inputs.forEach(function(input) {
         data.append(input.name, input.value);
 		input.classList.add('read-only');//取消光标css
     });
+data.forEach(function(value, key) {
+    console.log(key + ': ' + value);
+});
     
-//    fetch('UpdateUserServlet.do', {
-//        method: 'POST',
-//        body: formData
-//    })
-    // 使用 fetch 发送数据
-    fetch('UpdateUserServlet.do', {
+    fetch('../UpdateUserServlet.do', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded' // 设置内容类型为 x-www-form-urlencoded
         },
         body: data // URLSearchParams 对象可以直接作为 body 发送
     })
-    .then(response => response.text()) // 或者 response.json() 如果服务器返回JSON
+    .then(response => response.text()) 
     .then(result => console.log(result))
     .then(data => {
         console.log('服务器发来的响应数据：', data);
         
     })
     .catch(error => {
-		alert('请求失败'+error);
+		alert('修改失败'+error);
     })
     .finally(()=>{
 		// 重置【input】为只读
@@ -193,13 +185,13 @@ console.log('点击了提交按钮。');
         var isDelete = confirm("您确定要删除吗？");
         if (isDelete) {
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "DeleteUserServlet.do?uid="+uid  , true);// 配置请求类型、URL及异步处理方式
+            xhr.open("GET", "../DeleteUserServlet.do?uid="+uid  , true);// 配置请求类型、URL及异步处理方式
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     alert('删除成功');
-                    window.location.href="QueryAllUserServlet.do";
+                    window.location.href="../QueryAllUserServlet.do?path=admin_Module01_UserMng.jsp";
                 } else {
-                    alert('操作失败');
+                    alert('删除失败');
                 }
             };
             xhr.send();

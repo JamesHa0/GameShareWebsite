@@ -14,11 +14,6 @@ window.onload=function readonly_cursor(){
     readonlyInputs.forEach(function(input) {
         input.classList.add('read-only');
     });
-    //radio禁止点击：
-    var allRadios = document.querySelectorAll('input[type="radio"]');
-	allRadios.forEach(function(radio) {
-        radio.disabled = true;
-    });
 }
 
 
@@ -26,11 +21,9 @@ window.onload=function readonly_cursor(){
 function enableEditing(row) {//row=td,td子节点为input
 console.log('点击了修改按钮。');
 	//【input】取消只读：
-     var radios=row.querySelectorAll('input[type="radio"]');
-      radios.forEach(function(radio) {
-		radio.disabled= false; // 取消只读
-		radio.classList.remove('read-only');//取消光标css
-    });
+     var upoint=(row.querySelectorAll('input[name="upoint"]'))[0];
+     upoint.readOnly=false;//取消只读
+	 upoint.classList.remove('read-only');//取消光标css
     //【提交按钮】改变：
       var button = row.getElementsByTagName('button')[0];
       button.innerHTML = '提交'; //改为提交按钮
@@ -41,32 +34,17 @@ console.log('点击了修改按钮。');
 function submitChanges(row) {
 console.log('点击了提交按钮。');
 //填data：
-    var inputs = row.querySelectorAll('input:not([type="radio"])');
-    var radios=row.querySelectorAll('input[type="radio"]');
-    var checkedRadio = null;
+    var inputs=row.querySelectorAll('input[class="editing"]');
     var data = new URLSearchParams(); 
     inputs.forEach(function(input) {
         data.append(input.name, input.value);
 		input.classList.add('read-only');//添加光标css
     });
-    radios.forEach(function(radio) {
-        if (radio.checked) {
-            checkedRadio = radio;
-        }
-    });
-console.log(checkedRadio+'='+checkedRadio.name+":"+checkedRadio.value);
-    if (checkedRadio) {
-        data.append(checkedRadio.name, checkedRadio.value);
-        checkedRadio.classList.add('read-only'); // 添加光标CSS样式
-    }
-//test:
 data.forEach(function(value, key) {
     console.log(key + ': ' + value);
 });
-    
-    
 //开始fetch：
-    fetch('UpdateUserServlet.do', {
+    fetch('../UpdateUserServlet.do', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded' 
@@ -92,3 +70,28 @@ data.forEach(function(value, key) {
         button.onclick = function() { enableEditing(row); };
 	});
 }
+//**********************************************************************
+//**********************************************************************
+//**********************************************************************
+//***************************************【删除按钮】模块： */    
+//***************************************【删除按钮】模块： */    
+//***************************************【删除按钮】模块： */    
+    
+    function confirmDelete(uid) {
+        var isDelete = confirm("您确定要删除吗？");
+        if (isDelete) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "DeleteUserServlet.do?uid="+uid  , true);// 配置请求类型、URL及异步处理方式
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    alert('删除成功');
+                    window.location.href="QueryAllUserServlet.do";
+                } else {
+                    alert('操作失败');
+                }
+            };
+            xhr.send();
+        }
+    }
+    
+    

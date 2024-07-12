@@ -21,7 +21,9 @@ public class QueryAllUserServlet extends HttpServlet {
 			throws ServletException, IOException {
 		UserDaoImpl userdao=new UserDaoImpl();
 		
+		String path_param=request.getParameter("path");
 		String path=(String) request.getAttribute("path");
+		if( path!=null &&path_param==null)path=path_param;
 		System.out.println("path="+path);
 		
 		try {

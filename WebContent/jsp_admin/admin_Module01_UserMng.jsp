@@ -8,8 +8,7 @@
 		String path="admin_Module01_UserMng.jsp";
 		request.setAttribute("path", path);
 		session.setAttribute("path", path);
-		System.out.println("test");
-		request.getRequestDispatcher("../QueryAllUserServlet.do?"+path).forward(request, response);
+		request.getRequestDispatcher("../QueryAllUserServlet.do?path="+path).forward(request, response);
 	}
 %>
 <!DOCTYPE html><html>

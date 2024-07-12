@@ -3,7 +3,6 @@ package game.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +41,7 @@ public class UserDaoImpl implements UserDao{
         }catch (Exception e) {
 			System.out.println("！userdaoimpl:查询All");
 		} finally {
-            closeResources(conn, ps, rs); // 关闭资源的方法
+            closeResources_for_query(conn, ps, rs); // 关闭资源的方法
         }
 
         return userList;
@@ -80,7 +79,7 @@ public class UserDaoImpl implements UserDao{
         }catch (Exception e) {
 			System.out.println("！userdaoimpl:查询 by uid");
 		} finally {
-            closeResources(conn, ps, rs);
+            closeResources_for_query(conn, ps, rs);
         }
 
         return user;
@@ -116,7 +115,7 @@ public class UserDaoImpl implements UserDao{
         }catch (Exception e) {
 			System.out.println("！userdaoimpl:查询 by utel");
 		} finally {
-            closeResources(conn, ps, rs);
+            closeResources_for_query(conn, ps, rs);
         }
 
         return user;
@@ -152,7 +151,7 @@ public class UserDaoImpl implements UserDao{
         }catch (Exception e) {
 			System.out.println("！userdaoimpl:查询 by uemail");
 		} finally {
-            closeResources(conn, ps, rs);
+            closeResources_for_query(conn, ps, rs);
         }
 
         return user;
@@ -186,8 +185,7 @@ public class UserDaoImpl implements UserDao{
         }catch (Exception e) {
 			System.out.println("！userdaoimpl:插入");
 		} finally {
-            if (ps != null) ps.close();
-            if (conn != null) conn.close();
+            closeResources_for_update(conn, ps);
         }
 
         return affectedRows;
@@ -220,8 +218,7 @@ public class UserDaoImpl implements UserDao{
         }catch (Exception e) {
 			System.out.println("！userdaoimpl:更新");
 		} finally {
-            if (ps != null) ps.close();
-            if (conn != null) conn.close();
+            closeResources_for_update(conn, ps);
         }
 
         return affectedRows;
@@ -243,23 +240,10 @@ public class UserDaoImpl implements UserDao{
         }catch (Exception e) {
 			System.out.println("！userdaoimpl:删除");
 		} finally {
-            if (ps != null) ps.close();
-            if (conn != null) conn.close();
+            closeResources_for_update(conn, ps);
         }
 
         return affectedRows;
-    }
-
-
-    // 关闭数据库资源
-    private void closeResources(Connection conn, PreparedStatement ps, ResultSet rs) {
-        try {
-            if (rs != null) rs.close();
-            if (ps != null) ps.close();
-            if (conn != null) conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace(); 
-        }
     }
     
 

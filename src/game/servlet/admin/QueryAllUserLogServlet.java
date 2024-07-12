@@ -8,9 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import game.bean.User;
 import game.bean.UserLog;
-import game.dao.UserDaoImpl;
+import game.dao.UserLogDaoImpl;
 
 @WebServlet("/QueryAllUserLogServlet.do")
 public class QueryAllUserLogServlet extends HttpServlet {
@@ -20,25 +19,25 @@ public class QueryAllUserLogServlet extends HttpServlet {
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		UserDaoImpl userdao=new UserDaoImpl();
+		UserLogDaoImpl logdao=new UserLogDaoImpl();
 		
 		String path=(String) request.getAttribute("path");
-		System.out.println("path="+path);
+System.out.println("path="+path);
 		
 		try {
-			List<UserLog> li =userdao.queryAllUser();
+			List<UserLog> li =logdao.queryAllUserLog();
 			if(li.isEmpty()) {
-				System.out.println("!servlet-queryAll:li是空的。");
+				System.out.println("!servlet-queryAlluserLogs:li是空的。");
 				response.setStatus(400);
 				return;
 			}else {
-				System.out.println("servlet-queryAll:li成功获取数据。");
+				System.out.println("servlet-queryAlluserLogs:li成功获取数据。");
 			}
-			request.setAttribute("allUsers", li);
+			request.setAttribute("allUserLogs", li);
 			response.setStatus(200);//200
 			request.getRequestDispatcher("jsp_admin/"+path).forward(request, response);
 		} catch (Exception e) {
-			System.out.println("!servlet:queryAllUser报错。");
+			System.out.println("!servlet:queryAlluserLogs报错。");
 			response.setStatus(500);
 		}
 		
