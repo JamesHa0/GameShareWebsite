@@ -7,7 +7,8 @@ import game.dao.*;
 
 //共7参
 public class UserLog implements Dao{
-    private String logId; // 日志id，通常由数据库自动生成
+
+	private String logId; // 日志id，通常由数据库自动生成
 
     private String logOperatorId; // 操作者id
     private String logOperatorName; // 操作者name
@@ -128,6 +129,14 @@ public class UserLog implements Dao{
 		this.logSuccess = logSuccess;
 	}
 	
-	
+    @Override
+	public String toString() {
+		return "UserLog [logId=" + logId + ", logOperatorId=" + logOperatorId + ", logOperatorName=" + logOperatorName
+				+ ", logOperatorRole=" + logOperatorRole + ", logTime=" + logTime + ", logDetails=" + logDetails
+				+ ", logSuccess=" + logSuccess + "]";
+	}
+
+
+
     
 }

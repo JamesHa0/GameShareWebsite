@@ -14,4 +14,7 @@ public interface UserLogDao extends Dao{
 
 	//插入到数据库
 	public int saveLogToDatabase(UserLog log)throws Exception;
+	
+	//删除单条
+	public int deleteUserLogByLogId(String logId)throws Exception;
 }

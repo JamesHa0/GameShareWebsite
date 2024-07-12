@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
@@ -19,7 +18,7 @@
   <meta charset="UTF-8">
   <title>日志显示页面</title>
   <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
-  <script type="text/javascript" src="../js/admin_Module01_UserMng.js"></script>
+  <script type="text/javascript" src="../js/admin_Module04_UserLog.js"></script>
   <style>
   table input{ 
      border: none; 
@@ -66,20 +65,6 @@
     </c:forEach>
   </table>
 
-  <!-- 添加JavaScript函数 -->
-  <script type="text/javascript">
-    function confirmDelete(logId) {
-      if (confirm("您确定要删除此日志吗？")) {
-        // 这里可以添加删除日志的逻辑，例如使用AJAX请求发送到服务器
-        console.log("删除日志ID: " + logId);
-      }
-    }
-
-    function addBtn(button) {
-      // 这里可以添加增添记录的逻辑
-      console.log("增添记录按钮被点击");
-    }
-  </script>
 </body>
 
 </html>

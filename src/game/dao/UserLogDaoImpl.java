@@ -25,10 +25,11 @@ public class UserLogDaoImpl implements UserLogDao {
                 UserLog log = new UserLog();
                 log.setLogId(rs.getString("logId"));
                 log.setLogOperatorId(rs.getString("logOperatorId"));
+                log.setLogOperatorName(rs.getString("logOperatorName"));
                 log.setLogOperatorRole(rs.getString("logOperatorRole"));
                 log.setLogTime(rs.getString("logTime"));
                 log.setLogDetails(rs.getString("logDetails"));
-                log.setLogSuccess(rs.getString("logSuccess"));
+                log.setLogSuccess(rs.getString("logSuccess")); //7
                 li.add(log);
             }
         } catch (SQLException e) {
@@ -145,4 +146,25 @@ public class UserLogDaoImpl implements UserLogDao {
         }
 		return affectedRows;
     }
+
+	@Override
+	public int deleteUserLogByLogId(String logId) throws Exception {
+		Connection conn = null;
+        PreparedStatement ps = null;
+        int affectedRows = 0;
+
+        try {
+            conn = getConnection();
+            String sql = "DELETE FROM userlog WHERE logId=?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, logId);
+            affectedRows = ps.executeUpdate();
+        }catch (Exception e) {
+			System.out.println("！500 imp-userlog-delete");
+		} finally {
+            closeResources_for_update(conn, ps);
+        }
+
+        return affectedRows;
+	}
 }

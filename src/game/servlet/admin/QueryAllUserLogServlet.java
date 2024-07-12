@@ -26,22 +26,26 @@ public class QueryAllUserLogServlet extends HttpServlet {
 		String path_param=request.getParameter("path");
 		String path=(String) session.getAttribute("path");//session中
 			if(path_param!=null) path=path_param;
-System.out.println("————path（日志查所有）="+path);
+			
+System.out.println("---path（日志全查）="+path);
 		
 		try {
 			List<UserLog> li =logdao.queryAllUserLog();
 			if(li.isEmpty()) {
-				System.out.println("!servlet-queryAlluserLogs:li是空的。");
+				System.out.println("[null] servlet-userLog-全查:li是空的。");
 				response.setStatus(400);
 				return;
 			}else {
-				System.out.println("servlet-queryAlluserLogs:li成功获取数据。");
+				System.out.println("√ servlet-userLog-全查:li成功获取数据。");
+//for(UserLog i:li) {
+//	System.out.println(i);
+//}
 			}
 			request.setAttribute("allUserLogs", li);
 			response.setStatus(200);//200
 			request.getRequestDispatcher("jsp_admin/"+path).forward(request, response);
 		} catch (Exception e) {
-			System.out.println("!servlet:queryAlluserLogs报错。");
+			System.out.println("!500 servlet-userLog-全查");
 			response.setStatus(500);
 		}
 		
