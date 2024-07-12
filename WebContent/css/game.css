@@ -1,207 +1,288 @@
 @charset "UTF-8";
-.head{
-    position: relative;
-    height: 45px;
-    background-color: #4d4343;
+
+.head {
+	position: relative;
+	height: 45px;
+	background-color: #4d4343;
 }
-.head_zi{
-    width: 1200px;
-    margin: 0px auto;
-    height: 45px;
+
+.head_zi {
+	width: 1200px;
+	margin: 0px auto;
+	height: 45px;
 }
-.huan a{
-    color: #FFFFFF;
-    margin-left: 20px;
-    float: left;
-    font-size: 22px;
-    font-weight: 600;
-    line-height: 45px;
+
+.huan a {
+	color: #FFFFFF;
+	margin-left: 20px;
+	float: left;
+	font-size: 22px;
+	font-weight: 600;
+	line-height: 45px;
 }
-.login{
-    display:flex;
-    float: right;
-    line-height: 45px;
-    font-size: 15px;
+
+.login {
+	display: flex;
+	float: right;
+	line-height: 45px;
+	font-size: 15px;
 }
-.ulogin{
+
+.ulogin {
 	margin-right: 10px;
-    width: 200px;
-    text-align: center;
-}
-.login2{
-    margin-right: 10px;
-    width: 100px;
-    text-align: center;
-}
-.login a{
-    color: #FFFFFF;
-}
-.login>div a:hover{
-    color:#f10215;
-}
-.info{
-    position: relative;
-    display: block;
-    float: right;
-    /*margin-right: 150px;*/
-    height: 45px;
-
-    background-color: #919198;
-    line-height: 45px;
-    /*text-align: center;*/
-}
-.info a{
-    display: block;
-    color: #ffffff;
-    font-size: 18px;
-}
-.info img{
-    display: block;
-    float: left;
-    margin-top: 8px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-.dowebok {
-    margin: 20px auto 0px;
-    background:#fff;
-    border-radius:20px;
-    box-shadow:0 14px 28px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.22);
-    position:relative;
-    overflow:hidden;
-    width:1000px;
-    max-width:100%;
-}
-
-
-.error{
+	width: 200px;
 	text-align: center;
 }
-.errorImg{
-	width:600px;
+
+.login2 {
+	margin-right: 10px;
+	width: 100px;
+	text-align: center;
+}
+
+.login a {
+	color: #FFFFFF;
+}
+
+.login>div a:hover {
+	color: #f10215;
+}
+
+.info {
+	position: relative;
+	display: block;
+	float: right;
+	/*margin-right: 150px;*/
+	height: 45px;
+	background-color: #919198;
+	line-height: 45px;
+	/*text-align: center;*/
+}
+
+.info a {
+	display: block;
+	color: #ffffff;
+	font-size: 18px;
+}
+
+.info img {
+	display: block;
+	float: left;
+	margin-top: 8px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.dowebok {
+	margin: 20px auto 0px;
+	background: #fff;
+	border-radius: 20px;
+	box-shadow: 0 14px 28px rgba(0, 0, 0, .25), 0 10px 10px
+		rgba(0, 0, 0, .22);
+	position: relative;
+	overflow: hidden;
+	width: 1000px;
+	max-width: 100%;
+	min-height: 500px;
+}
+
+.showPurchase {
+	padding: 50px;
+}
+
+.showPurchase table {
+	text-align: center;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.showPurchase table th {
+	font-size: 30px;
+	font-weight: bold;
+	margin: 50px 0;
+}
+
+.showPurchase table td {
+	height: 50px;
+}
+
+.backIndex {
+	color: #ffffff;
+	font-size: 18px;
+}
+
+.backDetail {
+	color: #ffffff;
+	font-size: 18px;
+}
+
+button {
+	background-color: #f66f6a;
+	color: white;
+	width: 200px;
+	height: 45px;
+	border: 0;
+	font-size: 16px;
+	box-sizing: content-box;
+	border-radius: 5px;
+}
+
+button:hover {
+	background-color: #a54b4a;
+}
+
+.error {
+	text-align: center;
+}
+
+.errorImg {
+	width: 600px;
 	padding-top: 40px;
 	margin: 0 auto;
 }
-.errorMsg{
-	color:red;
-	font-family:宋体;
-	font-size:50px;
-	font-weight:bold;
+
+.errorMsg {
+	color: red;
+	font-family: 宋体;
+	font-size: 50px;
+	font-weight: bold;
 }
 
-
-
-
-.gtitle{
+.gtitle {
 	text-align: center;
-	font-size:30px;
-	font-weight:bold;
+	font-size: 30px;
+	font-weight: bold;
 	padding-top: 40px;
-	position:relative;
+	position: relative;
 }
+
 hr {
-    border: 1px solid black;
+	border: 1px solid black;
 }
-.gcover{
-	clear:right;
+
+.gcover {
+	clear: right;
 }
-.gcover img{
-	width:500px;
+
+.gcover img {
+	width: 500px;
 	padding: 50px;
 	float: left;
-	position:relative;
-	
+	position: relative;
 }
-.gcover table{
-	padding-top:50px;
+
+.gcover table {
+	padding-top: 50px;
 }
-.gcover table td{
-	height:30px;
+
+.gcover table td {
+	height: 30px;
 }
-#steam img{
+
+#steam img {
 	padding: 5px;
-	width:120px;
-	border-radius:20px;
+	width: 120px;
+	border-radius: 20px;
 }
-.gdescription{
-	clear:left;
-	position:relative;
+
+.gdescription {
+	clear: left;
+	position: relative;
 }
-.description{
-	font-size:20px;
-	font-weight:bold;
+
+.description {
+	font-size: 20px;
+	font-weight: bold;
 	padding-left: 40px;
-	position:relative;
+	position: relative;
 }
-.gtext{
-	padding:20px 50px;
-	position:relative;
+
+.gtext {
+	padding: 20px 50px;
+	position: relative;
 }
-.gimg{
-	padding:20px;
+
+.gimg {
+	padding: 20px;
 	text-align: center;
 }
-.gimg img{
-	width:800px;
-	padding-top:20px;
-	position:relative;
+
+.gimg img {
+	width: 800px;
+	padding-top: 20px;
+	position: relative;
 }
+
 .icon {
-	padding-top:50px;
+	padding-top: 50px;
 	display: flex;
-    justify-content: center;
-    align-items: center;
+	justify-content: center;
+	align-items: center;
 }
-.icon table{
+
+.icon table {
 	text-align: center;
 }
-.icon img{
-	padding:0 50px;
-	width:60px;
+
+.icon img {
+	padding: 0 50px;
+	width: 60px;
 }
-.gcomment{
-	padding:50px 20px;
-	position:relative;
+
+.gcomment {
+	padding: 50px 20px;
+	position: relative;
 }
-.comment{
-	font-size:20px;
-	font-weight:bold;
+
+.comment {
+	font-size: 20px;
+	font-weight: bold;
 	padding-left: 40px;
-	position:relative;
-}
-.ucomment{
-	padding:20px 40px;
-	position:relative;
+	position: relative;
 }
 
+.ucomment {
+	padding: 20px 40px;
+	position: relative;
+}
 
-.footer{
-    height: 300px;
-    background-color: #e5e8e0;
-    margin-top: 20px;
-    display: block;
+.footer {
+	height: 350px;
+	background-color: #e5e8e0;
+	margin-top: 20px;
+	display: block;
 }
-.translate{
-    width: 1300px;
-    margin: 0 auto;
-    padding-top: 40px;
+
+.translate {
+	width: 1300px;
+	margin: 0 auto;
+	padding-top: 40px;
 }
-.footer-links{
-    float: left;
-    width: 160px;
-    margin-left: 200px;
+
+.footer-links {
+	float: left;
+	width: 160px;
+	margin-left: 200px;
 }
-.footer-links h5{
-    font-size: 20px;
-    margin-bottom:30px;
+
+.footer-links h5 {
+	font-size: 20px;
+	margin-bottom: 30px;
 }
-.footer-links li{
-    font-size: 15px;
-    margin-top: 15px;
+
+.footer-links li {
+	font-size: 15px;
+	margin-top: 15px;
 }
-.footer-links li a{
-    color: #3d3d3d;
+
+.footer-links li a {
+	color: #3d3d3d;
 }
-.footer-links li a:hover{
-    color: #ea822e;
+
+.footer-links li a:hover {
+	color: #ea822e;
 }

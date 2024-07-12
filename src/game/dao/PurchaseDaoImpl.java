@@ -122,7 +122,7 @@ public class PurchaseDaoImpl implements PurchaseDao{
 		PreparedStatement ps = null;
 		int affectedRows = 0;
 		String onumber = uid+gid+System.currentTimeMillis();
-
+		System.out.println("onumber="+onumber);
 		try {
 			conn = getConnection();
 			String sql = "insert into purchase(gid,uid,onumber,otime) values (?, ?, ?, ?)";
