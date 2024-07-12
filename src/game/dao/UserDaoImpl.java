@@ -169,7 +169,7 @@ public class UserDaoImpl implements UserDao{
         Connection conn = null;
         PreparedStatement ps = null;
         int affectedRows = 0;
-
+System.out.println("待insert数据:"+user);
         try {
             conn = getConnection();
             String sql = "INSERT INTO userinfo(uname, utel, uemail, ugender, uaddress ,upsw) VALUES (?, ?, ?, ?, ?, ?)"; 	//注意这里不填uid、urole和upoint，合计6条数据
@@ -197,6 +197,7 @@ public class UserDaoImpl implements UserDao{
         Connection conn = null;
         PreparedStatement ps = null;
         int affectedRows = 0;
+System.out.println("待update数据:"+user);
 
         try {
             conn = getConnection();

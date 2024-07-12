@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import game.bean.User;
 import game.dao.UserDaoImpl;
@@ -20,11 +21,12 @@ public class QueryAllUserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		UserDaoImpl userdao=new UserDaoImpl();
+		HttpSession session=request.getSession();
 		
 		String path_param=request.getParameter("path");
-		String path=(String) request.getAttribute("path");
-		if( path!=null &&path_param==null)path=path_param;
-		System.out.println("path="+path);
+		String path=(String) session.getAttribute("path");//session中
+		if(path_param!=null) path=path_param;
+		System.out.println("————path（查询所有user）="+path);
 		
 		try {
 			List<User> li =userdao.queryAllUser();

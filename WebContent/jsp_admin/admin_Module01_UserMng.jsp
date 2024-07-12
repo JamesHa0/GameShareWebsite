@@ -4,10 +4,10 @@
 <jsp:include page="admin_query.jsp" />
 <%
 	Object x=request.getAttribute("allUsers");
+	String path="admin_Module01_UserMng.jsp";
+	request.setAttribute("path", path);
+	session.setAttribute("path", path);
 	if(x == null){
-		String path="admin_Module01_UserMng.jsp";
-		request.setAttribute("path", path);
-		session.setAttribute("path", path);
 		request.getRequestDispatcher("../QueryAllUserServlet.do?path="+path).forward(request, response);
 	}
 %>

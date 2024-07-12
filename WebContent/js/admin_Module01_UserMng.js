@@ -49,7 +49,7 @@ console.log('点击了提交按钮。');
     .finally(()=>{
         // 重置【修改按钮】
         var button =document.getElementById("addBtn");
-        button.innerText = '修改';
+        button.innerText = '增添记录 ';
         button.onclick = function() { addBtn(row); };
 	});
 }
@@ -189,7 +189,8 @@ data.forEach(function(value, key) {
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     alert('删除成功');
-                    window.location.href="../QueryAllUserServlet.do?path=admin_Module01_UserMng.jsp";
+                    location.reload();
+//                    window.location.href="../QueryAllUserServlet.do";
                 } else {
                     alert('删除失败');
                 }

@@ -37,9 +37,7 @@ public class UpdateUserServlet extends HttpServlet {
         String uaddress = request.getParameter("uaddress");
         String upsw = request.getParameter("upsw");
         String upoint = request.getParameter("upoint");	//9
-        
-User tmp=new User(uid, uname, utel, uemail, urole, ugender, uaddress, upsw, upoint);
-System.out.println(tmp);
+
 
         if(upsw.length() <= 18) { // 若未加密：(简单判断密码是否已经加密（假设未加密密码长度小于等于18）
             try {
