@@ -3,7 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
-
+<%
+	Object x=request.getAttribute("allUserLogs");
+	if(x == null){
+		String path="admin_Module04_UserLog.jsp";
+		request.setAttribute("path", path);
+		session.setAttribute("path", path);
+		request.getRequestDispatcher("../QueryAllUserLogServlet.do?"+path).forward(request, response);
+	}
+%>
 <!DOCTYPE html>
 <html>
 

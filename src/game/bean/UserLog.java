@@ -37,45 +37,6 @@ public class UserLog implements Dao{
         // 保存日志到数据库
         saveLogToDatabase(this);
     }
-	
-
-
-	private void saveLogToDatabase(UserLog log) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        int affectedRows = 0;
-
-        try {
-            conn = getConnection(); // 确保这个函数存在并返回有效的数据库连接
-            String sql = "INSERT INTO userlog (logOperatorId,logOperatorName,logOperatorRole,"
-            		+ "logTime,logDetails,logSuccess) VALUES (?, ?, ?, ?, ?, ?)";
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, log.logOperatorId);
-            ps.setString(2, log.logOperatorName);
-            ps.setString(3, log.logOperatorRole);
-            
-            ps.setString(4, log.logTime); 
-            ps.setString(5, log.logDetails); 
-            ps.setString(6, log.logSuccess);
-
-            affectedRows = ps.executeUpdate();
-            if(affectedRows>=0) {
-            	System.out.println("bean：插入日志成功");
-            }else {
-            	System.out.println("！bean：插入日志失败");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("！bean：插入日志:500");
-        } finally {
-            try {
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 	
 	//************************************get and set:

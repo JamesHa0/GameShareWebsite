@@ -2,6 +2,15 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="admin_query.jsp" />
+<%
+	Object x=request.getAttribute("allGameLogs");
+	if(x == null){
+		String path="xxx.jsp";
+		request.setAttribute("path", path);
+		session.setAttribute("path", path);
+		request.getRequestDispatcher("../QueryAllGameLogServlet.do?"+path).forward(request, response);
+	}
+%>
 <!DOCTYPE html>
 <html>
 
