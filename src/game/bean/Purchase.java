@@ -1,7 +1,5 @@
 package game.bean;
 
-import com.sun.jmx.snmp.SnmpStringFixed;
-
 public class Purchase {
 	private String gid;
 	private String onumber;
