@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import game.bean.UserLog;
 import game.dao.UserLogDaoImpl;
@@ -20,9 +21,12 @@ public class QueryAllUserLogServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		UserLogDaoImpl logdao=new UserLogDaoImpl();
-		
-		String path=(String) request.getAttribute("path");
-System.out.println("path="+path);
+		HttpSession session=request.getSession();
+
+		String path_param=request.getParameter("path");
+		String path=(String) session.getAttribute("path");//session中
+			if(path_param!=null) path=path_param;
+System.out.println("————path（日志查所有）="+path);
 		
 		try {
 			List<UserLog> li =logdao.queryAllUserLog();

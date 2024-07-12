@@ -5,10 +5,10 @@
 <%@ page import="java.util.Date" %>
 <%
 	Object x=request.getAttribute("allUserLogs");
+	String path="admin_Module04_UserLog.jsp";
+	request.setAttribute("path", path);
+	session.setAttribute("path", path);
 	if(x == null){
-		String path="admin_Module04_UserLog.jsp";
-		request.setAttribute("path", path);
-		session.setAttribute("path", path);
 		request.getRequestDispatcher("../QueryAllUserLogServlet.do?"+path).forward(request, response);
 	}
 %>

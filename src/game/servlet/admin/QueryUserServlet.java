@@ -29,8 +29,10 @@ public class QueryUserServlet extends HttpServlet {
 			throws ServletException, IOException {
 		//获取path
 		HttpSession session=request.getSession();
-		String path = (String) session.getAttribute("path");
-		System.out.println("path="+path);
+		String path_param=request.getParameter("path");
+		String path=(String) session.getAttribute("path");//session中
+			if(path_param!=null) path=path_param;
+		System.out.println("————path="+path);
 		
 		//前端传来的数据
 		String uid=request.getParameter("uid");

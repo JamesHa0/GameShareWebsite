@@ -36,7 +36,11 @@ console.log('点击了提交按钮。');
     .then(response => {
         if (!response.ok) {
             throw new Error('增添失败');
-        }
+        }else{
+			location.reload();
+			alert('增添成功');
+			
+		}
         return response.text();
     })
     .then(result => {
@@ -148,7 +152,16 @@ data.forEach(function(value, key) {
         },
         body: data // URLSearchParams 对象可以直接作为 body 发送
     })
-    .then(response => response.text()) 
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('修改失败');
+        }else{
+			location.reload();
+			alert('修改成功');
+			
+		}
+        return response.text();
+    })
     .then(result => console.log(result))
     .then(data => {
         console.log('服务器发来的响应数据：', data);
@@ -156,12 +169,13 @@ data.forEach(function(value, key) {
     })
     .catch(error => {
 		alert('修改失败'+error);
-    })
+    }
+    )
     .finally(()=>{
 		// 重置【input】为只读
         inputs.forEach(function(input) {
             input.readOnly = true;
-        })
+        });
         // 重置【修改按钮】
         var button = row.getElementsByClassName('updateBtn')[0];
         button.innerText = '修改';
