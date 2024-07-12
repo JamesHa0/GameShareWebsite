@@ -7,6 +7,7 @@
 	if(x == null){
 		String path="admin_Module01_UserMng.jsp";
 		request.setAttribute("path", path);
+		session.setAttribute("path", path);
 		System.out.println("test");
 		request.getRequestDispatcher("../QueryAllUserServlet.do?"+path).forward(request, response);
 	}
@@ -53,7 +54,7 @@
       <th>性别</th>
       <th>地址</th>
       <th>密码</th>
-      <th>积分</th>
+<!--       <th>积分</th> -->
       <th>删除操作</th>
       <th>修改操作</th>
     </tr>
@@ -83,7 +84,9 @@
         <td><input class="editing" readonly name="ugender"  	value="${user.ugender}" ></td>   
         <td><input class="editing" readonly name="uaddress" 	value="${user.uaddress}"></td> 
         <td><input class="editing" readonly name="upsw"  	value="${user.upsw}"  type="password"></td> 
-        <td><input class="editing" readonly name="upoint"  	value="${user.upoint}" 	></td>
+        <!-- 积分隐藏： -->
+        <td style="display:none"><input class="editing" readonly name="upoint"  	value="${user.upoint}" 	></td>
+        
         <td>  <button class="updateBtn" onclick="enableEditing(this.parentNode.parentNode)">修改</button></td>
         <td>  <button class="deleteBtn" onclick="confirmDelete('${user.uid}')">删除</button></td>
       </tr>

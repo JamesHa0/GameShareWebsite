@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import game.bean.User;
 import game.dao.UserDaoImpl;
@@ -26,11 +27,19 @@ public class QueryUserServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		//获取path
+		HttpSession session=request.getSession();
+		String path = (String) session.getAttribute("path");
+		System.out.println("path="+path);
+		
 		//前端传来的数据
 		String uid=request.getParameter("uid");
 		String utel=request.getParameter("utel");
 		String uemail =request.getParameter("uemail");
-		
+System.out.println("---查询单条，前端传来的数据是："
+		+ "\n uid="+uid
+		+ "\n utel="+utel
+		+ "\n uemail="+uemail);
 		
 		try {
 			UserDaoImpl userdao=new UserDaoImpl();
@@ -59,7 +68,7 @@ public class QueryUserServlet extends HttpServlet {
 			    System.out.println("servlet-query: li 成功获取数据。");
 			}
 			request.setAttribute("allUsers", li);
-			request.getRequestDispatcher("jsp_admin/disp_allUsers.jsp").forward(request, response);
+			request.getRequestDispatcher("jsp_admin/"+path).forward(request, response);
 		} catch (Exception e) {
 			System.out.println("!Servlet：query:User查询报错。");
 		}

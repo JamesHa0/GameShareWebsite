@@ -8,8 +8,8 @@
 <link rel="stylesheet" type="text/css" href="../css/admin_query.css">
 </head>
 <body>
-	<form action="QueryUserServlet.do" method="post">
-		<select name="select" onchange="changeNameOfInput(this)"><!-- this指此select元素 -->
+	<form action="../QueryUserServlet.do" method="post">
+		<select name="select" id="admin_query_jsp_select" onchange="changeNameOfInput(this)"><!-- this指此select元素 -->
             <option value="1" selected="selected" >id</option>
             <option value="2">手机号</option>
             <option value="3">邮箱</option>
@@ -20,11 +20,11 @@
         function changeNameOfInput(select) {
             // 根据选择的选项值设置 input 的 name 属性
             if (select.value === "1") {
-            	document.getElementById('val').name = "uid";
+            	select.nextElementSibling.name="uid";
             } else if (select.value === "2") {
-            	document.getElementById('val').name = "utel";
+            	select.nextElementSibling.name="utel";
             } else if (select.value === "3") {
-            	document.getElementById('val').name = "uemail";
+            	select.nextElementSibling.name="uemail";
             }
         }
     	</script>

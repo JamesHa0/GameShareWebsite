@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<jsp:include page="admin_query.jsp" />
 <%
 	Object x=request.getAttribute("allUsers");
 	if(x == null){
 		String path="admin_Module02_RoleMng.jsp";
 		request.setAttribute("path", path);
+		session.setAttribute("path", path);
 		System.out.println("test");
 		request.getRequestDispatcher("../QueryAllUserServlet.do?"+path).forward(request, response);
 	}

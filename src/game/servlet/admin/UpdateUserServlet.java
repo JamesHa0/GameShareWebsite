@@ -31,7 +31,7 @@ public class UpdateUserServlet extends HttpServlet {
         String uname = request.getParameter("uname");
         String utel = request.getParameter("utel");
         String uemail = request.getParameter("uemail");
-        String urole = request.getParameter("urole_"+uid);
+        String urole = request.getParameter("urole_"+uid);//!!!!!!切记urole特殊
         String ugender = request.getParameter("ugender");
         String uaddress = request.getParameter("uaddress");
         String upsw = request.getParameter("upsw");
