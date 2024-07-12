@@ -26,7 +26,7 @@ console.log('点击了提交按钮。');
     inputs.forEach(function(input) {
         data.append(input.name, input.value);
     });
-    fetch('../InsertUserServlet.do', {
+    fetch('../InsertPurchaseServlet.do', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded' 
@@ -53,49 +53,12 @@ console.log('点击了提交按钮。');
     .finally(()=>{
         // 重置【修改按钮】
         var button =document.getElementById("addBtn");
-        button.innerText = '增添记录 ';
-        button.onclick = function() { addBtn(row); };
+        button.innerText = '修改';
+        button.onclick = function() { addBtn(row);};
 	});
 }
 
 
-
-//点击【提交按钮】触发该函数：
-function queryBtn(button){
-console.log('点击了查询按钮。');
-	var input=document.getElementById("admin_query_jsp_input");
-    var data = new URLSearchParams();
-        data.append(input.name, input.value);
-    fetch('../QueryUserServlet.do', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded' 
-        },
-        body: data 
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('查询失败');
-        }else{
-			location.reload();
-			alert('查询成功');
-		}
-        return response.text();
-    })
-    .then(result => {
-        console.log('---服务器发来的响应数据：', result);
-    })
-    .catch(error => {
-        console.error('请求失败：', error);
-        alert('请求失败：' + error.message);
-    })
-    .finally(()=>{
-        // 重置【修改按钮】
-        var button =document.getElementById("addBtn");
-        button.innerText = '增添记录 ';
-        button.onclick = function() { addBtn(row); };
-	});
-}
 
 
 
@@ -148,7 +111,7 @@ function enableEditing(row) {//row=td,td子节点为input
 console.log('点击了修改按钮。');
 //console.log('row是个什么东西？'+row+row.tagName);
 	//【login】取消只读：
-      var tds = row.querySelectorAll('td');
+     /* var tds = row.querySelectorAll('td');
       tds.forEach(function(td) {
 		var input=td.getElementsByTagName('input')[0];
 		if(input)
@@ -159,7 +122,7 @@ console.log('点击了修改按钮。');
 				input.classList.remove('read-only');//取消光标css
 			}
         
-    });
+    });*/
     //【提交按钮】改变：
       var button = row.getElementsByTagName('button')[0];
       button.innerHTML = '提交'; //改为提交按钮
@@ -198,7 +161,7 @@ data.forEach(function(value, key) {
 			
 		}
         return response.text();
-    })
+    }) 
     .then(result => console.log(result))
     .then(data => {
         console.log('服务器发来的响应数据：', data);
@@ -206,8 +169,7 @@ data.forEach(function(value, key) {
     })
     .catch(error => {
 		alert('修改失败'+error);
-    }
-    )
+    })
     .finally(()=>{
 		// 重置【input】为只读
         inputs.forEach(function(input) {
@@ -215,7 +177,7 @@ data.forEach(function(value, key) {
         });
         // 重置【修改按钮】
         var button = row.getElementsByClassName('updateBtn')[0];
-        button.innerText = '修改';
+        button.innerText = '增添记录';
         button.onclick = function() { enableEditing(row); };
 	});
 }
@@ -232,16 +194,15 @@ data.forEach(function(value, key) {
 //***************************************【删除按钮】模块： */    
 //***************************************【删除按钮】模块： */    
     
-    function confirmDelete(uid) {
+    function confirmDelete(onumber) {
         var isDelete = confirm("您确定要删除吗？");
         if (isDelete) {
             var xhr = new XMLHttpRequest();
-            xhr.open("GET", "../DeleteUserServlet.do?uid="+uid  , true);// 配置请求类型、URL及异步处理方式
+            xhr.open("GET", "../DeletePurchaseServlet.do?onumber="+onumber  , true);// 配置请求类型、URL及异步处理方式
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     alert('删除成功');
                     location.reload();
-//                    window.location.href="../QueryAllUserServlet.do";
                 } else {
                     alert('删除失败');
                 }
