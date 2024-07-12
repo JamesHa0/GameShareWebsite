@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import game.bean.Purchase;
 import game.bean.User;
 import game.bean.UserLog;
+import game.dao.PurchaseDaoImpl;
 import game.dao.UserDaoImpl;
 
 @WebServlet("/QueryAllGameLogServlet.do")
@@ -20,13 +22,13 @@ public class QueryAllGameLogServlet extends HttpServlet {
 	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		UserDaoImpl userdao=new UserDaoImpl();
+		PurchaseDaoImpl purchaseDaoImpl = new PurchaseDaoImpl();
 		
 		String path=(String) request.getAttribute("path");
 		System.out.println("path="+path);
 		
 		try {
-			List<UserLog> li =userdao.queryAllUser();
+			List<Purchase> li =purchaseDaoImpl.queryAllPurchase();
 			if(li.isEmpty()) {
 				System.out.println("!servlet-queryAll:li是空的。");
 				response.setStatus(400);
@@ -34,7 +36,7 @@ public class QueryAllGameLogServlet extends HttpServlet {
 			}else {
 				System.out.println("servlet-queryAll:li成功获取数据。");
 			}
-			request.setAttribute("allUsers", li);
+			request.setAttribute("allGameLogs", li);
 			response.setStatus(200);//200
 			request.getRequestDispatcher("jsp_admin/"+path).forward(request, response);
 		} catch (Exception e) {
