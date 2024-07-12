@@ -85,7 +85,7 @@ data.forEach(function(value, key) {
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     alert('删除成功');
-                    window.location.href="QueryAllUserServlet.do";
+                    window.location.href="QueryAllUserLogServlet.do";
                 } else {
                     alert('操作失败');
                 }

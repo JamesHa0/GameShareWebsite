@@ -8,7 +8,8 @@
 <link rel="stylesheet" type="text/css" href="../css/admin_query.css">
 </head>
 <body>
-	<form action="../QueryUserServlet.do" method="post">
+<!--  action="../QueryUserServlet.do" method="post" -->
+	<form>
 		<select name="select" id="admin_query_jsp_select" onchange="changeNameOfInput(this)"><!-- this指此select元素 -->
             <option value="1" selected="selected" >id</option>
             <option value="2">手机号</option>
@@ -29,7 +30,7 @@
         }
     	</script>
 		
-		<input class="querySubmit" type="submit" value="提交" >
+		<input onclick="()" class="querySubmit" type="submit" value="提交" >
 	</form>
 </body>
 </html>
