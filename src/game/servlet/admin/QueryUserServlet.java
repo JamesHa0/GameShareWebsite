@@ -32,47 +32,45 @@ public class QueryUserServlet extends HttpServlet {
 		String path_param=request.getParameter("path");
 		String path=(String) session.getAttribute("path");//session中
 			if(path_param!=null) path=path_param;
-		System.out.println("————path="+path);
+		System.out.println("---前端传递path（user单查）="+path);
 		
 		//前端传来的数据
 		String uid=request.getParameter("uid");
 		String utel=request.getParameter("utel");
 		String uemail =request.getParameter("uemail");
-System.out.println("---查询单条，前端传来的数据是："
-		+ "\n uid="+uid
-		+ "\n utel="+utel
-		+ "\n uemail="+uemail);
+System.out.println("---前端传来的数据是（user单查）："
+		+ "\n	 uid="+uid
+		+ "\n 	 utel="+utel
+		+ "\n 	 uemail="+uemail);
 		
 		try {
 			UserDaoImpl userdao=new UserDaoImpl();
 			User user=new User();
-			if(uid!=null) {
+			if(uid!=null && !"".equals(uid)) {
 				user=userdao.queryUserByUid(uid);
-			}else if(utel !=null) {
+			}else if(utel !=null && !"".equals(utel)) {
 				user=userdao.queryUserByUtel(utel);
-			}else if(uemail!=null) {
+			}else if(uemail!=null && !"".equals(uemail)) {
 				user=userdao.queryUserByUemail(uemail);
+			}else {
+				//全都是空的！
+				response.sendRedirect("jsp_admin/"+path+"?query=queryAll");//*********1
 			}
 			
 			if(user==null) {
-				System.out.println("QueryUserServlet：user=空。数据库里没有该用户。");
+				System.out.println("[null] Servlet-user单查：user=空。数据库里没有该用户。");
+				response.sendRedirect("jsp_admin/"+path+"?query=none");//************2
 			}else {
-				System.out.println("QueryUserServlet:成功获取user。");
-			}
+				System.out.println("√ Servlet-user单查:成功获取user。");
+				//装载：
+				List<User> li = new ArrayList<User>();
+				li.add(user);
+				session.setAttribute("allUsers", li);
+			    response.sendRedirect("jsp_admin/"+path+"?query=get_it");//***********3
 			
-			//装载：
-			List<User> li = new ArrayList<User>();
-			li.add(user);
-			if (li == null || li.isEmpty()) {
-			    li = new ArrayList<>(); // 确保 li 不为空，避免 NullPointerException
-			    System.out.println("!servlet-query: li 是空的。");
-			} else {
-			    System.out.println("servlet-query: li 成功获取数据。");
 			}
-			request.setAttribute("allUsers", li);
-			request.getRequestDispatcher("jsp_admin/"+path).forward(request, response);
 		} catch (Exception e) {
-			System.out.println("!Servlet：query:User查询报错。");
+			System.out.println("!500 Servlet-user单查。");
 		}
 	}
 

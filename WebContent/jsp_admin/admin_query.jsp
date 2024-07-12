@@ -5,11 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>查询页面</title>
-<link rel="stylesheet" type="text/css" href="../css/admin_query.css">
+<%-- <%="当前项目根目录为："+ request.getContextPath()%> --%>
+<%--  <%="当前servletPath为："+ request.getServletPath() %> --%>
+<%--  <%="当前RequestURI为："+ request.getRequestURI() %> --%>
+ 
+<link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/css/admin_query.css">
 </head>
 <body>
-<!--  action="../QueryUserServlet.do" method="post" -->
-	<form>
+<!--  onsubmit="queryBtn()" -->
+	<form action="../QueryUserServlet.do" method="post">
 		<select name="select" id="admin_query_jsp_select" onchange="changeNameOfInput(this)"><!-- this指此select元素 -->
             <option value="1" selected="selected" >id</option>
             <option value="2">手机号</option>
@@ -30,7 +34,7 @@
         }
     	</script>
 		
-		<input onclick="()" class="querySubmit" type="submit" value="提交" >
+		<input class="querySubmit" type="submit" value="提交" >
 	</form>
 </body>
 </html>

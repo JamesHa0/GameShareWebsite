@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpFilter;
 import javax.servlet.http.HttpServletRequest;
 
+
 @WebFilter("/*")
 public class UTF8CodeFilter extends HttpFilter implements Filter {
        
@@ -26,7 +27,7 @@ public class UTF8CodeFilter extends HttpFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
 		String a =((HttpServletRequest)request).getRequestURI();
-		if(a.contains(".js") || a.contains(".css") || a.contains(".png") || a.contains(".jpg") || a.contains(".gif")) {
+		if(a.contains("jsp") || a.contains(".js") || a.contains(".css") || a.contains(".png") || a.contains(".jpg") || a.contains(".gif")) {
 			chain.doFilter(request, response);
 		}else {
 			request.setCharacterEncoding("utf-8");

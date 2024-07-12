@@ -2,15 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="admin_query.jsp" />
-<%
-	Object x=request.getAttribute("allUsers");
-	String path="admin_Module01_UserMng.jsp";
-	request.setAttribute("path", path);
-	session.setAttribute("path", path);
-	if(x == null){
-		request.getRequestDispatcher("../QueryAllUserServlet.do?path="+path).forward(request, response);
-	}
-%>
+<jsp:include page="header_123.jsp" />
+
 <!DOCTYPE html><html>
 <head>
   <meta charset="UTF-8">
@@ -33,16 +26,17 @@
    .read-only {
   		cursor: not-allowed;
 	}
-   
   </style>
-
 </head>
-
 <body>
 	
+	
+<c:if test="${param.query == 'none'}">
+	<h3>查找的用户不存在。</h3>
+</c:if>
+
+<c:if test="${param.query != 'none'}">
 	<button id="addBtn" onclick="addBtn(this)">增添记录</button>
-	
-	
   <table border="" style="border-collapse: collapse; border: 1px solid black;">
     <tr>
       <th>id</th>
@@ -91,7 +85,7 @@
       </tr>
 	    </c:forEach>
   </table>
-
+</c:if>
 
 </body>
 </html>

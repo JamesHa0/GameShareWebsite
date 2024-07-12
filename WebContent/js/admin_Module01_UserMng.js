@@ -61,41 +61,38 @@ console.log('点击了提交按钮。');
 
 
 //点击【提交按钮】触发该函数：
-function queryBtn(button){
-console.log('点击了查询按钮。');
-	var input=document.getElementById("admin_query_jsp_input");
-    var data = new URLSearchParams();
-        data.append(input.name, input.value);
-    fetch('../QueryUserServlet.do', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded' 
-        },
-        body: data 
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('查询失败');
-        }else{
-			location.reload();
-			alert('查询成功');
-		}
-        return response.text();
-    })
-    .then(result => {
-        console.log('---服务器发来的响应数据：', result);
-    })
-    .catch(error => {
-        console.error('请求失败：', error);
-        alert('请求失败：' + error.message);
-    })
-    .finally(()=>{
-        // 重置【修改按钮】
-        var button =document.getElementById("addBtn");
-        button.innerText = '增添记录 ';
-        button.onclick = function() { addBtn(row); };
-	});
-}
+//function queryBtn(){
+//console.log('点击了查询按钮。');
+//	var input=document.getElementById("admin_query_jsp_input");
+//    var data = new URLSearchParams();
+//        data.append(input.name, input.value);
+//        
+//data.forEach(function(value, key) {
+//    console.log(key + ': ' + value);
+//});
+//        
+//    fetch('../QueryUserServlet.do', {
+//        method: 'POST',
+//        headers: {
+//            'Content-Type': 'application/x-www-form-urlencoded' 
+//        },
+//        body: data 
+//    })
+//    .then(response => {
+//        if (!response.ok) {
+//            alert('查询失败')
+//            throw new Error('查询失败');
+//        }else{
+//			window.location.href="../admin_Module01_UserMng.jsp";
+//			alert('查询成功');
+//		}
+//        return response.text();
+//    })
+//    .catch(error => {
+//        console.error('请求失败：', error);
+//        alert('请求失败：' + error.message);
+//    })
+//}
 
 
 

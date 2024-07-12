@@ -1,16 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <jsp:include page="admin_query.jsp" />
-<%
-	Object x=request.getAttribute("allUsers");
-	if(x == null){
-		String path="admin_Module02_RoleMng.jsp";
-		request.setAttribute("path", path);
-		session.setAttribute("path", path);
-		System.out.println("test");
-		request.getRequestDispatcher("../QueryAllUserServlet.do?"+path).forward(request, response);
-	}
-%>
+<jsp:include page="header_123.jsp" />
+
 <!DOCTYPE html><html>
 <head>
 <meta charset="UTF-8">
@@ -42,6 +34,13 @@ table input {
 </style>
 </head>
 <body>
+
+	
+<c:if test="${param.query == 'none'}">
+	<h3>查找的用户不存在。</h3>
+</c:if>
+
+<c:if test="${param.query != 'none'}">
 	<table border="">
 		<tr>
 			<th>id</th>
@@ -86,5 +85,7 @@ table input {
 	    
 	    
         </table>
+        
+</c:if>
 </body>
 </html>
