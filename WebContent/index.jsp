@@ -89,11 +89,11 @@
 								<div class="na">植物大战僵尸</div>
 						</a></li>
 
-						<li class="game_tu"><a href="DetailServlet?gid=phone02">
+						<li class="game_tu"><a href="DetailServlet?gid=100000002">
 								<div class="ph">
-									<img src="images/gameNotFound.png">
+									<img src="images/game/100000002/1.jpg">
 								</div>
-								<div class="na">待定</div>
+								<div class="na">魔塔2023</div>
 						</a></li>
 
 						<li class="game_tu"><a href="DetailServlet?gid=phone03">
