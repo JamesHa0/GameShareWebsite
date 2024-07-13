@@ -52,18 +52,20 @@
 			<table>
 				<thead>
 					<td class="table_head" style="width: 200px;height: 60px;">游戏名</td>
+					<td class="table_head" style="width: 200px;height: 60px;">所需积分</td>
 					<td class="table_head" style="width: 200px;height: 60px;">购买时间</td>
 					<td class="table_head" style="width: 200px;height: 60px;">订单编号</td>
 				</thead>
 				<c:forEach items="${gameLogList}" var="log">
 					<tr>
 						<td>${log.gzhname}</td>
+						<td>${log.gprice}</td>
 						<td>${log.otime}</td>
 						<td>${log.onumber}</td>
 					</tr>
 				</c:forEach>
 				<tr>
-					<td colspan="3"><a href="info.jsp">返回</a></td>
+					<td colspan="4"><a href="info.jsp">返回</a></td>
 				</tr>
 			</table>
 		</div>

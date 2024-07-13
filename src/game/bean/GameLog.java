@@ -6,17 +6,20 @@ public class GameLog {
 	private String uid;
 	private String otime;
 	private String gzhname;
+	private String gprice;
 	public GameLog() {
 		super();
 	}
-	public GameLog(String gid, String onumber, String uid, String otime, String gzhname) {
+	public GameLog(String gid, String onumber, String uid, String otime, String gzhname, String gprice) {
 		super();
 		this.gid = gid;
 		this.onumber = onumber;
 		this.uid = uid;
 		this.otime = otime;
 		this.gzhname = gzhname;
+		this.gprice = gprice;
 	}
+
 
 	public String getGid() {
 		return gid;
@@ -47,6 +50,12 @@ public class GameLog {
 	}
 	public void setGzhname(String gzhname) {
 		this.gzhname = gzhname;
+	}
+	public String getGprice() {
+		return gprice;
+	}
+	public void setGprice(String gprice) {
+		this.gprice = gprice;
 	}
 	
 	

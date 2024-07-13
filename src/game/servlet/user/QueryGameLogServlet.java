@@ -48,7 +48,7 @@ public class QueryGameLogServlet extends HttpServlet {
 		for (Purchase i : list) {
 			try {
 				game = gameDaoImpl.queryGameByGid(i.getGid());
-				GameLog gameLog = new GameLog(i.getGid(), i.getOnumber(), i.getUid(), i.getOtime(), game.getGzhname());
+				GameLog gameLog = new GameLog(i.getGid(), i.getOnumber(), i.getUid(), i.getOtime(), game.getGzhname(),game.getGprice());
 				list2.add(gameLog);
 			} catch (Exception e) {
 				e.printStackTrace();
