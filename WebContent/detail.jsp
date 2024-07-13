@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="game.bean.Game" %>
+<%@ page import="game.bean.User" %>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -23,19 +24,23 @@
 			</div>
 			<div class="login">
 				<%
-					String userName = (String)session.getAttribute("Login_uname");
-					if(userName == null){
-				%>
-				<div class="login2">
-					<a href="LR.jsp">登录&注册</a>
-				</div>
-				<%
-					} else {
+					String userName = (String) session.getAttribute("Login_uname");
+					User user = (User) session.getAttribute("Login_user");
+					if (user != null) {
+						userName = user.getUname();
 				%>
 				<div class="ulogin">
 					<p>欢迎您，${sessionScope.Login_uname}</p>
 				</div>
-				<div class="login2"><a href="logout.jsp">登出</a></div>
+				<div class="login2">
+					<a href="logout.jsp">登出</a>
+				</div>
+				<%
+					} else {
+				%>
+				<div class="login2">
+					<a href="LR.jsp">登录&注册</a>
+				</div>
 				<%
 					}
 				%>
@@ -77,7 +82,7 @@
 			<% if (gid.length() < 9 ){ %>
 			<tr><td>在steam上购买：</td><td><div id="steam"><a href="https://store.steampowered.com/app/${game.gid }"><img  src="images/steam.png"/></a></div></td></tr>
 			<% }else{%>
-			<tr><td>使用${game.gprice}积分兑换：</td><td><div id="steam"><a href="QueryPurchaseServlet?gid=${game.gid }"><img  src="images/download.jpg"/></a></div></td></tr>
+			<tr><td>使用${game.gprice}积分兑换：</td><td><div id="steam"><a href="QueryPurchaseServlet?gid=${game.gid }&uid=${sessionScope.Login_user.uid }"><img  src="images/download.jpg"/></a></div></td></tr>
 			<% }%>
 		</table>
 	</div>

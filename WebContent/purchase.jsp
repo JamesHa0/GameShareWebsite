@@ -29,19 +29,22 @@
 			</div>
 			<div class="login">
 				<%
-					String userName = (String)session.getAttribute("Login_uname");
-					if(userName == null){
-				%>
-				<div class="login2">
-					<a href="LR.jsp">登录&注册</a>
-				</div>
-				<%
-					} else {
+					String userName = (String) session.getAttribute("Login_uname");
+					if (user != null) {
+						userName = user.getUname();
 				%>
 				<div class="ulogin">
 					<p>欢迎您，${sessionScope.Login_uname}</p>
 				</div>
-				<div class="login2"><a href="logout.jsp">登出</a></div>
+				<div class="login2">
+					<a href="logout.jsp">登出</a>
+				</div>
+				<%
+					} else {
+				%>
+				<div class="login2">
+					<a href="LR.jsp">登录&注册</a>
+				</div>
 				<%
 					}
 				%>

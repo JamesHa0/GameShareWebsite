@@ -9,10 +9,13 @@ public interface PurchaseDao extends Dao{
 	List<Purchase> queryAllPurchase() throws Exception;
 
 	// 查询某用户购买记录
-	Purchase queryPurchaseByUid(String uid) throws Exception;
+	List<Purchase> queryPurchaseByUid(String uid) throws Exception;
 
 	// 查询某游戏被购买记录
-	Purchase queryPurchaseByGid(String gid) throws Exception;
+	List<Purchase> queryPurchaseByGid(String gid) throws Exception;
+
+	// 查询单条购买记录
+	Purchase queryOnePurchase(String uid,String gid) throws Exception;
 
 	// 插入购买记录
 	String insertPurchase(String gid,String uid,String otime) throws Exception;

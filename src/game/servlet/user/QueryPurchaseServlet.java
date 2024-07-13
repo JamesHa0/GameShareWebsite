@@ -6,9 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import game.bean.Game;
 import game.bean.Purchase;
+import game.bean.User;
 import game.dao.GameDaoImpl;
 import game.dao.PurchaseDaoImpl;
 
@@ -17,7 +19,15 @@ public class QueryPurchaseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//验证是否处于登录状态
+		HttpSession session = request.getSession();
+		User isHaveUser = new User();
+		isHaveUser = (User)session.getAttribute("Login_user");
+		if (isHaveUser==null) {
+			request.getRequestDispatcher("LR.jsp").forward(request, response);
+		}
 		String gid = request.getParameter("gid");
+		String uid = request.getParameter("uid");
 		//获取游戏信息
 		Game game = new Game();
 		GameDaoImpl gameDaoImpl = new GameDaoImpl();
@@ -32,7 +42,7 @@ public class QueryPurchaseServlet extends HttpServlet {
 		Purchase purchase = new Purchase();
 		PurchaseDaoImpl purchaseDaoImpl = new PurchaseDaoImpl();
 		try {
-			purchase = purchaseDaoImpl.queryPurchaseByGid(gid);
+			purchase = purchaseDaoImpl.queryOnePurchase(uid,gid);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
