@@ -1,14 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="admin_query.jsp" />
+<jsp:include page="admin_query_purchase.jsp" />
 <%
-	Object x = request.getAttribute("allGameLogs");
+	Object allGameLogs = request.getAttribute("allGameLogs");
 	String path = "admin_Module06_GameLog.jsp";
 	request.setAttribute("path", path);
 	session.setAttribute("path", path);
-	if (x == null) {
-		request.getRequestDispatcher("../QueryAllGameLogServlet.do?path=" + path).forward(request, response);
+	String query = request.getParameter("query");
+	if (allGameLogs == null) { // 对象为空
+	    System.out.println("【主页检测】空   ：allGameLogs为空。query=" + query);
+	    if ("queryAll".equals(query) || query == null) { // 自动全查 和 手动全查
+	        request.getRequestDispatcher("../QueryAllGameLogServlet.do?path=" + path).forward(request, response);
+	    } else {/* query = none（没查到） 或 get_it（查到了）。不做任何处理。*/}
+	} else {
+	    System.out.println("【主页检测】√   ：allGameLogs非空。query=" + query);
 	}
 %>
 <!DOCTYPE html>
