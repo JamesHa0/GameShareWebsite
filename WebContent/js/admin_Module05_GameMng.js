@@ -13,13 +13,13 @@ function addBtn(button){
         input.classList.remove('hidden')
     });
     //改变按钮：
-      button.innerHTML = '提交并选择文件上传'; //改为上传按钮
+      button.innerHTML = '提交'; //改为上传按钮
       button.setAttribute('onclick', 'uploadBtn(this)');//修改点击函数
 }
 
 //点击【提交并选择文件上传】触发该函数，提交文字数据，插入数据库：
 function uploadBtn(button){
-	console.log('点击了提交并上传按钮。');
+	console.log('点击了提交按钮。');
 	
 	//【先进行：】文本数据提交到servlet：
 	var row=document.getElementById("addRow"); // 获取 增添行
@@ -28,6 +28,9 @@ function uploadBtn(button){
     inputs.forEach(function(input) {
         data.append(input.name, input.value);
     });
+data.forEach(function(value, key) {
+    console.log(key + ': ' + value);
+});
     fetch('../InsertGameServlet.do', {
         method: 'POST',
         headers: {
@@ -40,22 +43,18 @@ function uploadBtn(button){
 			location.reload();
 			alert('增添失败，状态码：' + response.status);
         }else{
-			location.reload();
+			//location.reload();
 			console.log('增添成功')
+			alert('增添成功。请继续点击按钮上传文件。')
 			//document.getElementById('gameFileInput').click(); //自动点击文件上传按钮
 			
-			//【后进行：】文件上传功能
-			document.getElementById('gameFileInput').click(); //自动点击文件上传按钮
+			//【后进行：】文件上传功能：隐藏增添按钮，显示上传按钮。
+			button.setAttribute("style","display:none;");//隐藏
+			document.getElementById('addFile').setAttribute("style","display:block;")//显示
 			//submitUploads(this);
 		}
         return response.text();
     })
-    .finally(()=>{
-        // 改变按钮
-        button.innerText = 'XXX';
-        button.setAttribute('onclick', 'submitUploads(this)');
-	});
-	
 }
 
 
@@ -64,6 +63,8 @@ function uploadBtn(button){
 function submitUploads() {
 console.log('上传处理中……');
 	document.getElementById('addForm').submit();
+	alert('处理完毕。请在服务器端检查文件上传情况。')
+console.log('处理完毕。')
 //    var fileInput = document.getElementById('gameFileInput');
 //    var file = fileInput.files[0]; // 获取选择的文件
 //

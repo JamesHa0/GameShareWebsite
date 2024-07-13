@@ -56,7 +56,7 @@ if (allGames == null) { // 对象为空
 	<button id="addBtn" onclick="addBtn(this)">增添游戏</button>
     <form id="addForm" action="../UploadGameServlet.do" enctype="multipart/form-data" method="post">
 	    <!-- 上传文件按钮： -->
-	    <input type="file" name="addFile" onchange="submitUploads()" id="addFile" /> <!-- 	    style="display:none;" -->
+	    <input type="file" name="addFile" onchange="submitUploads()" id="addFile" style="display:none;"/> 
     </form>
     
     <table border="" style="border-collapse: collapse; border: 1px solid black;">
@@ -70,28 +70,16 @@ if (allGames == null) { // 对象为空
             <th>描述</th>
             <th>中文名称</th>
             <th>标签</th>
-		      <th>删除操作</th>
-		      <th>修改操作</th>
+            <!-- 操作按钮 -->
+		    <th>删除操作</th>
+		    <th>修改操作</th>
         </tr>
 	        
 	        
-	    <!-- 上传模块： -->
-	    <jsp:include page="admin_upload.jsp" />
-        <!-- 增添栏 -->
-<!--         <tr class="hidden" id="addRow"> -->
-<!--             <th>——</th> -->
-<!--             <td><input class="hidden" name="gname"></td> -->
-<!--             <td><input class="hidden" name="gprice"></td> -->
-<!--             <td><input class="hidden" name="gdeveloper"></td> -->
-<!--             <td><input class="hidden" name="gpublisher"></td> -->
-<!--             <td><input class="hidden" name="grelease_date"></td> -->
-<!--             <td><input class="hidden" name="gdescription"></td> -->
-<!--             <td><input class="hidden" name="gzhname"></td> -->
-<!--             <td><input class="hidden" name="gtag"></td>   8 -->
-<!-- 	        <td>———— </td> -->
-<!-- 	        <td>———— </td> -->
-<!--         </tr> -->
+	    <!-- 增添模块： -->
+	    <jsp:include page="admin_game_add.jsp" />
         
+        <!-- 动态输出信息 -->
         <c:forEach items="${allGames}" var="game">
             <tr>
                 <td><input class="editing read-only" readonly name="gid" value="${game.gid}"></td>
@@ -111,6 +99,7 @@ if (allGames == null) { // 对象为空
                 </td>
             </tr>
         </c:forEach>
+        
     </table>
 </c:if>
 

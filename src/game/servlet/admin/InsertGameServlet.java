@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import game.dao.GameDaoImpl; // 假设您有一个GameDaoImpl来处理游戏数据
 import game.other.MD5; // 假设MD5工具类可以用于加密
@@ -22,7 +23,8 @@ public class InsertGameServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        UserLog userLog = new UserLog();
+        HttpSession session=request.getSession();
+    	UserLog userLog = new UserLog();
         
         // 获取前端输入的数据
         String gname = request.getParameter("gname");
@@ -68,8 +70,11 @@ System.out.println("---insert，前端传来的数据："+in_game);
                 // 插入成功
                 System.out.println("√  servlet-game-insert:插入成功");
                 userLog.logOperation(Login_uid, Login_uname, Login_urole, "管理员新增游戏数据，游戏名：" + gname, "成功");
-                response.setStatus(200); // 200 OK
-                return;
+                
+                
+                //向下一大跳（UploadGameServlet）传参gid：（这里直接传game对象）
+                Game Insert_game=gameDao.queryGameByGname(gname);
+                session.setAttribute("Insert_game", Insert_game);
             }
         } catch (Exception e) {
             System.out.println("！servlet-game-insert:报错。");
