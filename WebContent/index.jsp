@@ -82,27 +82,27 @@
 				<h2 class="title">&emsp;本站游戏</h2>
 				<div class="content_pohot">
 					<ul>
-						<li class="game_tu"><a href="DetailServlet?gid=100000001">
+						<li class="game_tu"><a href="DetailServlet.do?gid=100000001">
 								<div class="ph">
 									<img src="images/game/100000001/1.jpg">
 								</div>
 								<div class="na">植物大战僵尸</div>
 						</a></li>
 
-						<li class="game_tu"><a href="DetailServlet?gid=100000002">
+						<li class="game_tu"><a href="DetailServlet.do?gid=100000002">
 								<div class="ph">
 									<img src="images/game/100000002/1.jpg">
 								</div>
 								<div class="na">魔塔2023</div>
 						</a></li>
 
-						<li class="game_tu"><a href="DetailServlet?gid=phone03">
+						<li class="game_tu"><a href="DetailServlet.do?gid=phone03">
 								<div class="ph">
 									<img src="images/gameNotFound.png">
 								</div>
 								<div class="na">待定</div>
 						</a></li>
-						<li class="game_tu"><a href="DetailServlet?gid=phone04">
+						<li class="game_tu"><a href="DetailServlet.do?gid=phone04">
 								<div class="ph">
 									<img src="images/gameNotFound.png">
 								</div>
@@ -115,27 +115,27 @@
 				<h2 class="title">&emsp;近期推荐</h2>
 				<div class="content_pohot">
 					<ul>
-						<li class="game_tu"><a href="DetailServlet?gid=2420110">
+						<li class="game_tu"><a href="DetailServlet.do?gid=2420110">
 								<div class="ph">
 									<img src="images/game/2420110/1.jpg">
 								</div>
 								<div class="na">地平线：西之绝境</div>
 						</a></li>
 
-						<li class="game_tu"><a href="DetailServlet?gid=1245620">
+						<li class="game_tu"><a href="DetailServlet.do?gid=1245620">
 								<div class="ph">
 									<img src="images/game/1245620/1.jpg">
 								</div>
 								<div class="na">艾尔登法环</div>
 						</a></li>
 
-						<li class="game_tu"><a href="DetailServlet?gid=1623730">
+						<li class="game_tu"><a href="DetailServlet.do?gid=1623730">
 								<div class="ph">
 									<img src="images/game/1623730/1.jpg">
 								</div>
 								<div class="na">幻兽帕鲁</div>
 						</a></li>
-						<li class="game_tu"><a href="DetailServlet?gid=2358720">
+						<li class="game_tu"><a href="DetailServlet.do?gid=2358720">
 								<div class="ph">
 									<img src="images/game/2358720/1.jpg">
 								</div>
@@ -148,25 +148,25 @@
 				<h2 class="title">&emsp;高分神作</h2>
 				<div class="content_pohot">
 					<ul>
-						<li class="game_tu"><a href="DetailServlet?gid=205100">
+						<li class="game_tu"><a href="DetailServlet.do?gid=205100">
 								<div class="ph">
 									<img src="images/game/205100/1.jpg">
 								</div>
 								<div class="na">耻辱系列</div>
 						</a></li>
-						<li class="game_tu"><a href="DetailServlet?gid=413410">
+						<li class="game_tu"><a href="DetailServlet.do?gid=413410">
 								<div class="ph">
 									<img src="images/game/413410/1.jpg">
 								</div>
 								<div class="na">弹丸论破系列</div>
 						</a></li>
-						<li class="game_tu"><a href="DetailServlet?gid=49520">
+						<li class="game_tu"><a href="DetailServlet.do?gid=49520">
 								<div class="ph">
 									<img src="images/game/49520/1.jpg">
 								</div>
 								<div class="na">无主之地2</div>
 						</a></li>
-						<li class="game_tu"><a href="DetailServlet?gid=268050">
+						<li class="game_tu"><a href="DetailServlet.do?gid=268050">
 								<div class="ph">
 									<img src="images/game/268050/1.jpg">
 								</div>

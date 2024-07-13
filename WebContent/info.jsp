@@ -77,7 +77,7 @@
 				</tr>
 				<tr>
 					<td>购买的游戏:</td>
-					<td><a href="QueryGameLogServlet?uid=${sessionScope.Login_user.uid }">点此查看已购买的游戏</a></td>
+					<td><a href="QueryGameLogServlet.do?uid=${sessionScope.Login_user.uid }">点此查看已购买的游戏</a></td>
 				</tr>
 				<tr>
 					<td>地址:</td>

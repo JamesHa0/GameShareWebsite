@@ -22,7 +22,7 @@
 	<div class="head">
 		<div class="head_zi">
 			<div class="huan">
-				<a href="DetailServlet?gid=${game.gid }">返回游戏详情页</a>
+				<a href="DetailServlet.do?gid=${game.gid }">返回游戏详情页</a>
 			</div>
 			<div class="info">
 				<a href="info.jsp"><img src="images/info.png" height="28px"></a>
@@ -62,7 +62,7 @@
 			<% 	String onumber = (String)request.getAttribute("onumber");
 				if(onumber == null){
 			%>
-			<tr><td>是否购买？<br/>(当前账户剩余积分:<%=upoint %>)</td><td><div id="steam"><a href="PurchaseServlet?gid=${game.gid }&uid=${Login_uid}"><img  src="images/yes.png"/></a></div></td></tr>
+			<tr><td>是否购买？<br/>(当前账户剩余积分:<%=upoint %>)</td><td><div id="steam"><a href="PurchaseServlet.do?gid=${game.gid }&uid=${Login_uid}"><img  src="images/yes.png"/></a></div></td></tr>
 			<% }else{ %>
 			<tr><td>是否购买？<br/>(当前账户剩余积分:<%=upoint %>)</td><td>您已购买此游戏</td></tr>
 			<tr><td>订单编号:</td><td>${onumber }</td></tr>
