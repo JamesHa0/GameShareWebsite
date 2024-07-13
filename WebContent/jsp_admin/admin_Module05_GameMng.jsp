@@ -52,11 +52,12 @@ if (allGames == null) { // 对象为空
 
 <c:if test="${param.query != 'none'}">
 	
-	<!-- 增添文字数据按钮： -->
-    <button id="addBtn" onclick="addBtn(this)">增添游戏</button>
-    <!-- 上传文件input按钮： -->
-    <input type="file" onchange="submitUploads()" id="gameFileInput" style="display:none;" />
-    
+    <!-- 增添文字数据按钮： -->
+	<button id="addBtn" onclick="addBtn(this)">增添游戏</button>
+    <form id="addForm" action="../UploadGameServlet.do" enctype="multipart/form-data" method="post">
+	    <!-- 上传文件按钮： -->
+	    <input type="file" name="addFile" onchange="submitUploads()" id="addFile" /> <!-- 	    style="display:none;" -->
+    </form>
     
     <table border="" style="border-collapse: collapse; border: 1px solid black;">
         <tr>

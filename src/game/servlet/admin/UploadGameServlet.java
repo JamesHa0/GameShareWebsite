@@ -1,7 +1,10 @@
 package game.servlet.admin;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -26,23 +29,41 @@ public class UploadGameServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String path = this.getServletContext().getRealPath("/");
-		Part p = request.getPart("filename");
+		Part p = request.getPart("addFile");
+		if(p==null) {
+			System.out.println("【文件上传】！ part=null");
+			response.sendRedirect("jsp_admin/admin_Module05_GameMng.jsp");
+		}
+			
 		String fname = getFilename(p);	//文件名
-		System.out.print("---上传文件名为："+fname);
+		System.out.print("【文件上传】---上传文件名为："+fname+" ; ");
 		if (p.getSize() > 100 * 1024 * 1024) {//100MB
 			p.delete();
 			System.out.println("! 文件太大。上传失败");
 		} else {
-			path = path + "\\game\\" + fname;
+			String path = "/game"+File.separator;
 			File f = new File(path);
+			path=f.getAbsolutePath();
+			
+			
+			ServletContext context = getServletContext();
+			String absolutePath = context.getRealPath(".metadata");
+			System.out.println(".metadata绝对路径: " + absolutePath);
+			
+//			context = getServletContext();
+//			path = context.getRealPath("/game") + File.separator;
+
+			System.out.println(" path="+path);
 			if (!f.exists()) {
 				f.mkdirs();
 			}
-			System.out.println(fname);
-			p.write(path + "\\" + fname);//写入文件
-			System.out.println("√ 上传成功。");
+			p.write("game/" + fname);//写入文件
+			System.out.println("√ 上传成功。位置在 "+path+"\\"+fname);
+
 		}
+		
+//		response.sendRedirect("jsp_admin/admin_Module05_GameMng.jsp");
+		request.getRequestDispatcher("jsp_admin/admin_Module05_GameMng.jsp").forward(request, response); 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

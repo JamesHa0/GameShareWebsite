@@ -63,33 +63,34 @@ function uploadBtn(button){
 //点击【提交上传按钮】触发该函数：
 function submitUploads() {
 console.log('上传处理中……');
-    var fileInput = document.getElementById('gameFileInput');
-    var file = fileInput.files[0]; // 获取选择的文件
-
-    if (file) {
-        var formData = new FormData();
-        formData.append('gameFile', file); 
-
-        fetch('../UploadGameServlet.do', {
-            method: 'POST',
-            body: formData 
-        })
-        .then(response => response.json()) 
-        .then(result => {
-            console.log('文件上传结果：', result);
-            if (result.success) {
-                alert('文件上传成功');
-            } else {
-                alert('文件上传失败：' + result.message);
-            }
-        })
-        .catch(error => {
-            console.error('文件上传请求失败：', error);
-            alert('文件上传请求失败');
-        });
-    } else {
-        alert('未选择文件。');
-    }
+	document.getElementById('addForm').submit();
+//    var fileInput = document.getElementById('gameFileInput');
+//    var file = fileInput.files[0]; // 获取选择的文件
+//
+//    if (file) {
+//        var formData = new FormData();
+//        formData.append('gameFile', file); 
+//
+//        fetch('../UploadGameServlet.do', {
+//            method: 'POST',
+//            body: formData 
+//        })
+//        .then(response => response.json()) 
+//        .then(result => {
+//            console.log('文件上传结果：', result);
+//            if (result.success) {
+//                alert('文件上传成功');
+//            } else {
+//                alert('文件上传失败：' + result.message);
+//            }
+//        })
+//        .catch(error => {
+//            console.error('文件上传请求失败：', error);
+//            alert('文件上传请求失败');
+//        });
+//    } else {
+//        alert('未选择文件。');
+//    }
 }
 
 
