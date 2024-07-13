@@ -20,7 +20,7 @@
 	<div class="dowebok" id="dowebok">
 		<!-- 注册 -->
 		<div class="form-container sign-up">
-			<form action="<%=request.getContextPath() %>/RegistServlet.do"
+			<form action="<%=request.getContextPath()%>/RegisterServlet.do"
 				method="post" class="register">
 				<h1>注册</h1>
 				<input type="text" id="uname" name="uname" placeholder="用户名" /> <input
@@ -28,7 +28,9 @@
 					type="password" id="upsw" name="upsw" placeholder="请输入密码" /> <input
 					type="password" id="second_pwd" name="second_pwd"
 					placeholder="请再次输入密码" /> <input type="email" id="uemail"
-					name="uemail" placeholder="邮箱地址">
+					name="uemail" placeholder="邮箱地址"><input name="checkinput"
+					placeholder="点击下方图片刷新" value="" class="checkinput"> <img
+					id="checkinput" src="CheckCodeServlet" />
 
 				<!-- <input type="radio" id="man" checked="checked" name="ugender"/>男<input type="radio" id="woman" name="ugender">女
                     
