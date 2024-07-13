@@ -35,6 +35,7 @@ console.log('点击了提交按钮。');
     })
     .then(response => {
         if (!response.ok) {
+        	location.reload();
             throw new Error('增添失败');
         }else{
 			location.reload();
