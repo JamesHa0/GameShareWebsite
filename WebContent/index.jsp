@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ page import="game.bean.User"%>
 <html>
 <head>
 <title>GameShareWebsite</title>
@@ -18,19 +19,23 @@
 			</div>
 			<div class="login">
 				<%
-					String userName = (String)session.getAttribute("Login_uname");
-					if(userName == null){
-				%>
-				<div class="login2">
-					<a href="LR.jsp">登录&注册</a>
-				</div>
-				<%
-					} else {
+					String userName = (String) session.getAttribute("Login_uname");
+					User user = (User) session.getAttribute("Login_user");
+					if (user != null) {
+						userName = user.getUname();
 				%>
 				<div class="ulogin">
 					<p>欢迎您，${sessionScope.Login_uname}</p>
 				</div>
-				<div class="login2"><a href="logout.jsp">登出</a></div>
+				<div class="login2">
+					<a href="logout.jsp">登出</a>
+				</div>
+				<%
+					} else {
+				%>
+				<div class="login2">
+					<a href="LR.jsp">登录&注册</a>
+				</div>
 				<%
 					}
 				%>
@@ -50,20 +55,15 @@
 		<div class="picture">
 			<div class="picture-area">
 				<ul id="item">
-					<li class="item">
-						<img src="images/game/1091500/1.jpg" >
+					<li class="item"><img src="images/game/1091500/1.jpg">
 					</li>
-					<li class="item">
-						<img src="images/game/1086940/1.jpg" >
+					<li class="item"><img src="images/game/1086940/1.jpg">
 					</li>
-					<li class="item">
-						<img src="images/game/1245620/1.jpg" >
+					<li class="item"><img src="images/game/1245620/1.jpg">
 					</li>
-					<li class="item">
-						<img src="images/game/1174180/1.jpg" >
+					<li class="item"><img src="images/game/1174180/1.jpg">
 					</li>
-					<li class="item">
-						<img src="images/game/2358720/1.jpg" >
+					<li class="item"><img src="images/game/2358720/1.jpg">
 					</li>
 				</ul>
 			</div>
@@ -78,7 +78,7 @@
 			</ul>
 		</div>
 		<div class="content">
-		<div class="box_tit w">
+			<div class="box_tit w">
 				<h2 class="title">&emsp;本站游戏</h2>
 				<div class="content_pohot">
 					<ul>
@@ -162,8 +162,7 @@
 						</a></li>
 						<li class="game_tu"><a href="DetailServlet?gid=49520">
 								<div class="ph">
-									<img
-										src="images/game/49520/1.jpg">
+									<img src="images/game/49520/1.jpg">
 								</div>
 								<div class="na">无主之地2</div>
 						</a></li>
