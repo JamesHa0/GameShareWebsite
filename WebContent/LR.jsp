@@ -20,17 +20,15 @@
 	<div class="dowebok" id="dowebok">
 		<!-- 注册 -->
 		<div class="form-container sign-up">
-			<form action="<%=request.getContextPath()%>/RegisterServlet.do"
+			<form action="<%=request.getContextPath() %>/RegisterServlet.do"
 				method="post" class="register">
 				<h1>注册</h1>
-				<input type="text" id="uname" name="uname" placeholder="用户名" />
-				<input type="text" id="utel" name="utel" placeholder="手机号（必填）" /> 
-				<input
-					type="password" id="upsw" name="upsw" placeholder="请输入密码" /> 
-					<input type="password" id="second_pwd" name="second_pwd" placeholder="请再次输入密码" /> 
-					<input type="email" id="uemail" name="uemail" placeholder="邮箱地址">
-					<input name="checkinput" placeholder="点击下方图片刷新" value="" class="checkinput"> 
-					<img id="checkinput" src="CheckCodeServlet" />
+				<input type="text" id="uname" name="uname" placeholder="用户名" /> <input
+					type="text" id="utel" name="utel" placeholder="手机号（必填）" /> <input
+					type="password" id="upsw" name="upsw" placeholder="请输入密码" /> <input
+					type="password" id="second_pwd" name="second_pwd"
+					placeholder="请再次输入密码" /> <input  id="uemail"
+					name="uemail" placeholder="邮箱地址"><!--  type="email"-->
 
 				<!-- <input type="radio" id="man" checked="checked" name="ugender"/>男<input type="radio" id="woman" name="ugender">女
                     
@@ -43,11 +41,11 @@
 		<div class="form-container sign-in">
 			<form action="LoginServlet.do" method="post" class="sign">
 				<h1>登录</h1>
-				<input type="text" name="utel" placeholder="手机号">
-				<input type="password" name="upsw" placeholder="密码">
-				<input name="checkinput" placeholder="点击下方图片刷新" value="" class="checkinput">
-				<img id="checkinput" src="CheckCodeServlet" />
-				<a href="jsp_admin/admin_login.jsp">管理员登录</a>
+				<input type="text" name="utel" placeholder="手机号"> <input
+					type="password" name="upsw" placeholder="密码"> <input
+					name="checkinput" placeholder="点击下方图片刷新" value=""
+					class="checkinput"> <img id="checkinput"
+					src="CheckCodeServlet" /> <a href="jsp_admin/admin_login.jsp">管理员登录</a>
 
 				<button>登录</button>
 			</form>

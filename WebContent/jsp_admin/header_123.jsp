@@ -18,20 +18,16 @@ System.out.println("————————————————————
 	request.setAttribute("path", path);
 	session.setAttribute("path", path);
 	String query=request.getParameter("query");
+	
 	if(allUsers == null){//对象为空
-		if("queryAll".equals(query)){//全查
+	    System.out.println("【主页检测】空   ：allUsers为空。query=" + query);
+		if("queryAll".equals(query) || query == null){ // 自动全查 和 手动全查
 			request.getRequestDispatcher("../QueryAllUserServlet.do?path="+path).forward(request, response);
-		}else if("none".equals(query)){//没查到
-			//pass
-		}else if("get_it".equals(query)){//单查
-			//pass
-		}else if(query == null){//根本没单查，只是正常全查显示
-			request.getRequestDispatcher("../QueryAllUserServlet.do?path="+path).forward(request, response);
-		}
-		System.out.println("[null] 01 测试：allUsers为空。query="+query);
-		
+		}else {
+	        // query = none（没查到） 或 get_it（查到了）。不做任何处理。
+	    }
 	}else{
-		System.out.println("√ 01 测试：allUsers非空。query="+query);
+	    System.out.println("【主页检测】√   ：allUsers非空。query=" + query);
 	}
 %>
 </body>

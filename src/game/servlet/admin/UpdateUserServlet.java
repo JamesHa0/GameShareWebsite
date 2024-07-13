@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import game.bean.User;
+import game.bean.UserLog;
 import game.dao.UserDaoImpl;
 import game.other.MD5;
 
@@ -26,6 +27,7 @@ public class UpdateUserServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	UserLog userLog = new UserLog();
         
         String uid = request.getParameter("uid");
         String uname = request.getParameter("uname");
@@ -46,20 +48,30 @@ public class UpdateUserServlet extends HttpServlet {
                 System.out.println("！Servlet-update：加密报错。");
             }
         }
-
+        
+        //测试-暂时
+		//User Login_user=(User) session.getAttribute("Login_user");
+		//String Login_uid=Login_user.getUid();
+		String Login_uid="114514";
+		//String Login_urole=Login_user.getUrole();
+		String Login_urole="admin";
+		//String Login_uname=Login_user.getUname();
+		String Login_uname="管理员先生";
+		
         User user = new User(uid, uname, utel, uemail, urole, ugender, uaddress, upsw, upoint);
         try {
             int updateResult = daoImp.updateUserByUid(user); 
             if(updateResult<=0) {
             	System.out.println("!插入失败。");
+				userLog.logOperation(Login_uid,Login_uname, Login_urole,  "修改User信息", "失败");
             	response.setStatus(500);//500了
             } else {
+				userLog.logOperation(Login_uid,Login_uname, Login_urole,  "修改User信息", "成功");
             	response.setStatus(200);//200万岁
             }
         } catch (Exception e) {
-            System.out.println("!Servlet:update时报错。");
+            System.out.println("!500 Servlet-user-update");
             response.setStatus(500);
-            e.printStackTrace();
         }
     }
 

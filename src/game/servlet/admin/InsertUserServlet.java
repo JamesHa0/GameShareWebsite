@@ -51,6 +51,7 @@ public class InsertUserServlet extends HttpServlet {
     		String Login_urole="admin";
     		//String Login_uname=Login_user.getUname();
     		String Login_uname="管理员先生";
+    		
  			try {
  				UserDaoImpl userdao =new UserDaoImpl();
  				User user_test=userdao.queryUserByUtel(utel);
