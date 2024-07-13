@@ -15,55 +15,55 @@ $(function (){
         $("#dowebok").removeClass("right-panel-active");
     });
 	// 表单验证
-	$(".register").validate({
-		rules:{
-			utel:{
-				required: true,
-				rangelength:[11,11],
-			},
-			password:{
-				required: true,
-				rangelength:[8,20],
-			},
-			second_pwd:{
-				required: true,
-				rangelength:[8,20],
-				equalTo:"#upsw",
-			}
-		},
-		messages:{
-			utel:{
-				required:"手机号码不能为空",
-				rangelength:"请输入正确的手机号",
-			},
-			password:{
-				required:'密码不能为空',
-				rangelength:"密码长度在8~20位",
-			},
-			second_pwd:{
-				required:'密码不能为空',
-				rangelength:"密码长度在8~20位",
-				equalTo:'两次密码不同',
-			},
-		}
-	});
-	$(".sign").validate({
-		rules:{
-			utel:{
-				required: true,
-				rangelength:[11,11],
-			},
-			upsw:{
-				required: true,
-				rangelength:[8,20],
-			},
-		},
-		messages:{
-			utel:'请输入手机号',
-			upsw:{
-				required:'密码不能为空',
-				rangelength:"密码长度在8~20位",
-			},
-		},
-	});
+//	$(".register").validate({
+//		rules:{
+//			utel:{
+//				required: true,
+//				rangelength:[11,11],
+//			},
+//			password:{
+//				required: true,
+//				rangelength:[8,20],
+//			},
+//			second_pwd:{
+//				required: true,
+//				rangelength:[8,20],
+//				equalTo:"#upsw",
+//			}
+//		},
+//		messages:{
+//			utel:{
+//				required:"手机号码不能为空",
+//				rangelength:"请输入正确的手机号",
+//			},
+//			password:{
+//				required:'密码不能为空',
+//				rangelength:"密码长度在8~20位",
+//			},
+//			second_pwd:{
+//				required:'密码不能为空',
+//				rangelength:"密码长度在8~20位",
+//				equalTo:'两次密码不同',
+//			},
+//		}
+//	});
+//	$(".sign").validate({
+//		rules:{
+//			utel:{
+//				required: true,
+//				rangelength:[11,11],
+//			},
+//			upsw:{
+//				required: true,
+//				rangelength:[8,20],
+//			},
+//		},
+//		messages:{
+//			utel:'请输入手机号',
+//			upsw:{
+//				required:'密码不能为空',
+//				rangelength:"密码长度在8~20位",
+//			},
+//		},
+//	});
 });

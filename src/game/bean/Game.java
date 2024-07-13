@@ -2,6 +2,19 @@ package game.bean;
 /**
  * Game实体类
  */
+
+/*
+gid;          
+gname;        
+gprice;       
+gdeveloper;   
+gpublisher;   
+grelease_date;
+gdescription; 
+gzhname;      
+gtag;       
+*/  
+
 public class Game {
 	private String gid;
 	private String gname;
@@ -16,7 +29,8 @@ public class Game {
 	public Game() {
 		super();
 	}
-
+	
+	// 全9参
 	public Game(String gid, String gname, String gprice, String gdeveloper, String gpublisher, String grelease_date,
 			String gdescription, String gzhname, String gtag) {
 		super();
@@ -30,9 +44,21 @@ public class Game {
 		this.gzhname = gzhname;
 		this.gtag = gtag;
 	}
+	
 
-
-
+	//8参（除自增gid。用于insert）
+	public Game(String gname, String gprice, String gdeveloper, String gpublisher, String grelease_date,
+			String gdescription, String gzhname, String gtag) {
+		super();
+		this.gname = gname;
+		this.gprice = gprice;
+		this.gdeveloper = gdeveloper;
+		this.gpublisher = gpublisher;
+		this.grelease_date = grelease_date;
+		this.gdescription = gdescription;
+		this.gzhname = gzhname;
+		this.gtag = gtag;
+	}
 
 	public String getGid() {
 		return gid;
@@ -91,6 +117,13 @@ public class Game {
 
 	public void setGtag(String gtag) {
 		this.gtag = gtag;
+	}
+
+	@Override
+	public String toString() {
+		return "Game [gid=" + gid + ", gname=" + gname + ", gprice=" + gprice + ", gdeveloper=" + gdeveloper
+				+ ", gpublisher=" + gpublisher + ", grelease_date=" + grelease_date + ", gdescription=" + gdescription
+				+ ", gzhname=" + gzhname + ", gtag=" + gtag + "]";
 	}
 	
 	

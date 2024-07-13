@@ -38,7 +38,9 @@ public class GameDaoImpl implements GameDao{
                 Game game = new Game(gid, gname, gprice, gdeveloper, gpublisher, grelease_date, gdescription, gzhname, gtag);
                 list.add(game);
             }
-        } finally {
+        }catch (Exception e) {
+        	System.out.println("!500 imp-game-queryAll");
+		}  finally {
             if (rs != null) rs.close();
             if (ps != null) ps.close();
             if (conn != null) conn.close();
@@ -75,7 +77,9 @@ public class GameDaoImpl implements GameDao{
                 String gtag = rs.getString("gtag");
                 game = new Game(gid, gname, gprice, gdeveloper, gpublisher, grelease_date, gdescription, gzhname, gtag);
             }
-        } finally {
+        }catch (Exception e) {
+        	System.out.println("!500 imp-game-queryByid");
+		}  finally {
             if (rs != null) rs.close();
             if (ps != null) ps.close();
             if (conn != null) conn.close();
@@ -109,7 +113,9 @@ public class GameDaoImpl implements GameDao{
                 String gtag = rs.getString("gtag");
                 game = new Game(gid, gname, gprice, gdeveloper, gpublisher, grelease_date, gdescription, gzhname, gtag);
             }
-        } finally {
+        }catch (Exception e) {
+        	System.out.println("!500 imp-game-queryByname");
+		}  finally {
             if (rs != null) rs.close();
             if (ps != null) ps.close();
             if (conn != null) conn.close();
@@ -120,28 +126,34 @@ public class GameDaoImpl implements GameDao{
 	
 	//************************************************************************8
 	
-	//插入
+	//插入（8参，缺gid）
 	@Override
     public int insertGame(Game game) throws Exception {
         Connection conn = null;
         PreparedStatement ps = null;
         int affectedRows = 0;
-
+System.out.println("---待insert数据:"+game);
         try {
             conn = getConnection();
-            String sql = "insert into Game(gid,gname,gprice,gdeveloper,gpublisher,grelease_date,gdescription,gzhname,gtag) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "insert into gameinfo(gname,gprice,gdeveloper,gpublisher,"
+            		+ "grelease_date,gdescription,gzhname,gtag) values ( ?, ?, ?, ?, ?, ?, ?, ?)";
             ps = conn.prepareStatement(sql);
-            ps.setString(1, game.getGid());
-            ps.setString(2, game.getGname());
-            ps.setString(3, game.getGprice());
-            ps.setString(4, game.getGdeveloper());
-            ps.setString(5, game.getGpublisher());
-            ps.setString(6, game.getGrelease_date());
-            ps.setString(7, game.getGdescription());
-            ps.setString(8, game.getGzhname());
-            ps.setString(9, game.getGtag());
+            ps.setString(1, game.getGname());
+            
+            String price=game.getGprice();if(price==null || "".equals(price))price="0";
+            ps.setString(2, price);
+            ps.setString(3, game.getGdeveloper());
+            ps.setString(4, game.getGpublisher());
+            
+            ps.setString(5, game.getGrelease_date() );
+            ps.setString(6, game.getGdescription());
+            ps.setString(7, game.getGzhname());
+            ps.setString(8, game.getGtag());
             affectedRows = ps.executeUpdate();
-        } finally {
+        }catch (Exception e) {
+        	System.out.println("!500 imp-game-insert");
+		} 
+        finally {
             if (ps != null) ps.close();
             if (conn != null) conn.close();
         }
@@ -155,13 +167,17 @@ public class GameDaoImpl implements GameDao{
         Connection conn = null;
         PreparedStatement ps = null;
         int affectedRows = 0;
-
+System.out.println("待update数据:"+game);
         try {
             conn = getConnection();
-            String sql = "update Game set gname=?, gprice=?, gdeveloper=?, gpublisher=?, grelease_date=?, gdescription=?, gzhname=?, gtag=? where gid=?";
+            String sql = "update gameinfo set gname=?, gprice=?, gdeveloper=?, gpublisher=?, grelease_date=?, gdescription=?, gzhname=?, gtag=? where gid=?";
             ps = conn.prepareStatement(sql);
+            
             ps.setString(1, game.getGname());
-            ps.setString(2, game.getGprice());
+            
+            String price=game.getGprice();if(price==null || "".equals(price))price="0";
+            ps.setString(2, price);
+            
             ps.setString(3, game.getGdeveloper());
             ps.setString(4, game.getGpublisher());
             ps.setString(5, game.getGrelease_date());
@@ -170,7 +186,9 @@ public class GameDaoImpl implements GameDao{
             ps.setString(8, game.getGtag());
             ps.setString(9, game.getGid());
             affectedRows = ps.executeUpdate();
-        } finally {
+        }catch (Exception e) {
+        	System.out.println("!500 imp-game-update");
+		}  finally {
             if (ps != null) ps.close();
             if (conn != null) conn.close();
         }
@@ -193,7 +211,9 @@ public class GameDaoImpl implements GameDao{
 	            ps = conn.prepareStatement(sql);
 	            ps.setString(1, gid);
 	            affectedRows = ps.executeUpdate();
-	        } finally {
+	        }catch (Exception e) {
+	        	System.out.println("!500 imp-game-delete");
+			}  finally {
 	            if (ps != null) ps.close();
 	            if (conn != null) conn.close();
 	        }

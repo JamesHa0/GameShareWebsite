@@ -36,7 +36,9 @@
 </c:if>
 
 <c:if test="${param.query != 'none'}">
-	<button id="addBtn" onclick="addBtn(this)">增添记录</button>
+
+	<button id="addBtn" onclick="addBtn(this)">增添用户</button>
+	
   <table border="" style="border-collapse: collapse; border: 1px solid black;">
     <tr>
       <th>id</th>
