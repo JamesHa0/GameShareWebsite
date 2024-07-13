@@ -1,9 +1,7 @@
 package game.servlet.admin;
 
 import java.io.*;
-import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 @WebServlet("/UploadGameServlet.do" )
-@MultipartConfig(location = "D:\\", fileSizeThreshold = 1024)
+@MultipartConfig(location = "D:\\", fileSizeThreshold = 1024*100)//100KB
 public class UploadGameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -27,35 +25,24 @@ public class UploadGameServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		String path = this.getServletContext().getRealPath("/");
-		String userName = request.getParameter("username");
-		String userId = request.getParameter("userId");
-		String fType = request.getParameter("filetype");
-		String date = request.getParameter("userDate");
 		Part p = request.getPart("filename");
-		String message = "";
-		if (p.getSize() > 10 * 1024 * 1024) {//限制大小10MB
+		String fname = getFilename(p);	//文件名
+		System.out.print("---上传文件名为："+fname);
+		if (p.getSize() > 100 * 1024 * 1024) {//100MB
 			p.delete();
-			message = "文件太大，不能上传！";
+			System.out.println("! 文件太大。上传失败");
 		} else {
-			path = path + "\\source\\" + userId +"\\"+ fType;
+			path = path + "\\game\\" + fname;
 			File f = new File(path);
 			if (!f.exists()) {
 				f.mkdirs();
 			}
-			String fname = getFilename(p);
 			System.out.println(fname);
-			p.write(path + "\\" + fname);
-
-			fileBean fb = new fileBean(fname,fType,userName,date,userId);//将参数存入fileBean传递
-			request.setAttribute("fb", fb);
-			request.getRequestDispatcher("/fileDownload.jsp");
-			
-			message = "文件上传成功！";
+			p.write(path + "\\" + fname);//写入文件
+			System.out.println("√ 上传成功。");
 		}
-		request.setAttribute("message", message);
-		RequestDispatcher rd = request.getRequestDispatcher("/fileDownload.jsp");
-		rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

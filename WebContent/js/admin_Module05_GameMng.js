@@ -13,13 +13,15 @@ function addBtn(button){
         input.classList.remove('hidden')
     });
     //改变按钮：
-      button.innerHTML = '提交'; //改为提交按钮
-      button.setAttribute('onclick', 'submitAdds()');//修改点击函数
+      button.innerHTML = '提交并选择文件上传'; //改为上传按钮
+      button.setAttribute('onclick', 'uploadBtn(this)');//修改点击函数
 }
 
-//点击【提交按钮】触发该函数：
-function submitAdds() {
-console.log('点击了提交按钮。');
+//点击【提交并选择文件上传】触发该函数，提交文字数据，插入数据库：
+function uploadBtn(button){
+	console.log('点击了提交并上传按钮。');
+	
+	//【先进行：】文本数据提交到servlet：
 	var row=document.getElementById("addRow"); // 获取 增添行
     var inputs = row.querySelectorAll('input');
     var data = new URLSearchParams();
@@ -36,29 +38,59 @@ console.log('点击了提交按钮。');
     .then(response => {
         if (!response.ok) {
 			location.reload();
-            throw new Error('增添失败，状态码：' + response.status);
+			alert('增添失败，状态码：' + response.status);
         }else{
 			location.reload();
-			alert('增添成功');
+			console.log('增添成功')
+			//document.getElementById('gameFileInput').click(); //自动点击文件上传按钮
 			
+			//【后进行：】文件上传功能
+			document.getElementById('gameFileInput').click(); //自动点击文件上传按钮
+			//submitUploads(this);
 		}
         return response.text();
     })
-    .then(result => {
-        console.log('服务器发来的响应数据：', result);
-    })
-    .catch(error => {
-        console.error('请求失败：', error);
-        alert('请求失败：' + error.message);
-    })
     .finally(()=>{
-        // 重置【增添按钮】
-        var button =document.getElementById("addBtn");
-        button.innerText = '继续增添';
-        button.onclick = function() { addBtn(row); };
+        // 改变按钮
+        button.innerText = 'XXX';
+        button.setAttribute('onclick', 'submitUploads(this)');
 	});
+	
 }
 
+
+
+//点击【提交上传按钮】触发该函数：
+function submitUploads() {
+console.log('上传处理中……');
+    var fileInput = document.getElementById('gameFileInput');
+    var file = fileInput.files[0]; // 获取选择的文件
+
+    if (file) {
+        var formData = new FormData();
+        formData.append('gameFile', file); 
+
+        fetch('../UploadGameServlet.do', {
+            method: 'POST',
+            body: formData 
+        })
+        .then(response => response.json()) 
+        .then(result => {
+            console.log('文件上传结果：', result);
+            if (result.success) {
+                alert('文件上传成功');
+            } else {
+                alert('文件上传失败：' + result.message);
+            }
+        })
+        .catch(error => {
+            console.error('文件上传请求失败：', error);
+            alert('文件上传请求失败');
+        });
+    } else {
+        alert('未选择文件。');
+    }
+}
 
 
 //点击【提交按钮】触发该函数：

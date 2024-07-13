@@ -51,47 +51,12 @@ if (allGames == null) { // 对象为空
 </c:if>
 
 <c:if test="${param.query != 'none'}">
-
+	
+	<!-- 增添文字数据按钮： -->
     <button id="addBtn" onclick="addBtn(this)">增添游戏</button>
+    <!-- 上传文件input按钮： -->
+    <input type="file" onchange="submitUploads()" id="gameFileInput" style="display:none;" />
     
-    <form action="fileUpload.do" enctype="multipart/form-data"
-		method="post">
-		<table align="center">
-			<tr>
-				<td colspan="2" align="center"><h4>文件上传</h4></td>
-			</tr>
-			<tr>
-				<td><h4>会员号:</h4></td>
-				<td><input type="text" name="userId" size="30" /></td>
-			</tr>
-
-			<tr>
-				<td><h4>姓名:</h4></td>
-				<td><input type="text" name="username" size="30" /></td>
-			</tr>
-
-			<tr>
-				<td><h4>文件类型:</h4></td>
-				<td><select name="filetype">
-						<option value="" selected="selected">请选择文件类型</option>
-						<option value="file">普通文件</option>
-						<option value="img">图片文件</option>
-						<option value="mp3">音频文件</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td><h4>上传时间:</h4></td>
-				<td><input name="userDate" type="date" /></td>
-			</tr>
-			<tr>
-				<td><h4>文件名:</h4></td>
-				<td><input type="file" name="filename" size="30" /></td>
-			</tr>
-			<tr>
-				<td><input type="submit" value="提交" /></td>
-			</tr>
-		</table>
-	</form>
     
     <table border="" style="border-collapse: collapse; border: 1px solid black;">
         <tr>
@@ -107,21 +72,24 @@ if (allGames == null) { // 对象为空
 		      <th>删除操作</th>
 		      <th>修改操作</th>
         </tr>
-        
+	        
+	        
+	    <!-- 上传模块： -->
+	    <jsp:include page="admin_upload.jsp" />
         <!-- 增添栏 -->
-        <tr class="hidden" id="addRow">
-            <th>——</th>
-            <td><input class="hidden" name="gname"></td>
-            <td><input class="hidden" name="gprice"></td>
-            <td><input class="hidden" name="gdeveloper"></td>
-            <td><input class="hidden" name="gpublisher"></td>
-            <td><input class="hidden" name="grelease_date"></td>
-            <td><input class="hidden" name="gdescription"></td>
-            <td><input class="hidden" name="gzhname"></td>
-            <td><input class="hidden" name="gtag"></td>  <!--  8 -->
-	        <td>———— </td>
-	        <td>———— </td>
-        </tr>
+<!--         <tr class="hidden" id="addRow"> -->
+<!--             <th>——</th> -->
+<!--             <td><input class="hidden" name="gname"></td> -->
+<!--             <td><input class="hidden" name="gprice"></td> -->
+<!--             <td><input class="hidden" name="gdeveloper"></td> -->
+<!--             <td><input class="hidden" name="gpublisher"></td> -->
+<!--             <td><input class="hidden" name="grelease_date"></td> -->
+<!--             <td><input class="hidden" name="gdescription"></td> -->
+<!--             <td><input class="hidden" name="gzhname"></td> -->
+<!--             <td><input class="hidden" name="gtag"></td>   8 -->
+<!-- 	        <td>———— </td> -->
+<!-- 	        <td>———— </td> -->
+<!--         </tr> -->
         
         <c:forEach items="${allGames}" var="game">
             <tr>
