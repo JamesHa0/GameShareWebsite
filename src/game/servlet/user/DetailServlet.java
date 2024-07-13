@@ -32,14 +32,16 @@ public class DetailServlet extends HttpServlet {
 		try {
 			game = GameImp.queryGameByGid(gid);
 		} catch (Exception e) {
-			
+			e.printStackTrace();
+			System.out.println(game.toString());
 		}
 		if(game==null) {
 			request.setAttribute("msg", "gamenotfound");
 			request.getRequestDispatcher("detail.jsp").forward(request, response);
+		}else {
+			request.setAttribute("game", game);
+			request.getRequestDispatcher("detail.jsp").forward(request, response);
 		}
-		request.setAttribute("game", game);
-		request.getRequestDispatcher("detail.jsp").forward(request, response);
 		
 		
 	}
