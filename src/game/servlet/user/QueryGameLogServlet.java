@@ -20,7 +20,7 @@ import game.bean.User;
 import game.dao.GameDaoImpl;
 import game.dao.PurchaseDaoImpl;
 
-@WebServlet("/QueryGameLogServlet")
+@WebServlet("/QueryGameLogServlet.do")
 public class QueryGameLogServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

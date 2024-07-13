@@ -14,7 +14,7 @@ import game.bean.Game;
 import game.bean.User;
 import game.dao.GameDaoImpl;
 
-@WebServlet("/DetailServlet")
+@WebServlet("/DetailServlet.do")
 public class DetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

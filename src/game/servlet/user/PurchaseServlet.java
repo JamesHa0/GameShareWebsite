@@ -16,7 +16,7 @@ import game.dao.GameDaoImpl;
 import game.dao.PurchaseDaoImpl;
 import game.dao.UserDaoImpl;
 
-@WebServlet("/PurchaseServlet")
+@WebServlet("/PurchaseServlet.do")
 public class PurchaseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

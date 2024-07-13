@@ -14,7 +14,7 @@ import game.bean.User;
 import game.dao.GameDaoImpl;
 import game.dao.PurchaseDaoImpl;
 
-@WebServlet("/QueryPurchaseServlet")
+@WebServlet("/QueryPurchaseServlet.do")
 public class QueryPurchaseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
