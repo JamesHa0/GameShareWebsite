@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import game.bean.User;
 import game.bean.UserLog;
 import game.dao.GameDaoImpl; // 假设您有一个GameDaoImpl来处理游戏数据
 
@@ -29,13 +30,13 @@ public class DeleteGameServlet extends HttpServlet {
         System.out.println("---前端传来的gid为："+in_gid);
 
         //测试-暂时
-		//User Login_user=(User) session.getAttribute("Login_user");
-		//String Login_uid=Login_user.getUid();
-		String Login_uid="114514";
-		//String Login_urole=Login_user.getUrole();
-		String Login_urole="admin";
-		//String Login_uname=Login_user.getUname();
-		String Login_uname="管理员先生";
+		User Login_user=(User) session.getAttribute("Login_user");
+		String Login_uid=Login_user.getUid();
+		String Login_urole=Login_user.getUrole();
+		String Login_uname=Login_user.getUname();
+//		String Login_uid="114514";
+//		String Login_urole="admin";
+//		String Login_uname="管理员先生";
 
         try {
             if (gameDao.deleteGameByGId(in_gid) <= 0) { 

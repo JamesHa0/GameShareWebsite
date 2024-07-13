@@ -30,13 +30,13 @@ public class DeleteUserServlet extends HttpServlet {
 System.out.println("---前端传来的uid为："+in_uid);
 
 		//测试-暂时
-		//User Login_user=(User) session.getAttribute("Login_user");
-		//String Login_uid=Login_user.getUid();
-		String Login_uid="114514";
-		//String Login_urole=Login_user.getUrole();
-		String Login_urole="admin";
-		//String Login_uname=Login_user.getUname();
-		String Login_uname="管理员先生";
+		User Login_user=(User) session.getAttribute("Login_user");
+		String Login_uid=Login_user.getUid();
+		String Login_urole=Login_user.getUrole();
+		String Login_uname=Login_user.getUname();
+//		String Login_uid="114514";
+//		String Login_urole="admin";
+//		String Login_uname="管理员先生";
 		try {
 			if(userdao.deleteUser(in_uid) <=0) {
 				System.out.println("！500 删除student失败:"+in_uid);
@@ -64,6 +64,7 @@ System.out.println("---前端传来的uid为："+in_uid);
 			}
 			
 		} catch (Exception e) {
+			userLog.logOperation(Login_uid,Login_uname, Login_urole,  "管理员删除用户:500", "成功");
 			System.out.println("servlet-deleteuser：删除时报错。");
 		}
 	}

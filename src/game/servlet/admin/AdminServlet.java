@@ -39,7 +39,7 @@ public class AdminServlet extends HttpServlet {
 			System.out.println("servlet:login:Md5异常");
 		}
 		
-System.out.println("login页面前端传递的参数："	//测试用
+		System.out.println("login页面前端传递的参数："	//测试用
 		+ "\n	 utel:"+in_utel
 		+ "\n	 checkinput:"+in_checkcode
 		+ "\n	 upsw:"+in_upsw);
@@ -75,7 +75,7 @@ System.out.println("login页面前端传递的参数："	//测试用
 						request.getRequestDispatcher("error.jsp").forward(request, response);
 					}else {
 						//是管理员，检查密码是否正确：
-System.out.println("用户输入密码：\t"+in_upsw+"\n应输入的密码：\t"+upsw);
+						System.out.println("用户输入密码：\t"+in_upsw+"\n应输入的密码：\t"+upsw);
 						if(!in_upsw.equals(upsw)){//密码错误
 							userLog.logOperation(uid,uname, urole,  "管理员登录：密码错误", "失败");
 							request.setAttribute("msg", "密码错误。");
@@ -85,8 +85,8 @@ System.out.println("用户输入密码：\t"+in_upsw+"\n应输入的密码：\t"
 								//密码正确，登录成功：
 								System.out.println("登录成功。");
 								userLog.logOperation(uid,uname, urole,  "管理员登录：密码正确", "成功");
-								session.setAttribute("uid", uid);//session标记为登录状态，把uid和user对象存入session：***********************************************************
-								session.setAttribute("user", user);
+								session.setAttribute("Login_uid", uid);//session标记为登录状态，把uid和user对象存入session：***********************************************************
+								session.setAttribute("Login_user", user);
 								response.sendRedirect("jsp_admin/admin.jsp");
 						}
 					}
@@ -94,7 +94,7 @@ System.out.println("用户输入密码：\t"+in_upsw+"\n应输入的密码：\t"
 				
 			} catch (Exception e) {
 				e.printStackTrace();
-				System.out.println("Servlet:login报错");
+				System.out.println("!500 Servlet:login报错");
 			}
 		}
 	}

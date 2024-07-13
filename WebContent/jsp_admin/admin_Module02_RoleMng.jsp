@@ -68,7 +68,7 @@ table input {
 		    	<c:if test="${user.urole eq 'admin'}">checked</c:if>>
 	    </td>
 	    <!-- 修改按钮 -->
-	    <td><button class="updateBtn" onclick="enableEditing(this.parentNode.parentNode)">修改</button></td>
+	    <td><button class="updateBtn" onclick="updateBtn(this.parentNode.parentNode)">修改</button></td>
        
 	    <!-- 隐藏： -->
 	    <td class="none"><input class="none" name="uid"  		value="${user.uid}"    ></td>

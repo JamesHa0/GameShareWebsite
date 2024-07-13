@@ -1,7 +1,6 @@
 package game.servlet.admin;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,9 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import game.dao.GameDaoImpl; // 假设您有一个GameDaoImpl来处理游戏数据
-import game.other.MD5; // 假设MD5工具类可以用于加密
-import game.bean.Game; // 假设您有一个Game类来表示游戏信息
+import game.dao.GameDaoImpl; 
+import game.bean.Game;
+import game.bean.User;
 import game.bean.UserLog;
 
 @WebServlet("/InsertGameServlet.do")
@@ -40,13 +39,13 @@ Game in_game=new Game(gname, gprice, gdeveloper, gpublisher, grelease_date, gdes
 System.out.println("---insert，前端传来的数据："+in_game);
 
  		//测试-暂时
-		//User Login_user=(User) session.getAttribute("Login_user");
-		//String Login_uid=Login_user.getUid();
-		String Login_uid="114514";
-		//String Login_urole=Login_user.getUrole();
-		String Login_urole="admin";
-		//String Login_uname=Login_user.getUname();
-		String Login_uname="管理员先生";
+		User Login_user=(User) session.getAttribute("Login_user");
+		String Login_uid=Login_user.getUid();
+		String Login_urole=Login_user.getUrole();
+		String Login_uname=Login_user.getUname();
+//		String Login_uid="114514";
+//		String Login_urole="admin";
+//		String Login_uname="管理员先生";
 		
         
         try {

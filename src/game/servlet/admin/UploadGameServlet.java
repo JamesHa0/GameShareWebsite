@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import game.bean.Game;
+import game.bean.User;
+import game.bean.UserLog;
 
 @WebServlet("/UploadGameServlet.do" )
 @MultipartConfig(fileSizeThreshold = 1024*100)//100KB
@@ -41,14 +43,22 @@ public class UploadGameServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session=request.getSession();
+		UserLog userLog = new UserLog();
+		
+		//测试-暂时
+		User Login_user=(User) session.getAttribute("Login_user");
+		String Login_uid=Login_user.getUid();
+		String Login_urole=Login_user.getUrole();
+		String Login_uname=Login_user.getUname();
+//		String Login_uid="114514";
+//		String Login_urole="admin";
+//		String Login_uname="管理员先生";
 		
 		Part p = request.getPart("addFile");
 		Game game=(Game) (session.getAttribute("Insert_game")) ;
 		String gid=game.getGid();
-		
-		System.out.println("【文件上传】---gid="+gid);
-		
 		if(p==null) {
+            userLog.logOperation(Login_uid, Login_uname, Login_urole, "管理员上传游戏：游戏为空" , "失败");
 			System.out.println("【文件上传】！ part=null");
 			response.sendRedirect("jsp_admin/admin_Module05_GameMng.jsp");
 		}
@@ -62,6 +72,7 @@ public class UploadGameServlet extends HttpServlet {
 		if (p.getSize() > 100 * 1024 * 1024) {//100MB
 			p.delete();
 			System.out.println("! 文件太大。上传失败");
+            userLog.logOperation(Login_uid, Login_uname, Login_urole, "管理员上传游戏：游戏过大" , "失败");
 		} else {
 			String path = getUploadPath();
 			File f=new File(path);
@@ -70,6 +81,7 @@ public class UploadGameServlet extends HttpServlet {
 			}
 			p.write(path+File.separator+ fname);//写入文件
 			System.out.println("√ 上传成功。位置在 "+path+File.separator+fname);
+            userLog.logOperation(Login_uid, Login_uname, Login_urole, "管理员上传游戏：，游戏名：" + game.getGname(), "成功");
 
 		}
 		response.sendRedirect("jsp_admin/admin_Module05_GameMng.jsp"); 

@@ -23,7 +23,7 @@ window.onload=function readonly_cursor(){
 
 
 //点击【修改按钮】触发该函数：
-function enableEditing(row) {//row=td,td子节点为input
+function updateBtn(row) {//row=td,td子节点为input
 console.log('点击了修改按钮。');
 	//【input】取消只读：
      var radios=row.querySelectorAll('input[type="radio"]');
@@ -66,20 +66,22 @@ data.forEach(function(value, key) {
     
     
 //开始fetch：
-    fetch('UpdateUserServlet.do', {
+    fetch('../UpdateUserServlet.do', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded' 
         },
         body: data 
     })
-    .then(response => response.text()) 
-    .then(result => console.log(result))
-    .then(data => {
-        console.log('服务器发来的响应数据：', data);
-    })
-    .catch(error => {
-		alert('请求失败'+error);
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('修改失败');
+        }else{
+			location.reload();
+			alert('修改成功');
+			
+		}
+        return response.text();
     })
     .finally(()=>{
 		// 重置【input】为只读
@@ -89,6 +91,6 @@ data.forEach(function(value, key) {
         // 重置【修改按钮】
         var button = row.getElementsByClassName('updateBtn')[0];
         button.innerText = '修改';
-        button.onclick = function() { enableEditing(row); };
+        button.onclick = function() { updateBtn(row); };
 	});
 }
