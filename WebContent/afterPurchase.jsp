@@ -67,8 +67,8 @@
 					if (onumber == null) {
 				%>
 				<tr>
-					<td><a href="DetailServlet?gid=${gid }"><button>返回游戏详情页</button></a></td>
-					<td><a href="index.jsp"><button>返回首页</button></a></td>
+					<td><a href="DetailServlet?gid=${gid }"><button class="myButton">返回游戏详情页</button></a></td>
+					<td><a href="index.jsp"><button class="myButton">返回首页</button></a></td>
 				</tr>
 				<%
 					} else {
@@ -78,8 +78,8 @@
 					<td><%=onumber%></td>
 				</tr>
 				<tr>
-					<td><a href="DetailServlet?gid=${gid }"><button>返回游戏详情页</button></a></td>
-					<td><a href=""><button>点击下载</button></a></td>
+					<td><a href="DetailServlet?gid=${gid }"><button class="myButton">返回游戏详情页</button></a></td>
+					<td><a href=""><button class="myButton">点击下载</button></a></td>
 				</tr>
 				<%
 					}
