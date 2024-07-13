@@ -86,6 +86,29 @@
 	min-height: 500px;
 }
 
+.showPurchase {
+	paddinf:50px;
+}
+
+.showPurchase table{
+	text-align:center;
+	margin:auto;
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+}
+
+.showPurchase table th{
+	font-size:30px;
+	font-weight:bold;
+	margin:50px 0;
+}
+
+.showPurchase table td{
+	height:50px;
+}
 .new_table {
 	padding:50px 200px;
 }
