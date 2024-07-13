@@ -66,7 +66,7 @@
 			<% }else{ %>
 			<tr><td>是否购买？<br/>(当前账户剩余积分:<%=upoint %>)</td><td>您已购买此游戏</td></tr>
 			<tr><td>订单编号:</td><td>${onumber }</td></tr>
-			<tr><td>是否立即下载？</td><td><div id="steam"><a href=""><img  src="images/yes.png"/></a></div></td></tr>
+			<tr><td>是否立即下载？</td><td><div id="steam"><a href="DownloadGameServlet.do?gid=${game.gid }"><img  src="images/yes.png"/></a></div></td></tr>
 			<% } %>
 		</table>
 	</div>

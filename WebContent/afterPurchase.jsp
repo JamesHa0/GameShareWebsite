@@ -80,7 +80,7 @@
 				</tr>
 				<tr>
 					<td><a href="DetailServlet.do?gid=${gid }"><button class="myButton">返回游戏详情页</button></a></td>
-					<td><a href=""><button class="myButton">点击下载</button></a></td>
+					<td><a href="DownloadGameServlet.do?gid=${gid }"><button class="myButton">点击下载</button></a></td>
 				</tr>
 				<%
 					}
