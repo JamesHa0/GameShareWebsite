@@ -62,6 +62,9 @@
 						<td>${log.onumber}</td>
 					</tr>
 				</c:forEach>
+				<tr>
+					<td colspan="3"><a href="info.jsp">返回</a></td>
+				</tr>
 			</table>
 		</div>
 
