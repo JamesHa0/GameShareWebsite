@@ -96,13 +96,13 @@
 								<div class="na">魔塔2023</div>
 						</a></li>
 
-						<li class="game_tu"><a href="DetailServlet.do?gid=phone03">
+						<li class="game_tu"><a href="DetailServlet.do?gid=0">
 								<div class="ph">
 									<img src="images/gameNotFound.png">
 								</div>
 								<div class="na">待定</div>
 						</a></li>
-						<li class="game_tu"><a href="DetailServlet.do?gid=phone04">
+						<li class="game_tu"><a href="DetailServlet.do?gid=0">
 								<div class="ph">
 									<img src="images/gameNotFound.png">
 								</div>
