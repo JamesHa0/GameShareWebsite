@@ -82,7 +82,7 @@
 			<% if (gid.length() < 9 ){ %>
 			<tr><td>在steam上购买：</td><td><div id="steam"><a href="https://store.steampowered.com/app/${game.gid }"><img  src="images/steam.png"/></a></div></td></tr>
 			<% }else{%>
-			<tr><td>使用${game.gprice}积分兑换：</td><td><div id="steam"><a href="QueryPurchaseServlet?gid=${game.gid }"><img  src="images/download.jpg"/></a></div></td></tr>
+			<tr><td>使用${game.gprice}积分兑换：</td><td><div id="steam"><a href="QueryPurchaseServlet?gid=${game.gid }&uid=${sessionScope.Login_user.uid }"><img  src="images/download.jpg"/></a></div></td></tr>
 			<% }%>
 		</table>
 	</div>

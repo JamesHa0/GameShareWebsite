@@ -22,6 +22,13 @@ public class PurchaseServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		//验证是否处于登录状态
+		HttpSession session = request.getSession();
+		User isHaveUser = new User();
+		isHaveUser = (User)session.getAttribute("Login_user");
+		if (isHaveUser==null) {
+			request.getRequestDispatcher("LR.jsp").forward(request, response);
+		}
 		String gid = request.getParameter("gid");
 		String uid = request.getParameter("uid");
 		request.setAttribute("gid", gid);
@@ -80,7 +87,6 @@ public class PurchaseServlet extends HttpServlet {
 				try {
 					if(userDaoImpl.updateUserByUid(user) > 0) {
 						request.setAttribute("onumber", onumber);
-						HttpSession session = request.getSession();
 						request.setAttribute("msg", "购买成功！");
 						session.setAttribute("Login_user", user);
 						request.getRequestDispatcher("afterPurchase.jsp").forward(request, response);

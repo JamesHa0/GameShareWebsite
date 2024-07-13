@@ -1,9 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="game.bean.User"%>
+<%@ page import="game.bean.GameLog"%>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>个人信息</title>
+<title>购买记录</title>
 <link rel="stylesheet" type="text/css" href="css/public.css" />
 <link rel="stylesheet" type="text/css" href="css/game.css" />
 <script src="js/jquery-3.6.0.js" type="text/javascript" charset="utf-8"></script>
@@ -34,7 +36,7 @@
 					<a href="logout.jsp">登出</a>
 				</div>
 				<%
-					} else {
+					} else { 
 				%>
 				<script>window.location.href = "LR.jsp";</script>
 				<%
@@ -49,40 +51,17 @@
 		<div class="new_table">
 			<table>
 				<thead>
-					<td colspan="2" class="table_head" style="width: 600px;height: 60px;">个人信息</td>
+					<td class="table_head" style="width: 200px;height: 60px;">游戏名</td>
+					<td class="table_head" style="width: 200px;height: 60px;">购买时间</td>
+					<td class="table_head" style="width: 200px;height: 60px;">订单编号</td>
 				</thead>
-				<tr>
-					<td>用户ID:</td>
-					<td>${sessionScope.Login_user.uid }</td>
-				</tr>
-				<tr>
-					<td>用户名:</td>
-					<td>${sessionScope.Login_user.uname }</td>
-				</tr>
-				<tr>
-					<td>性别:</td>
-					<td>${sessionScope.Login_user.ugender }</td>
-				</tr>
-				<tr>
-					<td>注册手机号:</td>
-					<td>${sessionScope.Login_user.utel }</td>
-				</tr>
-				<tr>
-					<td>邮箱:</td>
-					<td>${sessionScope.Login_user.uemail }</td>
-				</tr>
-				<tr>
-					<td>拥有积分:</td>
-					<td>${sessionScope.Login_user.upoint }</td>
-				</tr>
-				<tr>
-					<td>购买的游戏:</td>
-					<td><a href="QueryGameLogServlet?uid=${sessionScope.Login_user.uid }">点此查看已购买的游戏</a></td>
-				</tr>
-				<tr>
-					<td>地址:</td>
-					<td>${sessionScope.Login_user.uaddress }</td>
-				</tr>
+				<c:forEach items="${gameLogList}" var="log">
+					<tr>
+						<td>${log.gzhname}</td>
+						<td>${log.otime}</td>
+						<td>${log.onumber}</td>
+					</tr>
+				</c:forEach>
 			</table>
 		</div>
 
