@@ -86,6 +86,7 @@ public class AdminServlet extends HttpServlet {
 								System.out.println("登录成功。");
 								userLog.logOperation(uid,uname, urole,  "管理员登录：密码正确", "成功");
 								session.setAttribute("Login_uid", uid);//session标记为登录状态，把uid和user对象存入session：***********************************************************
+								session.setAttribute("Login_uname",uname);
 								session.setAttribute("Login_user", user);
 								response.sendRedirect("jsp_admin/admin.jsp");
 						}

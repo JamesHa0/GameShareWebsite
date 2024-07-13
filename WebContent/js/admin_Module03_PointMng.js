@@ -51,7 +51,16 @@ data.forEach(function(value, key) {
         },
         body: data 
     })
-    .then(response => response.text()) 
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('修改失败');
+        }else{
+			location.reload();
+			alert('修改成功');
+			
+		}
+        return response.text();
+    })
     .then(result => console.log(result))
     .then(data => {
         console.log('服务器发来的响应数据：', data);
