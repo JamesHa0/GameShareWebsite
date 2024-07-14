@@ -30,14 +30,10 @@ public class UploadGameServlet extends HttpServlet {
 	}
 	
 	private String getUploadPath() {
-		ServletContext context = getServletContext();
-		
-		String rowPath=context.getRealPath("");
-		int i = rowPath.indexOf(".metadata");
-		String prefix = rowPath.substring(0, i);
-		// 构建新的路径
-		String nowPath = prefix + "GameShareWebsite\\WebContent\\game\\";
+		ServletContext context = this.getServletContext();
+		String nowPath = context.getRealPath("/game/");
 		return nowPath;
+		
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
