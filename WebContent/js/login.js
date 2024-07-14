@@ -21,7 +21,7 @@ $(function (){
 				required: true,
 				rangelength:[11,11],
 			},
-			password:{
+			upsw:{
 				required: true,
 				rangelength:[8,20],
 			},
@@ -29,6 +29,9 @@ $(function (){
 				required: true,
 				rangelength:[8,20],
 				equalTo:"#upsw",
+			},
+			checkinput:{
+				required: true,
 			}
 		},
 		messages:{
@@ -36,7 +39,7 @@ $(function (){
 				required:"手机号码不能为空",
 				rangelength:"请输入正确的手机号",
 			},
-			password:{
+			upsw:{
 				required:'密码不能为空',
 				rangelength:"密码长度在8~20位",
 			},
@@ -45,6 +48,9 @@ $(function (){
 				rangelength:"密码长度在8~20位",
 				equalTo:'两次密码不同',
 			},
+			checkinput:{
+				required: "验证码不能为空",
+			}
 		}
 	});
 	$(".sign").validate({
@@ -57,6 +63,9 @@ $(function (){
 				required: true,
 				rangelength:[8,20],
 			},
+			checkinput:{
+				required: true,
+			}
 		},
 		messages:{
 			utel:'请输入手机号',
@@ -64,6 +73,9 @@ $(function (){
 				required:'密码不能为空',
 				rangelength:"密码长度在8~20位",
 			},
+			checkinput:{
+				required: "验证码不能为空",
+			}
 		},
 	});
 });
