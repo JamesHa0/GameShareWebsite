@@ -73,7 +73,7 @@
 				</tr>
 				<tr>
 					<td>拥有积分:</td>
-					<td>${sessionScope.Login_user.upoint }</td>
+					<td>&emsp;&emsp;&emsp;${sessionScope.Login_user.upoint }&emsp;&emsp;&emsp;<a href="#">点此签到</a></td>
 				</tr>
 				<tr>
 					<td>购买的游戏:</td>
