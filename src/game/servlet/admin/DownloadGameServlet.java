@@ -48,8 +48,7 @@ public class DownloadGameServlet extends HttpServlet {
 			}
 		} else {
 			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("下载失败！");
+			response.sendRedirect("DetailServlet.do?gid=0");
 		}
 
 	}
