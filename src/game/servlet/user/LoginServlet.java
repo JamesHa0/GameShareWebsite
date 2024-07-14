@@ -26,6 +26,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
     	UserLog userLog = new UserLog();
+    	HttpSession session=request.getSession();
 
 		// 获取前端输入的数据
 		String utel = request.getParameter("utel");
@@ -45,18 +46,8 @@ System.out.println("登录页传来的数据为：\n电话："+utel
 		+"，\n密码（加密后）："+upsw
 		);   
 		
-
-		//测试-暂时
-		//User Login_user=(User) session.getAttribute("Login_user");
-		//String Login_uid=Login_user.getUid();
-		String Login_uid="1919810";
-		//String Login_urole=Login_user.getUrole();
-		String Login_urole="user/vip";
-		//String Login_uname=Login_user.getUname();
-		String Login_uname="测试用户/贵宾";
 		
 		// 验证码部分：
-		HttpSession session = request.getSession();
 		String checkcode_session = (String) session.getAttribute("checkcode_session");
 		if (!checkcode_session.equalsIgnoreCase(checkinput)) {// 未正确输入验证码（忽略大小写）
 			userLog.logOperation("未登录","未登录", "未登录",  "用户登录：验证码错误", "失败");
@@ -74,19 +65,19 @@ System.out.println("登录页传来的数据为：\n电话："+utel
 					request.setAttribute("path", "LR.jsp");
 					request.getRequestDispatcher("error.jsp").forward(request, response);
 				}else {
-				
+					String uid=user.getUid();
+					String uname=user.getUname();
+					String urole=user.getUrole();
 					String psw=user.getUpsw();//数据库中MD5加密的密码
 					System.out.println("用户输入密码："+upsw+"\n应输入的密码："+psw);
 					if(!upsw.equals(psw)){//密码错误
-						userLog.logOperation(Login_uid,Login_uname, Login_urole,  "用户登录：密码错误", "失败");
+						userLog.logOperation(uid,uname, urole,  "用户登录：密码错误", "失败");
 						request.setAttribute("msg", "密码错误。");
 						request.setAttribute("path", "LR.jsp");
 						request.getRequestDispatcher("error.jsp").forward(request, response);
 					}else {//密码正确
-						userLog.logOperation(Login_uid,Login_uname, Login_urole,  "用户登录：密码正确", "成功");
+						userLog.logOperation(uid,uname, urole,  "用户登录：密码正确", "成功");
 						System.out.println("登录成功。");
-						String uid=user.getUid();
-						String uname=user.getUname();
 						session.setAttribute("Login_uname", uname);//session标记为登录状态，记录登录用户名和user对象***********************************
 						session.setAttribute("Login_uid", uid);
 						session.setAttribute("Login_user", user);
@@ -97,6 +88,7 @@ System.out.println("登录页传来的数据为：\n电话："+utel
 			} catch (Exception e) {
 				e.printStackTrace();
 				System.out.println("Servlet:login报错");
+				userLog.logOperation("未登录","未登录", "未登录",  "用户登录：500", "失败");
 			}
 		}
 	}
