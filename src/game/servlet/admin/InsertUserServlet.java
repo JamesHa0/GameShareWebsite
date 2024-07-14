@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import game.dao.UserDaoImpl;
 import game.other.MD5;
@@ -25,6 +26,7 @@ public class InsertUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     		PrintWriter out=response.getWriter();
     		UserLog userLog = new UserLog();
+    		HttpSession session=request.getSession();
     	
     	// 获取前端输入的数据
      		String utel 	= request.getParameter("utel");
@@ -44,13 +46,13 @@ public class InsertUserServlet extends HttpServlet {
      		}
      		
      		//测试-暂时
-    		//User Login_user=(User) session.getAttribute("Login_user");
-    		//String Login_uid=Login_user.getUid();
-    		String Login_uid="114514";
-    		//String Login_urole=Login_user.getUrole();
-    		String Login_urole="admin";
-    		//String Login_uname=Login_user.getUname();
-    		String Login_uname="管理员先生";
+    		User Login_user=(User) session.getAttribute("Login_user");
+    		String Login_uid=Login_user.getUid();
+    		String Login_urole=Login_user.getUrole();
+    		String Login_uname=Login_user.getUname();
+//    		String Login_uid="114514";
+//    		String Login_urole="admin";
+//    		String Login_uname="管理员先生";
     		
  			try {
  				UserDaoImpl userdao =new UserDaoImpl();

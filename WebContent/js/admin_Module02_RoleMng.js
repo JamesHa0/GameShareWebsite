@@ -75,6 +75,7 @@ data.forEach(function(value, key) {
     })
     .then(response => {
         if (!response.ok) {
+			alert('修改失败')
             throw new Error('修改失败');
         }else{
 			location.reload();
