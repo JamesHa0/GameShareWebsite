@@ -1,22 +1,19 @@
 window.onload = function() {
 	var img = document.getElementById("checkinput");
-	if (img) { // 确保元素存在
-	    img.onclick = function() {
-	        var date = new Date().getTime();
-	        img.src = "CheckCodeServlet?" + date;
-	    }
+	img.onclick = function() {
+		var date = new Date().getTime();
+		img.src = "CheckCodeServlet?" + date;
 	}
 }
 
 $(function (){
+	
     $("#signUp").click(function() {
         $("#dowebok").addClass("right-panel-active");
     });
-
     $("#signIn").click(function() {
         $("#dowebok").removeClass("right-panel-active");
     });
-
 	// 表单验证
 	$(".register").validate({
 		rules:{
@@ -31,7 +28,7 @@ $(function (){
 			second_pwd:{
 				required: true,
 				rangelength:[8,20],
-				equalTo:"#upsw", // 确保此处与密码字段的 ID 匹配
+				equalTo:"#upsw",
 			}
 		},
 		messages:{
@@ -50,7 +47,6 @@ $(function (){
 			},
 		}
 	});
-	
 	$(".sign").validate({
 		rules:{
 			utel:{
