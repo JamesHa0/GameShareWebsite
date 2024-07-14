@@ -48,6 +48,7 @@ console.log('点击了提交按钮。');
     })
     .catch(error => {
         console.error('请求失败：', error);
+		location.reload();
         alert('请求失败：' + error.message);
     })
     .finally(()=>{

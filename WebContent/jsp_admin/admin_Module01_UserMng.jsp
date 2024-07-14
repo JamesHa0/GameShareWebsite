@@ -11,7 +11,7 @@
   <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
   <script type="text/javascript" src="../js/admin_Module01_UserMng.js"></script>
   <style>
-  table input{ 
+  table input{
      border: none; 
      padding: 0; 
      height:30px; 
@@ -58,12 +58,12 @@
     <tr class="hidden" id="addRow">
 	  <th>——</th>   
       <th><input class="hidden" name="uname" 	>	</th>       
-      <th><input class="hidden" name="utel"  	required>	</th>        
-      <th><input class="hidden" name="uemail" >	</th>      
+      <th><input class="hidden" name="utel"  	placeholder="必填">	</th>        
+      <th><input class="hidden" name="uemail"	placeholder="必填" >	</th>      
       <th>——</th>       
       <th><input class="hidden" name="ugender">	</th>  
       <th><input class="hidden" name="uaddress">	</th>  
-      <th><input class="hidden" name="upsw"  type="password" maxlength="18" 	required >	</th>        
+      <th><input class="hidden" name="upsw"	   placeholder="必填"  type="password" maxlength="18" 	required >	</th>        
       <th>——</th>
       <th>——</th>
       <th>——</th>
