@@ -67,10 +67,10 @@ table input {
 		    <input readonly class="editing_radio" type="radio" name="urole_${user.uid }" value="admin" 
 		    	<c:if test="${user.urole eq 'admin'}">checked</c:if>>
 	    </td>
-	    <!-- 修改按钮 -->
+	    <!-- 修改按钮 --><!-- 修改按钮，点击后调用 enableEditing 函数 -->
 	    <td><button class="updateBtn" onclick="updateBtn(this.parentNode.parentNode)">修改</button></td>
        
-	    <!-- 隐藏： -->
+	    <!-- 隐藏字段： -->
 	    <td class="none"><input class="none" name="uid"  		value="${user.uid}"    ></td>
         <td class="none"><input class="none" name="uname"  	value="${user.uname}"  ></td>
         <td class="none"><input class="none" name="utel"  	value="${user.utel}"  ></td>
