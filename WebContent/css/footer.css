@@ -1,0 +1,36 @@
+.footer {
+	height: 350px;
+	background-color: #e5e8e0;
+	margin-top: 20px;
+	display: block;
+}
+
+.translate {
+	width: 1300px;
+	margin: 0 auto;
+	padding-top: 40px;
+}
+
+.footer-links {
+	float: left;
+	width: 160px;
+	margin-left: 200px;
+}
+
+.footer-links h5 {
+	font-size: 20px;
+	margin-bottom: 30px;
+}
+
+.footer-links li {
+	font-size: 15px;
+	margin-top: 15px;
+}
+
+.footer-links li a {
+	color: #3d3d3d;
+}
+
+.footer-links li a:hover {
+	color: #ea822e;
+}

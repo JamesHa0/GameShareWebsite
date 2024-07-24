@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="game.bean.Game" %>
 <%@ page import="game.bean.User" %>
 <html>
@@ -6,7 +7,7 @@
 <meta charset="UTF-8">
 <title>游戏详情</title>
 <link rel="stylesheet" type="text/css" href="css/public.css" />
-<link rel="stylesheet" type="text/css" href="css/game.css" />
+<link rel="stylesheet" type="text/css" href="css/detail.css" />
 <script src="js/jquery-3.6.0.js" type="text/javascript"
 	charset="utf-8"></script>
 <script src="js/jquery.validate.min.js" type="text/javascript"
@@ -16,104 +17,116 @@
 <body>
 	<div class="head">
 		<div class="head_zi">
+			<!-- 返回按钮 -->
 			<div class="huan">
 				<a href="index.jsp">返回首页</a>
 			</div>
-			<div class="info">
-				<a href="info.jsp"><img src="images/info.png" height="28px"></a>
-			</div>
-			<div class="login">
-				<%
-					String userName = (String) session.getAttribute("Login_uname");
-					User user = (User) session.getAttribute("Login_user");
-					if (user != null) {
-						userName = user.getUname();
-				%>
-				<div class="ulogin">
-					<p>欢迎您，${sessionScope.Login_uname}</p>
-				</div>
-				<div class="login2">
-					<a href="logout.jsp">登出</a>
-				</div>
-				<%
-					} else {
-				%>
-				<div class="login2">
-					<a href="LR.jsp">登录&注册</a>
-				</div>
-				<%
-					}
-				%>
-			</div>
+			<!-- 页眉 -->
+			<jsp:include page="header.jsp"/>
 		</div>
 	</div>
+	
+	<!-- 正文 -->
 	<div class="dowebok" id="dowebok">
+		<c:choose>
+			<c:when test="${requestScope.game==null }" >
+				<div class="error">
+					<img class="errorImg" src="images/gameNotFound.png" />
+					<br/><br/>
+					<span class="errorMsg">游戏不见了！</span>
+				</div>
+			</c:when>
+			<c:otherwise>
+				<div class="gtitle">${game.gzhname}</div>
+				<hr/>
+				<div class="gcover">
+					<img src="images/game/${game.gid }/1.jpg"/>
+					<table style="border:0">
+						<!-- 基本游戏信息 -->
+						<tr><td>游戏名：</td><td>${game.gname}</td></tr>
+						<tr><td>游戏类型：</td><td>${game.gtag}</td></tr>
+						<tr><td>价格：</td>
+							<td>
+								<c:if test="${game.gid.length()<9 }">
+									${game.gprice}RMB
+								</c:if>
+								<c:if test="${game.gid.length()>=9 }">
+									${game.gprice}积分
+								</c:if>
+							</td>
+						</tr>
+						<tr><td>制造商：</td><td>${game.gdeveloper }</td></tr>
+						<tr><td>发行商：</td><td>${game.gpublisher }</td></tr>
+						<tr><td>发行日期：</td><td>${game.grelease_date }</td></tr>
+						<!-- 购买&下载按钮： -->
+						<c:choose>
+							<c:when test="${game.gid.length()<9 }">
+								<!-- steam外站下载业务 -->
+								<tr>
+									<td>在steam上购买：</td>
+									<td>
+										<div id="steam"><a href="https://store.steampowered.com/app/${game.gid }">
+										<img  src="images/steam.png"/></a></div>
+									</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<!-- 本站游戏下载业务 -->
+								<c:if test="${purchase == null }"><!-- 尚未购买 -->
+									<tr>
+										<td>是否购买？<br/>（剩余积分:${user.upoint }）</td>
+										<td><div id="steam"><a href="PurchaseServlet.do?gid=${game.gid }&uid=${Login_uid}">
+										<img  src="images/yes.png"/></a></div></td>
+									</tr>
+								</c:if>
+								<c:if test="${purchase != null }"><!-- 业已购买 -->
+									<tr>
+										<td>购买情况：</td>
+										<td>您已购买此游戏</td></tr>
+									<tr>
+										<td>订单编号:</td>
+										<td>${purchase.onumber }</td>
+									</tr>
+									<tr>
+										<td>是否立即下载？</td>
+										<td><div id="steam"><a href="DownloadGameServlet.do?gid=${game.gid }">
+										<img  src="images/yes.png"/></a></div></td>
+									</tr>
+								</c:if>
+							</c:otherwise>
+						</c:choose>	
+					</table>
+				</div>
+			</c:otherwise>
+		</c:choose>
+		
+		<div class="gdescription">
+			<div class="description">游戏简介：</div>
+			<div class="gtext">${game.gdescription }</div>
+		</div>
+		<div class="gimg">
+			<img src="images/game/${game.gid }/2.jpg" />
+			<img src="images/game/${game.gid }/3.jpg" />
+			<img src="images/game/${game.gid }/4.jpg" />
+			<img src="images/game/${game.gid }/5.jpg" />
+		</div>
+		<div class="icon">
+			<table style="border:0;text-align:center">
+				<tr><td><img src="images/like.png"/></td>
+				<td><img src="images/comment.png"/></td></tr>
+				<tr><td>点赞量</td>
+				<td>评论量</td></tr>
+			</table>
+		</div>
+		<div class="gcomment">
+			<div class="comment">玩家评论：</div>
+			<div class="ucomment">${game.gdescription }</div>
+		</div>
 	
 	
-	<% String message = (String) request.getAttribute("msg");
-		if("gamenotfound".equals(message)){ 
-	%>
-	<div class="error">
-		<img class="errorImg" src="images/gameNotFound.png" />
-		<br/><br/>
-		<span class="errorMsg">游戏不见了！</span>
-	</div>
-	<% } else {%>
-	
-	
-	<div class="gtitle">${game.gzhname}</div>
-	<hr/>
-	<div class="gcover">
-		<img src="images/game/${game.gid }/1.jpg"/>
-		<table border="0">
-			<tr><td>游戏名：</td><td>${game.gname}</td></tr>
-			<tr><td>游戏类型：</td><td>${game.gtag}</td></tr>
-			<tr><td>价格：</td>
-			<% 	Game game = (Game)request.getAttribute("game");
-				String gid=game.getGid();
-				if (gid.length() < 9 ){ %>
-			<td>${game.gprice}RMB</td></tr>
-			<% }else{%>
-			<td>${game.gprice}积分</td></tr>
-			<% }%>
-			<tr><td>制造商：</td><td>${game.gdeveloper }</td></tr>
-			<tr><td>发行商：</td><td>${game.gpublisher }</td></tr>
-			<tr><td>发行日期：</td><td>${game.grelease_date }</td></tr>
-			<% if (gid.length() < 9 ){ %>
-			<tr><td>在steam上购买：</td><td><div id="steam"><a href="https://store.steampowered.com/app/${game.gid }"><img  src="images/steam.png"/></a></div></td></tr>
-			<% }else{%>
-			<tr><td>使用${game.gprice}积分兑换：</td><td><div id="steam"><a href="QueryPurchaseServlet.do?gid=${game.gid }&uid=${sessionScope.Login_user.uid }"><img  src="images/download.jpg"/></a></div></td></tr>
-			<% }%>
-		</table>
-	</div>
-	<div class="gdescription">
-		<div class="description">游戏简介：</div>
-		<div class="gtext">${game.gdescription }</div>
-	</div>
-	<div class="gimg">
-		<img src="images/game/${game.gid }/2.jpg" />
-		<img src="images/game/${game.gid }/3.jpg" />
-		<img src="images/game/${game.gid }/4.jpg" />
-		<img src="images/game/${game.gid }/5.jpg" />
-	</div>
-	<div class="icon">
-		<table border="0px";align="center">
-			<tr><td><img src="images/like.png"/></td>
-			<td><img src="images/comment.png"/></td></tr>
-			<tr><td>点赞量</td>
-			<td>评论量</td></tr>
-		</table>
-	</div>
-	<div class="gcomment">
-		<div class="comment">玩家评论：</div>
-		<div class="ucomment">${game.gdescription }</div>
 	</div>
 	
-	
-	
-	<% }%>
-	</div>
-
-	<jsp:include page="footer.html" flush="true" />
+	<!-- 页脚 -->
+	<jsp:include page="footer.html"  />
 </body>
 </html>

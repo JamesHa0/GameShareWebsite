@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>购买记录</title>
 <link rel="stylesheet" type="text/css" href="css/public.css" />
-<link rel="stylesheet" type="text/css" href="css/game.css" />
+<link rel="stylesheet" type="text/css" href="css/info.css" /><!-- 借用css -->
 <script src="js/jquery-3.6.0.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery.validate.min.js" type="text/javascript"
 	charset="utf-8"></script>
@@ -16,33 +16,12 @@
 <body>
 	<div class="head">
 		<div class="head_zi">
+			<!-- 返回按钮 -->
 			<div class="huan">
 				<a href="index.jsp">返回首页</a>
 			</div>
-			<div class="info">
-				<a href="info.jsp"><img src="images/info.png" height="28px"></a>
-			</div>
-			<div class="login">
-				<%
-					String userName = (String) session.getAttribute("Login_uname");
-					User user = (User) session.getAttribute("Login_user");
-					if (user != null) {
-						userName = user.getUname();
-				%>
-				<div class="ulogin">
-					<p>欢迎您，${sessionScope.Login_uname}</p>
-				</div>
-				<div class="login2">
-					<a href="logout.jsp">登出</a>
-				</div>
-				<%
-					} else { 
-				%>
-				<script>window.location.href = "LR.jsp";</script>
-				<%
-					}
-				%>
-			</div>
+			<!-- 页眉 -->
+			<jsp:include page="header.jsp"/>
 		</div>
 	</div>
 
@@ -50,12 +29,12 @@
 	<div class="dowebok" id="dowebok">
 		<div class="new_table">
 			<table>
-				<thead>
+				<tr>
 					<td class="table_head" style="width: 200px;height: 60px;">游戏名</td>
 					<td class="table_head" style="width: 200px;height: 60px;">所需积分</td>
 					<td class="table_head" style="width: 200px;height: 60px;">购买时间</td>
 					<td class="table_head" style="width: 200px;height: 60px;">订单编号</td>
-				</thead>
+				</tr>
 				<c:forEach items="${gameLogList}" var="log">
 					<tr>
 						<td>${log.gzhname}</td>
@@ -65,7 +44,7 @@
 					</tr>
 				</c:forEach>
 				<tr>
-					<td colspan="4"><a href="info.jsp">返回</a></td>
+					<td colspan="4"><a href="QueryInfoServlet.do">返回</a></td>
 				</tr>
 			</table>
 		</div>
@@ -73,8 +52,8 @@
 
 
 	</div>
-
-	<jsp:include page="footer.html" flush="true" />
+	<!-- 页脚 -->
+	<jsp:include page="footer.html"  />
 </body>
 </html>
 

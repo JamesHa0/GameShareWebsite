@@ -168,26 +168,38 @@ public class UserDaoImpl implements UserDao{
     public int insertUser(User user) throws Exception {
         Connection conn = null;
         PreparedStatement ps = null;
+//		System.out.println("待insert数据:"+user);
         int affectedRows = 0;
-System.out.println("待insert数据:"+user);
         try {
             conn = getConnection();
-            String sql = "INSERT INTO userinfo(uname, utel, uemail, ugender, uaddress ,upsw) VALUES (?, ?, ?, ?, ?, ?)"; 	//注意这里不填uid、urole和upoint，合计6条数据
+            String sql = "INSERT INTO userinfo(uname, utel, uemail,urole,"
+            		+ " ugender, uaddress ,upsw) VALUES (?, ?, ?, ?, ?, ?, ?)";//注意这里不填uid和upoint，合计7条数据
             ps = conn.prepareStatement(sql);
             ps.setString(1, user.getUname());
-            ps.setString(2, user.getUtel());
-            ps.setString(3, user.getUemail());
-            ps.setString(4, user.getUgender());
-            ps.setString(5, user.getUaddress());
-            ps.setString(6, user.getUpsw());
-
+            if("".equals(user.getUtel()) || user.getUtel()==null)
+            	System.out.println("! utel不能为null");
+            	ps.setString(2, user.getUtel());
+            if("".equals(user.getUemail()) || user.getUemail()==null) 
+            	{user.setUemail(user.getUtel()+"@tel.com"); 
+            	System.out.println("uemail为空。系统已设置缺省值为"+user.getUtel()+"@tel.com");}
+            	ps.setString(3, user.getUemail());	
+            if("".equals(user.getUrole()) || user.getUrole()==null)
+            	{user.setUrole("user");
+            	System.out.println("urole为空。系统已设置缺省值为user。");}
+            	ps.setString(4, user.getUrole());
+            ps.setString(5, user.getUgender());
+            ps.setString(6, user.getUaddress());
+            if("".equals(user.getUpsw()) || user.getUpsw()==null)
+            	System.out.println("! upsw不能为null");
+            	ps.setString(7, user.getUpsw());
+            
             affectedRows = ps.executeUpdate();
         }catch (Exception e) {
-			System.out.println("！userdaoimpl:插入");
+			System.out.print("！500 userdaoimpl:insert ; ");
+			System.out.println("待insert数据:"+user);
 		} finally {
             closeResources_for_update(conn, ps);
         }
-
         return affectedRows;
     }
 
@@ -197,7 +209,6 @@ System.out.println("待insert数据:"+user);
         Connection conn = null;
         PreparedStatement ps = null;
         int affectedRows = 0;
-System.out.println("待update数据:"+user);
 
         try {
             conn = getConnection();
@@ -217,7 +228,7 @@ System.out.println("待update数据:"+user);
 
             affectedRows = ps.executeUpdate();
         }catch (Exception e) {
-			System.out.println("！userdaoimpl:更新");
+			System.out.println("！500 userdaoimpl:update ; 待update数据:"+user);
 		} finally {
             closeResources_for_update(conn, ps);
         }
@@ -239,7 +250,7 @@ System.out.println("待update数据:"+user);
             ps.setString(1, uid);
             affectedRows = ps.executeUpdate();
         }catch (Exception e) {
-			System.out.println("！userdaoimpl:删除");
+			System.out.println("！userdaoimpl:delete");
 		} finally {
             closeResources_for_update(conn, ps);
         }

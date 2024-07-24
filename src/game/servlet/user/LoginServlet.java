@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,6 +28,7 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
     	UserLog userLog = new UserLog();
     	HttpSession session=request.getSession();
+    	String SESSIONID=(String) session.getAttribute("SESSIONID");
 
 		// 获取前端输入的数据
 		String utel = request.getParameter("utel");
@@ -41,14 +43,11 @@ public class LoginServlet extends HttpServlet {
 		}
 		
 		
-System.out.println("登录页传来的数据为：\n电话："+utel
-		+"，\n验证码："+checkinput
-		+"，\n密码（加密后）："+upsw
-		);   
+System.out.println("【用户登录】填写的数据：  电话："+utel+"，验证码："+checkinput+"，密码（加密后）："+upsw);   
 		
 		
 		// 验证码部分：
-		String checkcode_session = (String) session.getAttribute("checkcode_session");
+		String checkcode_session = (String) session.getAttribute("checkcode_session_"+SESSIONID);
 		if (!checkcode_session.equalsIgnoreCase(checkinput)) {// 未正确输入验证码（忽略大小写）
 			userLog.logOperation("未登录","未登录", "未登录",  "用户登录：验证码错误", "失败");
 			request.setAttribute("msg", "请正确输入验证码。");
@@ -69,25 +68,25 @@ System.out.println("登录页传来的数据为：\n电话："+utel
 					String uname=user.getUname();
 					String urole=user.getUrole();
 					String psw=user.getUpsw();//数据库中MD5加密的密码
-					System.out.println("用户输入密码："+upsw+"\n应输入的密码："+psw);
+					System.out.println("用户输入密码："+upsw+"；应输入的密码："+psw);
 					if(!upsw.equals(psw)){//密码错误
 						userLog.logOperation(uid,uname, urole,  "用户登录：密码错误", "失败");
 						request.setAttribute("msg", "密码错误。");
 						request.setAttribute("path", "LR.jsp");
 						request.getRequestDispatcher("error.jsp").forward(request, response);
 					}else {//密码正确
+						System.out.println("√ 登录成功。");
 						userLog.logOperation(uid,uname, urole,  "用户登录：密码正确", "成功");
-						System.out.println("登录成功。");
-						session.setAttribute("Login_uname", uname);//session标记为登录状态，记录登录用户名和user对象***********************************
-						session.setAttribute("Login_uid", uid);
-						session.setAttribute("Login_user", user);
+						response.addCookie(new Cookie("Login_uid", uid));
+						response.addCookie(new Cookie("Login_uname",uname));
+						response.addCookie(new Cookie("Login_urole",urole));
 						response.sendRedirect("index.jsp");
 					}
 				}
 				
 			} catch (Exception e) {
 				e.printStackTrace();
-				System.out.println("Servlet:login报错");
+				System.out.println("！500 Servlet:login报错");
 				userLog.logOperation("未登录","未登录", "未登录",  "用户登录：500", "失败");
 			}
 		}

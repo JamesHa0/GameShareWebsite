@@ -1,14 +1,13 @@
 package game.servlet.admin;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import game.dao.UserDaoImpl;
 import game.other.MD5;
@@ -24,11 +23,26 @@ public class InsertUserServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    		PrintWriter out=response.getWriter();
     		UserLog userLog = new UserLog();
-    		HttpSession session=request.getSession();
+    		
+    		//从Cookie获取当前登录者信息：
+            String Login_uid = "0";
+            String Login_uname = "获取cookie（Login_uname）失败";
+            String Login_urole = "获取cookie（Login_urole）失败";
+            Cookie[] cookie=request.getCookies();
+            if(cookie !=null) {
+            	for(Cookie c:cookie) {
+            		if("Login_uid".equals(c.getName())) {
+            			Login_uid=c.getValue();
+            		}else if("Login_uname".equals(c.getName())) {
+            			Login_uname=c.getValue();
+            		}else if("Login_urole".equals(c.getName())) {
+            			Login_urole=c.getValue();
+            		}
+            	}
+            }
     	
-    	// 获取前端输入的数据
+    		// 前端数据
      		String utel 	= request.getParameter("utel");
      		String uemail 	=request.getParameter("uemail");
      		String upsw 	= request.getParameter("upsw");
@@ -42,43 +56,32 @@ public class InsertUserServlet extends HttpServlet {
      		}catch (NoSuchAlgorithmException e) {
      			System.out.println("！Servlet:注册时MD5转换报错。");
      			response.setStatus(500);
-     			out.print("！Servlet:注册时MD5转换报错。");
      		}
-     		
-     		//测试-暂时
-    		User Login_user=(User) session.getAttribute("Login_user");
-    		String Login_uid=Login_user.getUid();
-    		String Login_urole=Login_user.getUrole();
-    		String Login_uname=Login_user.getUname();
-//    		String Login_uid="114514";
-//    		String Login_urole="admin";
-//    		String Login_uname="管理员先生";
     		
+     		
  			try {
  				UserDaoImpl userdao =new UserDaoImpl();
  				User user_test=userdao.queryUserByUtel(utel);
- 				if(user_test !=null) {
- 					response.setStatus(500);
- 					return;
+ 				if(user_test !=null) {//数据库数据冲突
+ 					System.out.println("！409 servlet-user-insert:插入失败！");
+					userLog.logOperation(Login_uid,Login_uname, Login_urole,  "新增User数据：409", "失败");
+ 					response.setStatus(409); // 409
  				}
  				else {//insert数据入库：
  					User user_new=new User(uname, utel, uemail, ugender, uaddress, upsw);
  					if(userdao.insertUser(user_new) <=0) {//user_new 目前还没有uid值
- 						System.out.println("！500 servlet-user-insert");
- 						userLog.logOperation(Login_uid,Login_uname, Login_urole,  "新增User数据", "失败");
- 		     			response.setStatus(400);
- 		     			System.out.println("！500 servlet-user-insert:插入失败！");
- 						return;
+ 						System.out.println("！500 servlet-user-insert:插入失败！");
+ 						userLog.logOperation(Login_uid,Login_uname, Login_urole,  "新增User数据：500", "失败");
+ 		     			response.setStatus(500);// 500
+ 					}else {//插入成功：
+ 						System.out.println("√  servlet-user-insert:插入成功");
+						userLog.logOperation(Login_uid,Login_uname, Login_urole,  "新增User数据，昵称："+uname, "成功");
+	 					response.setStatus(200);//200
  					}
- 					//插入成功：
-		     		System.out.println("√  servlet-user-insert:插入成功");
-					userLog.logOperation(Login_uid,Login_uname, Login_urole,  "新增User数据，昵称："+uname, "成功");
- 					response.setStatus(200);//200
- 					return;
  				}
  			} catch (Exception e) {
  				System.out.println("！servlet-insert:报错。");
-     			out.print("！servlet-insert:报错。");
+				userLog.logOperation(Login_uid,Login_uname, Login_urole,  "新增User数据:500-2", "失败");
  				response.setStatus(500);
  			}
     }

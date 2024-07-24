@@ -5,10 +5,11 @@
 <%
 	Object x=request.getAttribute("allUserLogs");
 	String path="admin_Module04_UserLog.jsp";
+	
 	request.setAttribute("path", path);
-	session.setAttribute("path", path);
+	
 	if(x == null){
-		request.getRequestDispatcher("../QueryAllUserLogServlet.do?"+path).forward(request, response);
+		request.getRequestDispatcher("../QueryAllUserLogServlet.do?path="+path).forward(request, response);
 	}
 %>
 <!DOCTYPE html>
@@ -20,7 +21,7 @@
   <script type="text/javascript" src="../js/jquery-3.6.0.js"></script>
   <script type="text/javascript" src="../js/admin_Module04_UserLog.js"></script>
   <style>
-  table input{ 
+  table input{
      border: none; 
      padding: 0; 
      height:30px; 

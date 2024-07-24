@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +27,9 @@ public class RegisterServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	UserLog userLog = new UserLog();
+		UserDaoImpl userdao =new UserDaoImpl();
     	HttpSession session=request.getSession();
+    	String SESSIONID=(String) session.getAttribute("SESSIONID");
 		
 		// 获取前端输入的数据
 		String utel 	= request.getParameter("utel");
@@ -47,48 +50,51 @@ public class RegisterServlet extends HttpServlet {
 		
 		
 		// 验证码部分：
-		String checkcode_session = (String) session.getAttribute("checkcode_session");
+		String checkcode_session = (String) session.getAttribute("checkcode_session_"+SESSIONID);
+		if(checkcode_session==null) {
+			System.out.println("！session中的checkcode_session值为空。考虑验证码生成问题、赋值问题或取值问题。");
+			return;
+		}
 		if (!checkcode_session.equalsIgnoreCase(checkinput)) {// 未正确输入验证码（忽略大小写）
-			userLog.logOperation("未登录","未登录", "未登录",  "用户注册：验证码错误", "失败");
+			userLog.logOperation("未登录",uname, urole,  "用户注册：验证码错误", "失败");
 			request.setAttribute("msg", "请正确输入验证码。");
 			request.setAttribute("path", "LR.jsp");
 			request.getRequestDispatcher("error.jsp").forward(request, response);
 		} else {
 			//验证码通过：
+			System.out.print("√ 验证码通过 ; ");
 			try {
-				UserDaoImpl userdao =new UserDaoImpl();
 				User user_test=userdao.queryUserByUtel(utel);
 				if(user_test !=null) {
-					userLog.logOperation("未登录","未登录", "未登录",  "用户注册：该用户已存在", "失败");
+					System.out.println("！注册失败（该用户已存在）。");
+					userLog.logOperation("未登录",uname, urole,  "用户注册：该用户已存在", "失败");
 					request.setAttribute("msg", "注册失败：该User已存在。");
 					request.setAttribute("path", "LR.jsp");
 					request.getRequestDispatcher("error.jsp").forward(request, response);
 				}
 				else {//insert数据入库：
 					User user_new=new User(uname, utel, uemail, urole, ugender, uaddress, upsw);
-					if(userdao.insertUser(user_new) <=0) {//user_new还没有uid值
-						userLog.logOperation("未登录","未登录", "未登录",  "用户注册：500", "失败");
-						System.out.println("！插入学生记录失败！");
+					if(userdao.insertUser(user_new) <=0) {//插入失败
+						System.out.println("！注册失败（500）。");
+						userLog.logOperation("未登录",uname, urole ,  "用户注册：insert失败", "失败");
 						request.setAttribute("msg", "注册失败：500。");
 						request.setAttribute("path", "LR.jsp");
 						request.getRequestDispatcher("error.jsp").forward(request, response);
-					}
-					//注册成功，则跳转：
-					userLog.logOperation("未登录","未登录", "未登录",  "用户注册", "成功");
-					if(session.getAttribute("Login_uid") == null) {//若为未登录状态
+					}else {//注册成功，则视为已登录：
+						System.out.println("√ 注册成功。");
+						userLog.logOperation("待生成",uname, urole,  "用户注册", "成功");
 						User user=userdao.queryUserByUtel(utel);
 						String uid=user.getUid();
-						session.setAttribute("Login_uid", uid);//*********************************************session填入登录信息
-						session.setAttribute("Login_uname",uname);
-						session.setAttribute("Login_user", user);
-						System.out.println("----当前用户："+session.getAttribute("Login_uid"));
+						response.addCookie(new Cookie("Login_uid", uid));
+						response.addCookie(new Cookie("Login_uname",uname));
+						response.addCookie(new Cookie("Login_urole",urole));
+							
+						response.sendRedirect("index.jsp");
 					}
-						
-					request.getRequestDispatcher("index.jsp").forward(request, response);
 				}
 			} catch (Exception e) {
-				userLog.logOperation("未登录","未登录", "未登录",  "用户注册：500", "失败");
-				System.out.println("！注册页面报错。");
+				System.out.println("！500 用户注册页面。");
+				userLog.logOperation("未登录","未登录", "未登录",  "用户注册：500-2", "失败");
 			}
 		}
 	}

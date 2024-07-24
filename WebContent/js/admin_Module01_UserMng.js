@@ -239,7 +239,6 @@ data.forEach(function(value, key) {
                 if (xhr.status === 200) {
                     alert('删除成功');
                     location.reload();
-//                    window.location.href="../QueryAllUserServlet.do";
                 } else {
                     alert('删除失败');
                 }

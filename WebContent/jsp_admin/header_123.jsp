@@ -15,13 +15,12 @@ System.out.println("————————————————————
 	int i = URI.lastIndexOf("/");
 	String path=URI.substring(i+1);//例如admin_Module01_UserMng.jsp
 	
-	request.setAttribute("path", path);
-	session.setAttribute("path", path);
-	String query=request.getParameter("query");
+	request.setAttribute("path", path);//设置path值，以便servlet寻址返回
 	
+	String query=request.getParameter("query");
 	if(allUsers == null){//对象为空
 	    System.out.println("【主页检测】空   ：allUsers为空。query=" + query);
-		if("queryAll".equals(query) || query == null){ // 自动全查 和 手动全查
+		if( query == null || "queryAll".equals(query)){ // 自动全查 和 手动全查（query="queryAll"，意为查询所有）
 			request.getRequestDispatcher("../QueryAllUserServlet.do?path="+path).forward(request, response);
 		}else {
 	        // query = none（没查到） 或 get_it（查到了）。不做任何处理。

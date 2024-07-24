@@ -21,3 +21,8 @@ img{
 .ulogin{
 	color: #FFFFFF;
 }
+.ulogin p{
+  	white-space: nowrap;/*保持文本在一行显示 */
+  	overflow: hidden; /* 隐藏溢出的文本 */
+ 	text-overflow: ellipsis;/* 文本溢出显示省略号 */
+}

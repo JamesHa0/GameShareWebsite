@@ -1,78 +1,5 @@
 @charset "UTF-8";
 
-.head {
-	position: relative;
-	height: 45px;
-	background-color: #4d4343;
-}
-
-.head_zi {
-	width: 1200px;
-	margin: 0px auto;
-	height: 45px;
-}
-
-.huan a {
-	color: #FFFFFF;
-	margin-left: 20px;
-	float: left;
-	font-size: 22px;
-	font-weight: 600;
-	line-height: 45px;
-}
-
-.login {
-	display: flex;
-	float: right;
-	line-height: 45px;
-	font-size: 15px;
-}
-
-.ulogin {
-	margin-right: 10px;
-	width: 200px;
-	text-align: center;
-}
-
-.login2 {
-	margin-right: 10px;
-	width: 100px;
-	text-align: center;
-}
-
-.login a {
-	color: #FFFFFF;
-}
-
-.login>div a:hover {
-	color: #f10215;
-}
-
-.info {
-	position: relative;
-	display: block;
-	float: right;
-	/*margin-right: 150px;*/
-	height: 45px;
-	background-color: #919198;
-	line-height: 45px;
-	/*text-align: center;*/
-}
-
-.info a {
-	display: block;
-	color: #ffffff;
-	font-size: 18px;
-}
-
-.info img {
-	display: block;
-	float: left;
-	margin-top: 8px;
-	margin-left: 10px;
-	margin-right: 10px;
-}
-
 .dowebok {
 	margin: 20px auto 0px;
 	background: #fff;
@@ -86,8 +13,9 @@
 	min-height: 500px;
 }
 
+/*
 .showPurchase {
-	paddinf:50px;
+	padding:50px;
 }
 
 .showPurchase table{
@@ -165,7 +93,7 @@
 .myButton:hover {
 	background-color: #a54b4a;
 }
-
+*/
 .error {
 	text-align: center;
 }
@@ -279,41 +207,4 @@ hr {
 .ucomment {
 	padding: 20px 40px;
 	position: relative;
-}
-
-.footer {
-	height: 350px;
-	background-color: #e5e8e0;
-	margin-top: 20px;
-	display: block;
-}
-
-.translate {
-	width: 1300px;
-	margin: 0 auto;
-	padding-top: 40px;
-}
-
-.footer-links {
-	float: left;
-	width: 160px;
-	margin-left: 200px;
-}
-
-.footer-links h5 {
-	font-size: 20px;
-	margin-bottom: 30px;
-}
-
-.footer-links li {
-	font-size: 15px;
-	margin-top: 15px;
-}
-
-.footer-links li a {
-	color: #3d3d3d;
-}
-
-.footer-links li a:hover {
-	color: #ea822e;
 }

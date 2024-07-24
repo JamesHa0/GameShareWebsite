@@ -8,7 +8,7 @@
 <script src="js/jquery-3.6.0.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery.validate.min.js" type="text/javascript"
 	charset="utf-8"></script>
-<script src="js/login.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/LR.js" type="text/javascript" charset="utf-8"></script>
 
 </head>
 <body>
@@ -31,9 +31,10 @@
 				<img id="checkinput" src="CheckCodeServlet" />
 				<input  id="uemail" name="uemail" placeholder="邮箱地址"><!--  type="email"-->
 
-				<!-- <input type="radio" id="man" checked="checked" name="ugender"/>男<input type="radio" id="woman" name="ugender">女
-                    
-                    <input type="text" id="uaddress" name="uaddress" placeholder="地址" /> -->
+				保密<input type="radio" id="man" checked="checked" name="ugender" value="保密"/>
+				男<input type="radio" id="man" name="ugender" value="M"/>
+				女<input type="radio" id="woman" name="ugender" value="F">
+                <input type="text" id="uaddress" name="uaddress" placeholder="地址" /> 
 
 				<button>注册</button>
 			</form>

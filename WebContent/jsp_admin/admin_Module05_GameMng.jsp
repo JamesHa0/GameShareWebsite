@@ -5,8 +5,9 @@
 System.out.println("——————————————————————————————————————————————到了模块主页：————————————————————————————————————————");
 Object allGames = request.getAttribute("allGames");
 String path = "admin_Module05_GameMng.jsp";
+
 request.setAttribute("path", path);
-session.setAttribute("path", path);
+
 String query = request.getParameter("query");
 if (allGames == null) { // 对象为空
     System.out.println("【主页检测】空   ：allGames为空。query=" + query);

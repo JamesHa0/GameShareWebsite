@@ -6,15 +6,26 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import game.bean.UserLog;
+
 public interface Dao {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url="jdbc:mysql://127.0.0.1:3306/Game?characterEncoding=utf-8";
 	String username="root";
 	String password="root";
 	//获得连接
-	public default Connection getConnection() throws Exception {
-		Class.forName(driver);
-		return DriverManager.getConnection(url, username, password);
+	public default Connection getConnection() {
+		UserLog userLog=new UserLog();
+		Connection conn = null;
+		try {
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url, username, password);
+		} catch (Exception e) {
+			System.out.println("!!! Dao接口：获取连接对象失败。");
+			userLog.logOperation("!", "!", "!", "Dao接口：获取连接对象失败。", "失败");
+		}
+		
+		return conn;
 	}
 
 	//关闭资源（查询操作）

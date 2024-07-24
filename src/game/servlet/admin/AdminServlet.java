@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,27 +27,25 @@ public class AdminServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		UserLog userLog = new UserLog();
+    	HttpSession session=request.getSession();
+    	String SESSIONID=(String) session.getAttribute("SESSIONID");
 		
-		// 获取前端输入的数据
+		// 前台信息：
 		String in_utel = request.getParameter("utel");
 		String in_checkcode = request.getParameter("checkinput");
 		String in_upsw = request.getParameter("upsw");
 
-		// MD5加密upsw
+		// MD5加密
 		try {
 			in_upsw = MD5.MD5Encoder(in_upsw);
 		} catch (NoSuchAlgorithmException e) {
 			System.out.println("servlet:login:Md5异常");
 		}
+		System.out.println("login页面前端传递的参数：\n\t utel:"+in_utel+ "\n\t checkinput:"+in_checkcode+"\n\t upsw:"+in_upsw);
 		
-		System.out.println("login页面前端传递的参数："	//测试用
-		+ "\n	 utel:"+in_utel
-		+ "\n	 checkinput:"+in_checkcode
-		+ "\n	 upsw:"+in_upsw);
 		
 		// 检查验证码是否正确：
-		HttpSession session = request.getSession();
-		String checkcode_session = (String) session.getAttribute("checkcode_session");
+		String checkcode_session = (String) session.getAttribute("checkcode_session_"+SESSIONID);
 		if (!checkcode_session.equalsIgnoreCase(in_checkcode)) {// 未正确输入验证码（忽略大小写）
 			userLog.logOperation("未登录","未登录", "未登录",  "管理员登录：验证码错误", "失败");
 			request.setAttribute("msg", "请正确输入验证码。");
@@ -85,9 +84,10 @@ public class AdminServlet extends HttpServlet {
 								//密码正确，登录成功：
 								System.out.println("登录成功。");
 								userLog.logOperation(uid,uname, urole,  "管理员登录：密码正确", "成功");
-								session.setAttribute("Login_uid", uid);//session标记为登录状态，把uid和user对象存入session：***********************************************************
-								session.setAttribute("Login_uname",uname);
-								session.setAttribute("Login_user", user);
+								response.addCookie(new Cookie("Login_uid", uid));
+								response.addCookie(new Cookie("Login_uname",uname));
+								response.addCookie(new Cookie("Login_urole",urole));
+								
 								response.sendRedirect("jsp_admin/admin.jsp");
 						}
 					}

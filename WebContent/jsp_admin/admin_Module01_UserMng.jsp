@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="admin_query.jsp" />
+<jsp:include page="admin_query_user.jsp" />
 <jsp:include page="header_123.jsp" />
 
 <!DOCTYPE html><html>
@@ -58,12 +58,12 @@
     <tr class="hidden" id="addRow">
 	  <th>——</th>   
       <th><input class="hidden" name="uname" 	>	</th>       
-      <th><input class="hidden" name="utel"  	placeholder="必填">	</th>        
-      <th><input class="hidden" name="uemail"	placeholder="必填" >	</th>      
+      <th><input class="hidden" name="utel"  	placeholder="必填（长度为11）" >	</th>        
+      <th><input class="hidden" name="uemail"	 >	</th>      
       <th>——</th>       
       <th><input class="hidden" name="ugender">	</th>  
       <th><input class="hidden" name="uaddress">	</th>  
-      <th><input class="hidden" name="upsw"	   placeholder="必填"  type="password" maxlength="18" 	required >	</th>        
+      <th><input class="hidden" name="upsw"	   placeholder="必填"  type="password" maxlength="18"  >	</th>        
       <th>——</th>
       <th>——</th>
       <th>——</th>

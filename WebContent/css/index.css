@@ -1,65 +1,4 @@
-.head{
-    position: relative;
-    height: 45px;
-    background-color: #4d4343;
-}
-.head_zi{
-    width: 1200px;
-    margin: 0px auto;
-    height: 45px;
-}
-.huan{
-    color: #FFFFFF;
-    margin-left: 20px;
-    float: left;
-    font-size: 20px;
-    line-height: 45px;
-}
-.login{
-    display:flex;
-    float: right;
-    line-height: 45px;
-    font-size: 15px;
-}
-.ulogin{
-	margin-right: 10px;
-    width: 200px;
-    text-align: center;
-}
-.login2{
-    margin-right: 10px;
-    width: 100px;
-    text-align: center;
-}
-.login a{
-    color: #FFFFFF;
-}
-.login>div a:hover{
-    color:#f10215;
-}
-.info{
-    position: relative;
-    display: block;
-    float: right;
-    /*margin-right: 150px;*/
-    height: 45px;
-
-    background-color: #919198;
-    line-height: 45px;
-    /*text-align: center;*/
-}
-.info a{
-    display: block;
-    color: #ffffff;
-    font-size: 18px;
-}
-.info img{
-    display: block;
-    float: left;
-    margin-top: 8px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
+/* 【搜索框】 */
 .search_kuang{
     position: relative;
     height: 60px;
@@ -85,6 +24,10 @@
     background-color: #f53c3c;
     cursor: pointer;
 }
+
+
+
+/* 【轮播图】模块 **************************/
 .shop{
     display: block;
     margin: 10px auto 0px;
@@ -111,6 +54,7 @@
 	width: 888px;
 }
 
+
 #item{
 	width: 100%;
 	height: 100%;
@@ -118,13 +62,15 @@
 }
 .item{
 	position: absolute;
-	opacity: 0;
+/* 	opacity: 0; */
 	transition: all 2s;
 	list-style-type: none;
 }
-.item.active{
+
+.item .active{
 	opacity:1;
 }
+
 #btn-left{
 	width: 30px;
 	height: 75px;
@@ -179,12 +125,23 @@
 	margin: 5px;
 	list-style-type: none;
 }
+
+
 .white{
 	background-color: #FFFFFF;
 }
 
 
 
+
+
+
+
+
+
+
+
+/* 【本站游戏】模块 ***************************************/
 .box_tit{
     width: 1200px;
     height: 940px;
@@ -227,7 +184,6 @@
     font-size: 16px;
     color: #000000;
     text-align: center;
-    /*padding: 8px 0px;*/
     height: 50px;
     line-height: 50px;
     width: 190px;
@@ -241,62 +197,4 @@
     margin-top: 8px;
     margin-left: 5px;
 }
-.footer{
-    height: 300px;
-    background-color: #e5e8e0;
-    margin-top: 20px;
-    display: block;
-}
-.translate{
-    width: 1300px;
-    margin: 0 auto;
-    padding-top: 40px;
-}
-.footer-links{
-    float: left;
-    width: 160px;
-    margin-left: 200px;
-}
-.footer-links h5{
-    font-size: 20px;
-    margin-bottom:30px;
-}
-.footer-links li{
-    font-size: 15px;
-    margin-top: 15px;
-}
-.footer-links li a{
-    color: #3d3d3d;
-}
-.footer-links li a:hover{
-    color: #ea822e;
-}
-/* .nav{
-    position: fixed;
-    top: 300px;
-    right: 50px;
-    width: 100px;
-    background-color: #e87070;
-    text-align: center;
-    display: none;
-}
-.nav li {
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    font-size: 18px;
-    border-bottom: 2px solid #bdb9b9;
-    cursor: pointer;
-}
-.current{
-    background-color: #9c82e8;
-    color: #FFFFFF;
-}
-.back{
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    font-size: 18px;
-    border-bottom: 1px solid #bdb9b9;
-    cursor: pointer;
-} */
+

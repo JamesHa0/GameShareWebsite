@@ -5,8 +5,9 @@
 <%
 	Object allGameLogs = request.getAttribute("allGameLogs");
 	String path = "admin_Module06_GameLog.jsp";
+	
 	request.setAttribute("path", path);
-	session.setAttribute("path", path);
+	
 	String query = request.getParameter("query");
 	if (allGameLogs == null) { // 对象为空
 	    System.out.println("【主页检测】空   ：allGameLogs为空。query=" + query);
@@ -23,7 +24,6 @@
 <head>
 <meta charset="UTF-8">
 <title>显示页面</title>
-<!--   <link rel="stylesheet" type="text/css" href="xxx.css"> -->
 <script type="text/javascript" src="js/jquery-3.6.0.js"></script>
 <script type="text/javascript" src="../js/admin_Module06_GameLog.js"></script>
 <style>
@@ -60,7 +60,6 @@ table input {
 			<th>游戏ID</th>
 			<th width="220px">订单编号</th>
 			<th width="150px">下单时间</th>
-
 			<th>删除操作</th>
 		</tr>
 
@@ -70,7 +69,6 @@ table input {
 			<th><input class="hidden" name="gid" required></th>
 			<th>——</th>
 			<th>——</th>
-
 			<th>——</th>
 		</tr>
 
@@ -84,7 +82,6 @@ table input {
 					value="${gameLog.onumber}" style="width: 100%;"></td>
 				<td><input class="editing" readonly name="otime"
 					value="${gameLog.otime}" style="width: 100%;"></td>
-
 				<td>
 					<button class="deleteBtn"
 						onclick="confirmDelete('${gameLog.onumber}')">删除</button>

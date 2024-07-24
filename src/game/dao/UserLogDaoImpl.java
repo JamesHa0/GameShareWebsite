@@ -133,9 +133,9 @@ public class UserLogDaoImpl implements UserLogDao {
 
             affectedRows = ps.executeUpdate();
             if(affectedRows>=0) {
-            	System.out.println("imp-userlog：插入日志成功");
+//            	System.out.println("imp-userlog：插入日志成功");
             }else {
-            	System.out.println("！imp-userlog：插入日志失败");
+            	System.out.println("【日志】！imp-userlog：插入日志失败");
             }
         } catch (Exception e) {
             e.printStackTrace();

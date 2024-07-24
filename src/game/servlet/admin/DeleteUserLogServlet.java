@@ -18,25 +18,21 @@ public class DeleteUserLogServlet extends HttpServlet {
     }
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		UserLogDaoImpl logdao=new UserLogDaoImpl();
-
+		
+		//前端数据
 		String logId=request.getParameter("logId");
-System.out.println("---前端传来的logId为："+logId);
+		System.out.print("【删除操作日志】---前端传来的logId为："+logId);
+		
 		try {
 			if(logdao.deleteUserLogByLogId(logId) <=0) {
 				System.out.println("！500 删除log失败:"+logId);
 				response.setStatus(500);	//500服务器内部错误
 				request.setAttribute("msg", "删除失败。");
-				//request.setAttribute("path", "../QueryAllUserServlet.do");
-				//request.getRequestDispatcher("error.jsp").forward(request, response);
 			
 			}else {
 				System.out.println("√ 删除user成功:"+logId);
 				response.setStatus(200); 	//200顺利
-//				request.setAttribute("msg", "删除成功。");
-//				request.setAttribute("path", "../QueryAllUserServlet.do");
-//				request.getRequestDispatcher("error.jsp").forward(request, response);
 			}
 			
 		} catch (Exception e) {

@@ -1,11 +1,10 @@
-package game.servlet.admin;
+package game.servlet.user;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.URLEncoder;
 
 import javax.servlet.ServletContext;
@@ -20,36 +19,37 @@ public class DownloadGameServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//前端数据
 		String gid = request.getParameter("gid");
+		
+		//下载业务：
 		String filename = gid+".zip";
 		System.out.println("filename="+filename);
 		ServletContext servletcontext = this.getServletContext();
 		String realpath = servletcontext.getRealPath("/game/"+filename);
 		File file = new File(realpath);
+		
 		if (file.exists()) {
-			FileInputStream fis = new FileInputStream(realpath);
 			String minetype = servletcontext.getMimeType(filename);
-			response.setHeader("content-type", minetype);
+			response.setHeader("Content-type", minetype!=null ? minetype : "application/octet-stream");
 			response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(filename,"UTF-8"));
-			BufferedInputStream bis = null;
-			byte[] buffer = new byte[1024];
-			bis = new BufferedInputStream(fis);
-			OutputStream os = response.getOutputStream();
-			int i = bis.read(buffer);
-			while (i != -1) {
-				os.write(buffer, 0, i);
-				i = bis.read(buffer);
-			}
-			if (bis != null) {
-				bis.close();
-			}
-			if (fis != null) {
-				fis.close();
-			}
+			
+			try (FileInputStream fis = new FileInputStream(realpath);
+	             BufferedInputStream bis = new BufferedInputStream(fis);
+	             OutputStream os = response.getOutputStream()) {
+	            byte[] buffer = new byte[4096];
+	            int i;
+	            while ((i = bis.read(buffer)) != -1) {
+	                os.write(buffer, 0, i);
+	            }
+	        } catch (IOException e) {
+	            //response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error occurred while processing the download request.");
+	        }
 		} else {
-			response.setContentType("text/html;charset=UTF-8");
-			response.sendRedirect("DetailServlet.do?gid=0");
-		}
+	        //response.sendError(HttpServletResponse.SC_NOT_FOUND, "File does not exist.");
+	    }
+		//response.setContentType("text/html;charset=UTF-8");
+		//response.sendRedirect("DetailServlet.do?gid="+gid);
 
 	}
 

@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet("/CheckCodeServlet")
 public class CheckCodeServlet extends HttpServlet {
@@ -20,6 +21,10 @@ public class CheckCodeServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session= request.getSession();
+		String SESSIONID=(String) session.getAttribute("SESSIONID");//获取SESSIONID
+		
+		
 		int width = 120;
 		int height = 50;
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -38,7 +43,7 @@ public class CheckCodeServlet extends HttpServlet {
 			char ch = str.charAt(index);
 			str1 = str1 + ch;
 			g.drawString(ch + "", width / 5 * i, height / 2);
-			request.getSession().setAttribute("checkcode_session", str1);
+			session.setAttribute("checkcode_session_"+SESSIONID, str1);
 		}
 		for (int j = 0; j < 6; j++) {
 			int x1 = ran.nextInt(width);

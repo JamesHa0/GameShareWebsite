@@ -12,8 +12,16 @@
 <link rel="stylesheet" type="text/css" href="<%= request.getContextPath()%>/css/admin_query.css">
 </head>
 <body>
-<!--  onsubmit="queryBtn()" -->
-	<form action="../QueryUserServlet.do" method="post">
+	<%
+	//获取主jsp的文件名：
+		String URI = request.getRequestURI();//例如/GameShareWebsite/jsp_admin/admin_Module01_UserMng.jsp
+		int i = URI.lastIndexOf("/");
+		String path=URI.substring(i+1);//例如admin_Module01_UserMng.jsp
+		
+
+		System.out.println("【test!!】---path="+path+" ; ");
+	%>
+	<form action="../QueryUserServlet.do?path=<%=path %>" method="post">
 		<select name="select" id="admin_query_jsp_select" onchange="changeNameOfInput(this)"><!-- this指此select元素 -->
             <option value="1" selected="selected" >id</option>
             <option value="2">手机号</option>
