@@ -76,7 +76,7 @@ window.onload = function() {
 	})
 	.then(response=> {
 		if(!response.ok){
-			alert('')
+			alert('获取SESSIONID失败')
 		}else{
 			console.log('获取SESSIONID成功。')
 		}

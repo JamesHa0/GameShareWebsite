@@ -14,6 +14,7 @@ import game.bean.Purchase;
 import game.bean.User;
 import game.bean.UserLog;
 import game.dao.GameDaoImpl;
+import game.dao.LikeDaoImpl;
 import game.dao.PurchaseDaoImpl;
 import game.dao.UserDaoImpl;
 
@@ -78,6 +79,18 @@ public class DetailServlet extends HttpServlet {
 			System.out.println("!500 servlet-detail-3");
 			userLog.logOperation(Login_uid, Login_uname, Login_urole, "显示游戏详情：500-3", "失败");
 		}
+		//4，点赞查询
+		LikeDaoImpl likeDaoImpl=new LikeDaoImpl();
+		int likeNum=0;
+		boolean isLiked=false;
+		try {
+			likeNum=likeDaoImpl.queryLikeNum(gid);
+			isLiked=likeDaoImpl.queryIsLikedByUidAndGid(uid, gid);
+		} catch (Exception e) {
+			System.out.println("！500 servlet-detail-like");
+		}
+		//5，评论查询（待做）
+		String 评论没做呢;
 		
 		if(user!=null) {
 			request.setAttribute("user", user);
@@ -88,6 +101,8 @@ public class DetailServlet extends HttpServlet {
 		if(purchase!=null) {
 			request.setAttribute("purchase", purchase);
 		}
+		request.setAttribute("likeNum", likeNum);
+		request.setAttribute("isLiked", isLiked);
 		//走你
 		request.getRequestDispatcher("detail.jsp").forward(request, response);
 		

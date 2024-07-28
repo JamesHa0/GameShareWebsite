@@ -12,6 +12,7 @@
 	charset="utf-8"></script>
 <script src="js/jquery.validate.min.js" type="text/javascript"
 	charset="utf-8"></script>
+<script src="js/detail.js" type="text/javascript" charset="utf-8"></script>
 
 </head>
 <body>
@@ -28,6 +29,7 @@
 	
 	<!-- 正文 -->
 	<div class="dowebok" id="dowebok">
+		<!-- 封面、参数、价格等 -->
 		<c:choose>
 			<c:when test="${requestScope.game==null }" >
 				<div class="error">
@@ -99,7 +101,7 @@
 				</div>
 			</c:otherwise>
 		</c:choose>
-		
+		<!-- 游戏简介及内容截屏 -->
 		<div class="gdescription">
 			<div class="description">游戏简介：</div>
 			<div class="gtext">${game.gdescription }</div>
@@ -110,14 +112,20 @@
 			<img src="images/game/${game.gid }/4.jpg" />
 			<img src="images/game/${game.gid }/5.jpg" />
 		</div>
+		<!-- 点赞量和评论量 -->
 		<div class="icon">
 			<table style="border:0;text-align:center">
-				<tr><td><img src="images/like.png"/></td>
-				<td><img src="images/comment.png"/></td></tr>
-				<tr><td>点赞量</td>
-				<td>评论量</td></tr>
+				<tr>
+					<td><img onclick="click_like(this,${user.uid},${game.gid })" src="images/like${isLiked? '_yes': '' }.png"/></td>
+					<td><img onclick="click_comment(this,${user.uid},${game.gid })" src="images/comment.png"/></td>
+				</tr>
+				<tr>
+					<td id="td_likeNum">${likeNum }</td>
+					<td>评论量</td>
+				</tr>
 			</table>
 		</div>
+		<!-- 具体评论 -->
 		<div class="gcomment">
 			<div class="comment">玩家评论：</div>
 			<div class="ucomment">${game.gdescription }</div>

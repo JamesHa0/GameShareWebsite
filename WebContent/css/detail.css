@@ -13,87 +13,7 @@
 	min-height: 500px;
 }
 
-/*
-.showPurchase {
-	padding:50px;
-}
 
-.showPurchase table{
-	text-align:center;
-	margin:auto;
-	position:absolute;
-	top:0;
-	left:0;
-	right:0;
-	bottom:0;
-}
-
-.showPurchase table th{
-	font-size:30px;
-	font-weight:bold;
-	margin:50px 0;
-}
-
-.showPurchase table td{
-	height:50px;
-}
-.new_table {
-	padding:50px 200px;
-}
-
-.new_table table {
-	border-spacing: 0;
-	text-align: center;
-}
-
-.new_table table thead tr:nth-child(2n+1) {
-	background-color: #FAFAFA;
-}
-
-.new_table table tr {
-	height: 40px;
-	font-size: 14px;
-	color: #666666;
-	line-height: 14px;
-	font-weight: 400;
-}
-
-.new_table table tr:nth-child(2n) {
-	background-color: #FAFAFA;
-}
-
-.new_table table .table_head {
-	font-size: 30px;
-	color: #666666;
-	line-height: 14px;
-	font-weight: 600;
-}
-
-.backIndex {
-	color: #ffffff;
-	font-size: 18px;
-}
-
-.backDetail {
-	color: #ffffff;
-	font-size: 18px;
-}
-
-.myButton {
-	background-color: #f66f6a;
-	color: white;
-	width: 200px;
-	height: 45px;
-	border: 0;
-	font-size: 16px;
-	box-sizing: content-box;
-	border-radius: 5px;
-}
-
-.myButton:hover {
-	background-color: #a54b4a;
-}
-*/
 .error {
 	text-align: center;
 }
@@ -176,6 +96,8 @@ hr {
 	position: relative;
 }
 
+
+/*************点赞和评论*****************/
 .icon {
 	padding-top: 50px;
 	display: flex;
@@ -190,6 +112,7 @@ hr {
 .icon img {
 	padding: 0 50px;
 	width: 60px;
+	cursor:pointer;
 }
 
 .gcomment {
