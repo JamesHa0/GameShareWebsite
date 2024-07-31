@@ -121,14 +121,35 @@
 				</tr>
 				<tr>
 					<td id="td_likeNum">${likeNum }</td>
-					<td>评论量</td>
+					<td>${allComments.size() }</td>
 				</tr>
 			</table>
 		</div>
-		<!-- 具体评论 -->
-		<div class="gcomment">
+		<!-- 评论模块 --><br><br><br>
+		<div class="gcomment" style="display:none">
 			<div class="comment">玩家评论：</div>
-			<div class="ucomment">${game.gdescription }</div>
+				<!-- 评论发表文本框 -->
+				<div class="comment-input">
+			        <h2>发表评论</h2>
+			        <form onsubmit="return submit_comment(this,${user.uid},${game.gid })" method="post">
+			            <textarea id="comment-textarea" name="comment" placeholder="写下你的评论..." required></textarea>
+			            <div><button type="submit">提交评论</button></div>
+	        		</form>
+   				</div>
+   				<!-- 评论区 -->
+				<div class="ucomment">
+					<!-- 无评论时显示的沙发图案 -->
+					<c:if test="${empty allComments }"><img id="sofa" src="images/sofa.png" draggable="false"></c:if>
+					
+					<c:forEach items="${allComments }" var="comment">
+						<!-- 单条评论（single-comment） -->
+						<div class="comment-container">
+						    <span class="comment-uid">${comment.uid} :</span>
+						    <span class="comment-ctime">[${comment.ctime}]</span>
+						    <p class="comment-text">${comment.comment}</p>
+						</div>
+					</c:forEach>
+				</div>
 		</div>
 	
 	

@@ -11,18 +11,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import game.bean.Like;
-import game.bean.UserLog;
-import game.dao.LikeDaoImpl;
+import com.google.gson.Gson;
 
-//用于标记点赞或取消点赞入库的servlet。Ajax。
-@WebServlet("/LikeServlet.do")
-public class LikeServlet extends HttpServlet {
+import game.bean.Comment;
+import game.bean.UserLog;
+import game.dao.CommentDaoImpl;
+
+//用于写评论入库（action=writeComment）的servlet。Ajax。
+@WebServlet("/CommentServlet.do")
+public class CommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserLog userLog=new UserLog();
-		LikeDaoImpl likeDaoImpl=new LikeDaoImpl();
+		CommentDaoImpl commentDaoImpl=new CommentDaoImpl();
 		//从Cookie获取当前登录者信息：
         String Login_uid = "0";
         String Login_uname = "获取cookie（Login_uname）失败";
@@ -46,38 +48,33 @@ public class LikeServlet extends HttpServlet {
         }
         
         //前端数据
-        String action=request.getParameter("action");
         String uid=request.getParameter("uid");
         String gid=request.getParameter("gid");
-        
+        String comment=request.getParameter("comment");
+
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String ltime=sdf.format(new Date());
+        String ctime=sdf.format(new Date());
         
         //main
-        if("like".equals(action)) { //点赞业务：插入
-        	Like like=new Like(uid, gid, ltime);
-        	try {
-				likeDaoImpl.insertLike(like);
-		        response.setStatus(200);
-				
-			} catch (Exception e) {
-				System.out.println("!500 Servlet-like-1");
-				userLog.logOperation(Login_uid, Login_uname, Login_urole, "点赞入库：500", "失败");
-				response.setStatus(500);
-				return;
-			}
-        }else if("unlike".equals(action)) { //取消点赞业务：删除
-        	try {
-				likeDaoImpl.deleteLikeByUidAndGid(uid, gid);
-		        response.setStatus(200);
-				
-			} catch (Exception e) {
-				System.out.println("!500 Servlet-like-2");
-				userLog.logOperation(Login_uid, Login_uname, Login_urole, "取消点赞入库：500", "失败");
-				response.setStatus(500);
-				return;
-			}
-        }
+    	try {//写评论入库
+			Comment comment2=new Comment(uid, gid, ctime, comment);
+			commentDaoImpl.insertComment(comment2);
+			
+			//response返回json，供给detail.js使用
+			String json = new Gson().toJson(comment2);
+		    response.setContentType("application/json");
+		    response.setCharacterEncoding("UTF-8");
+		    response.getWriter().write(json);
+		    
+	        response.setStatus(200);
+			
+		} catch (Exception e) {
+			System.out.println("!500 Servlet-comment-2");
+			userLog.logOperation(Login_uid, Login_uname, Login_urole, "写评论入库：500", "失败");
+			response.setStatus(500);
+			return;
+		}
+        
 		
 	}
 

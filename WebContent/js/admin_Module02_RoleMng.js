@@ -54,14 +54,14 @@ console.log('点击了提交按钮。');
             checkedRadio = radio;
         }
     });
-console.log(checkedRadio+'='+checkedRadio.name+":"+checkedRadio.value);
+console.debug(checkedRadio+'='+checkedRadio.name+":"+checkedRadio.value);
     if (checkedRadio) {
         data.append(checkedRadio.name, checkedRadio.value);
         checkedRadio.classList.add('read-only'); // 添加光标CSS样式
     }
 //test:
 data.forEach(function(value, key) {
-    console.log(key + ': ' + value);
+    console.debug(key + ': ' + value);
 });
     
     

@@ -115,6 +115,8 @@ hr {
 	cursor:pointer;
 }
 
+
+/***********************评论模块*********************/
 .gcomment {
 	padding: 50px 20px;
 	position: relative;
@@ -127,7 +129,89 @@ hr {
 	position: relative;
 }
 
+/*发表评论****************/
+.comment-input {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+.comment-input h2 {
+	font-size: 25px;
+    color: #400000;
+}
+
+.comment-input form {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-input form textarea {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 30px;
+    resize: vertical;
+}
+
+.comment-input form div{
+    margin-top: 20px;
+    text-align: right;
+}
+
+.comment-input form button {
+    background-color: #804000;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.comment-input form button:hover {
+    background-color: #400000;
+}
+
+
+/*评论区****************/
 .ucomment {
 	padding: 20px 40px;
 	position: relative;
+}
+
+#sofa{
+	width:800px;
+}
+
+.comment-container {
+    border: 1px solid #ddd; /* 边框，提供边界和层次感 */
+    border-radius: 8px; /* 圆角边框 */
+    padding: 1em; /* 内边距 */
+    margin-bottom: 1em; /* 与上一个元素的外边距 */
+    background-color: #f9f9f9; /* 轻微的背景颜色 */
+}
+
+.comment-uid {
+    font-size: 1em; /* 字体大小 */
+    font-weight:bold;
+    color: #333; /* 字体颜色 */
+}
+
+.comment-ctime {
+    float: right; /* 靠右显示 */
+    font-size: 0.9em; /* 相对小一些的字体大小 */
+    color: #888; /* 较浅的字体颜色 */
+}
+
+.comment-text {
+    margin-top: 0.5em; /* 与上文的间隔 */
+    font-size: 1em; /* 字体大小 */
+    color: #444; /* 字体颜色 */
+    white-space: pre-wrap; /* 保留空格和换行符 */
+    word-wrap: break-word; /* 自动换行 */
 }
