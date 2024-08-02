@@ -126,12 +126,14 @@ function createCommentElement(commentData) {
 }
 
 /*写评论后提交表单*/
-function submit_comment(form,uid,gid){
+function submit_comment(form,uid,gid,uname,cparentid){
 	var textarea=document.getElementById('comment-textarea')
 	var formData=new URLSearchParams(new FormData(form)); // 使用FormData API收集表单数据
 	
 	formData.append('uid',uid)
 	formData.append('gid',gid)
+	formData.append('uname',uname)
+	formData.append('cparentid',cparentid)
 	
 /*	console.debug('【data内容如下：】')
 formData.forEach(function(value,key){//注意这里是value在前
@@ -142,7 +144,7 @@ formData.forEach(function(value,key){//注意这里是value在前
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded' 
         },
-		body:formData
+		body:formData	//comment,uid,gid,uname,cparentid 这5个参数传到servlet
 	})
 	.then(response=>{
 		if(!response.ok){
@@ -174,3 +176,19 @@ formData.forEach(function(value,key){//注意这里是value在前
 	return false;	//阻止提交表单避免跳转
 }
 
+
+function click_comment_like(img,cid,clike){
+	if(img.src.endsWith('comment_like.png')){
+		img.src = "images/comment_like_yes.png" //点赞
+	}else{
+		img.src = "images/comment_like.png"		//取消点赞
+	}
+	
+}
+
+function click_comment_reply(img,cid){
+	var textarea=document.createElement('textarea')
+	textarea.className="comment_reply"
+	
+	img.insertAfter(textarea)	//显示回复框
+}

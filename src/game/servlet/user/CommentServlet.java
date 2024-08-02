@@ -18,6 +18,8 @@ import game.bean.UserLog;
 import game.dao.CommentDaoImpl;
 
 //用于写评论入库（action=writeComment）的servlet。Ajax。
+//或者是点赞入库。
+//或者是回复评论入库。
 @WebServlet("/CommentServlet.do")
 public class CommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -47,20 +49,24 @@ public class CommentServlet extends HttpServlet {
         	return;
         }
         
-        //前端数据
+        //前端数据（共7参）
         String uid=request.getParameter("uid");
         String gid=request.getParameter("gid");
+        String uname=request.getParameter("uname");
         String comment=request.getParameter("comment");
-
+        String cparentid=request.getParameter("cparentid");	//从js拿来的5个参数
+        
+        String clike="0";	//刚发表评论，赞为0
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String ctime=sdf.format(new Date());
         
         //main
     	try {//写评论入库
-			Comment comment2=new Comment(uid, gid, ctime, comment);
+			Comment comment2=new Comment(uid, gid, uname, ctime, comment, clike, cparentid);
 			commentDaoImpl.insertComment(comment2);
 			
 			//response返回json，供给detail.js使用
+			String json要传给js的数据还得增加;
 			String json = new Gson().toJson(comment2);
 		    response.setContentType("application/json");
 		    response.setCharacterEncoding("UTF-8");

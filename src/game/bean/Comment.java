@@ -4,97 +4,131 @@ package game.bean;
  */
 
 /*    
-cid,
-uid,
-gid,
-ctime,
-comment
+cid,uid,gid,uname,ctime,`comment`,clike,cparentid,cpath
 */  
 
+//9参
 public class Comment {
-	private String cid;//comment id
-	private String uid; //user id
-	private String gid; //game id
-	private String ctime;//comment time
-	private String comment;//comment content
+	private String cid;//自增
+	private String uid;
+	private String gid;
+	private String uname;
+	private String ctime;
+	private String comment;
+	private String clike;
+	private String cparentid;
+	private String cpath;//辅助属性
 	
+	public Comment() {
+		super();
+	}
 	
-	//全5参
-	public Comment(String cid, String uid, String gid, String ctime, String comment) {
+	//全9参
+	public Comment(String cid, String uid, String gid, String uname, String ctime, String comment, String clike,
+			String cparentid, String cpath) {
 		super();
 		this.cid = cid;
 		this.uid = uid;
 		this.gid = gid;
+		this.uname = uname;
 		this.ctime = ctime;
 		this.comment = comment;
+		this.clike = clike;
+		this.cparentid = cparentid;
+		this.cpath = cpath;
 	}
-
-
-	//4参（缺自增cid）
-	public Comment(String uid, String gid, String ctime, String comment) {
+	
+	//7参（缺cid，cpath）
+	public Comment(String uid, String gid, String uname, String ctime, String comment, String clike, String cparentid) {
 		super();
 		this.uid = uid;
 		this.gid = gid;
+		this.uname = uname;
 		this.ctime = ctime;
 		this.comment = comment;
+		this.clike = clike;
+		this.cparentid = cparentid;
 	}
-
 
 	public String getCid() {
 		return cid;
 	}
 
-
 	public void setCid(String cid) {
 		this.cid = cid;
 	}
-
 
 	public String getUid() {
 		return uid;
 	}
 
-
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
-
 
 	public String getGid() {
 		return gid;
 	}
 
-
 	public void setGid(String gid) {
 		this.gid = gid;
 	}
 
+	public String getUname() {
+		return uname;
+	}
+
+	public void setUname(String uname) {
+		this.uname = uname;
+	}
 
 	public String getCtime() {
 		return ctime;
 	}
 
-
 	public void setCtime(String ctime) {
 		this.ctime = ctime;
 	}
-
 
 	public String getComment() {
 		return comment;
 	}
 
-
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
+	public String getClike() {
+		return clike;
+	}
+
+	public void setClike(String clike) {
+		this.clike = clike;
+	}
+
+	public String getCparentid() {
+		return cparentid;
+	}
+
+	public void setCparentid(String cparentid) {
+		this.cparentid = cparentid;
+	}
+
+	public String getCpath() {
+		return cpath;
+	}
+
+	public void setCpath(String cpath) {
+		this.cpath = cpath;
+	}
 
 	@Override
 	public String toString() {
-		return "Comment [cid=" + cid + ", uid=" + uid + ", gid=" + gid + ", ctime=" + ctime + ", comment=" + comment
-				+ "]";
+		return "Comment [cid=" + cid + ", uid=" + uid + ", gid=" + gid + ", uname=" + uname + ", ctime=" + ctime
+				+ ", comment=" + comment + ", clike=" + clike + ", cparentid=" + cparentid + ", cpath=" + cpath + "]";
 	}
+	
+	
 	
 	
 	

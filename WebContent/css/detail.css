@@ -208,6 +208,10 @@ hr {
     color: #888; /* 较浅的字体颜色 */
 }
 
+#comment_like,#comment_reply{
+	width:30px;
+}
+
 .comment-text {
     margin-top: 0.5em; /* 与上文的间隔 */
     font-size: 1em; /* 字体大小 */

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="game.bean.Game" %>
 <%@ page import="game.bean.User" %>
 <html>
@@ -131,7 +132,7 @@
 				<!-- 评论发表文本框 -->
 				<div class="comment-input">
 			        <h2>发表评论</h2>
-			        <form onsubmit="return submit_comment(this,${user.uid},${game.gid })" method="post">
+			        <form onsubmit="return submit_comment(this,${user.uid},${game.gid },${user.uname },null)" method="post">
 			            <textarea id="comment-textarea" name="comment" placeholder="写下你的评论..." required></textarea>
 			            <div><button type="submit">提交评论</button></div>
 	        		</form>
@@ -144,9 +145,20 @@
 					<c:forEach items="${allComments }" var="comment">
 						<!-- 单条评论（single-comment） -->
 						<div class="comment-container">
-						    <span class="comment-uid">${comment.uid} :</span>
+					        <c:set var="sharpNum" value="${fn:length(comment.cpath) - fn:length(comment.cpath.replace('#', ''))}" />
+							<c:set var="indent" value=""/>
+					        <c:forEach begin="1" end="${sharpNum *16}">
+					        	<c:set var="indent" value="${indent += '&nbsp;'}"/>
+							</c:forEach>
+						    ${indent }<span class="comment-uid">${comment.uid} :</span>
 						    <span class="comment-ctime">[${comment.ctime}]</span>
-						    <p class="comment-text">${comment.comment}</p>
+						    
+						    <!-- 每条评论的点赞和回复 -->
+						    <img id="comment_like" onclick="click_comment_like(this,${comment.cid },${comment.clike })" src="images/comment_like${isLikedComment? '_yes': '' }.png"/>
+						    点赞量：${comment.clike }
+						    <img id="comment_reply" onclick="click_comment_reply(this,${comment.cid})" src="images/comment_reply.png"/>
+						    
+						    <p style="display:block" class="comment-text"> ${indent} ${comment.comment }</p>
 						</div>
 					</c:forEach>
 				</div>
