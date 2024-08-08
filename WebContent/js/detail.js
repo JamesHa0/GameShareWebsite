@@ -1,3 +1,74 @@
+/**********************************************************工具函数： */
+function insertAfter(newElement,targetElement){
+    var parent = targetElement.parentNode;
+    if(parent.lastChild == targetElement){
+        parent.appendChild(newElement);
+    }else{
+        parent.insertBefore(newElement,targetElement.nextSibling);
+    }
+}
+function getCookieValue(name) {
+    // 获取文档的所有cookie
+    let cookies = document.cookie.split(';');
+    // 遍历cookie数组
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim(); // 去除空白字符
+        // 查找名称和值
+        let equals = cookie.indexOf('=');
+        if (equals > -1) {
+            let cookieName = cookie.substring(0, equals); // 获取cookie名称
+            // 检查名称是否匹配
+            if (cookieName === name) {
+                // 返回cookie的值
+                return cookie.substring(equals + 1);
+            }
+        }
+    }
+    // 如果没有找到cookie或名称不匹配，则返回null
+    return null;
+}
+/*创建单个评论区域的整个div*/
+function createSingleComment(commentData) {//全9参
+console.debug('create的整个评论对象为：')
+console.debug(commentData)
+	//从cookie获取当前用户信息：
+	let uname=getCookieValue('Login_uname')
+	//进行剪切,计算出被回复者的uname：
+	let suffix;
+	if(commentData.uname_upper==undefined || commentData.uname_upper==null){
+		suffix="";
+console.debug(`suffix=''`)
+	}else{
+		suffix='&nbsp;&nbsp;回复&nbsp;&nbsp;'+commentData.uname_upper.split("  回复  ")[0];
+	}
+    //计算缩进：A  回复  B
+    let sharpNum = (commentData.cpath.match(/#/g) || []).length;	//中间数组为["#", "#"]（假设有两个#号
+    if(sharpNum>4)sharpNum=4;	//控制最大缩进量
+	//生成容器：
+    const Div_container = document.createElement('div');	//造元素
+    Div_container.className = 'comment-container';	//写类名
+    Div_container.style=`padding-left:${20 + sharpNum * 60}px`; //负责缩进
+	//生成内容：
+    Div_container.innerHTML = `
+        <span class="comment-uname">${uname}${suffix}:</span>
+        <span class="comment-ctime">[${commentData.ctime}]</span>
+        <img id="comment-like" onclick="click_comment_like(this,  
+${commentData.cid},${commentData.gid},  &quot;${commentData.cpath}&quot; ,${commentData.clike } )" src="images/comment_like.png" />
+        <span class="comment-likeNum"  >${commentData.clike == 0 ? "" : commentData.clike }</span>
+        <img id="comment-reply" onclick="click_comment_reply(this,  
+${commentData.cid},${commentData.gid},  &quot;${commentData.cpath}&quot; ,  &quot;${commentData.uname }&quot;)" src="images/comment_reply.png" />
+        <p style="display:block" class="comment-text">${commentData.comment}</p>
+    `;
+//alert('生成评论完毕')
+    return Div_container;
+}
+
+
+let _________TheDelimiter = () => {
+       return "This is The Delimiter";
+   };
+
+/*************************************************业务函数： */
 /*点击点赞按钮后会触发相应的Ajax*/
 function click_like(img,uid,gid){
 	var action=img.src.endsWith('like.png')? 'like': 'unlike';
@@ -22,173 +93,208 @@ function click_like(img,uid,gid){
 		}
 	})
 	.catch(error=>{
-		alert(error.message)
+		alert(`游戏点击赞异常：${error.message}`)
 	})
 }
 
-
-
-
-
 /*点击评论按钮后会改变图片*/
-//var click_comment_isFirstClick=true;	//标记首次点击的全局变量
 function click_comment(img){
-	var gcomment=document.getElementsByClassName('gcomment')[0];
-	var display=gcomment.style.display==="none"? "none": "block";
-//	var formData=new URLSearchParams(); 	//URLSearchParams()用来获取[查询串]的参数内容
-	
+	var comment_module=document.getElementsByClassName('comment-module')[0];
+	var display=comment_module.style.display==="none"? "none": "block";
+
 	if(display==="none"){
-		gcomment.style.display="block";//显示评论区
+		comment_module.style.display="block";//显示评论区
 		img.src = "images/comment_yes.png" //显示对勾
 	}else if(display==="block"){
-		gcomment.style.display="none";//隐藏评论区
+		comment_module.style.display="none";//隐藏评论区
 		img.src = "images/comment.png"	   //隐藏对勾
 	}
-	
-//	if(click_comment_isFirstClick){
-//		click_comment_isFirstClick=false;	//标记首次点击变量为false
-//		formData.append('action','showComment')
-//		formData.append('uid',uid)
-//		formData.append('gid',gid)
-//		fetch('CommentServlet.do',{
-//			method:'POST',
-//	        headers: {
-//	            'Content-Type': 'application/x-www-form-urlencoded' 
-//	        },
-//			body:formData
-//		})
-//		.then(response=>{
-//			if(!response.ok){
-//				throw new Error('获取评论失败')
-//			}else{
-//				console.debug('获取评论成功')
-//			}
-//			console.debug('响应体内容：\n'+response.body); // 打印响应体以调试
-//			return response.text();	//这里需要json格式化响应数据，以便下面对data进行处理
-//		})
-//		.then(text => {
-//		    // 打印响应体的文本内容
-//		    //console.log('文本内容为：'+text);
-//		    // 尝试解析文本为JSON（如果预期响应是JSON）
-//		    try {
-//		      const data = JSON.parse(text);
-//		      console.log(data);
-//		    } catch (error) {
-//		      console.error('Failed to parse JSON:', error);
-//		    }
-//		})
-//		.then(data=>{
-//			if(data.allComments && data.allComments.length === 0){
-//				console.debug('评论数为0')
-//			}else{
-//				console.debug('评论数为'+data.allComments.length)
-//			}
-//				
-//		})
-//		.catch(error=>{
-//			alert(error.message)
-//		})
-//	}
 }
 
-/*创建单个评论区域的整个div*/
-function createCommentElement(commentData) {
-	var uid=commentData.uid;
-	var ctime=commentData.ctime;
-	var comment=commentData.comment;
-	
-    // 创建div
-    var Div_container = document.createElement('div');	//造元素
-    Div_container.className = 'comment-container';	//写类名
-
-    // 创建uid部分
-    var Span_uid = document.createElement('span');	//造元素
-    Span_uid.className = 'comment-uid';			//写类名
-    Span_uid.textContent = uid+" :";		//填内容
-
-    // 创建ctime部分
-    var Span_date = document.createElement('span');	//造元素
-    Span_date.className = 'comment-ctime';		//写类名
-    Span_date.textContent = `[${ctime}]`;	//填内容
-
-    // 创建comment部分
-    var P_comment = document.createElement('p');
-    P_comment.className = 'comment-text';
-    P_comment.textContent = comment;
-
-    // 将所有元素添加到评论容器中
-    Div_container.appendChild(Span_uid);
-    Div_container.appendChild(Span_date);
-    Div_container.appendChild(P_comment);
-
-    // 返回创建的DOM元素
-    return Div_container;
-}
-
-/*写评论后提交表单*/
-function submit_comment(form,uid,gid,uname,cparentid){
+//function submit_comment(form,uid,gid,uname){
+// alert('进函数')	
+// return false;
+//}
+/*写一级评论后提交表单*/
+function submit_comment(form,uid,gid,uname){
 	var textarea=document.getElementById('comment-textarea')
-	var formData=new URLSearchParams(new FormData(form)); // 使用FormData API收集表单数据
+	var urlSearchParams=new URLSearchParams(new FormData(form)); // 使用FormData API收集表单数据
 	
-	formData.append('uid',uid)
-	formData.append('gid',gid)
-	formData.append('uname',uname)
-	formData.append('cparentid',cparentid)
-	
-/*	console.debug('【data内容如下：】')
-formData.forEach(function(value,key){//注意这里是value在前
-	console.debug(key+":"+value)
-})*/
+	urlSearchParams.append('uid',uid)
+	urlSearchParams.append('gid',gid)
+	urlSearchParams.append('uname',uname)
+	urlSearchParams.append('cid_upper',null)
+	urlSearchParams.append('cpath_upper',null)
 	fetch('CommentServlet.do',{
 		method:"POST",
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded' 
         },
-		body:formData	//comment,uid,gid,uname,cparentid 这5个参数传到servlet
+		body:urlSearchParams	//comment,uid,gid,uname,cid_upper,cpath_upper 这6个参数传到servlet
 	})
 	.then(response=>{
 		if(!response.ok){
 			throw new Error('提交失败');
 		}else{
 			console.debug('提交成功');
-			textarea.value="";		//清空文本域的内容
+			textarea.value="";//清空文本
 			return response.json();
 		}
 	})
-	.then(json=>{// 从JSON响应中提取属性
+	.then(json=>{// 全9参
 	    var commentData = {
+			cid: json.cid,
 	        uid: json.uid,
+	        gid: json.gid,
+	        uname: json.uname,
+	        clike: json.clike,
 	        ctime: json.ctime,
-	        comment: json.comment
+	        comment: json.comment,
+	        cparentid: json.cparentid,
+	        cpath: json.cpath
 	    };
 	    //开始生成评论
-	    var newCommentElement = createCommentElement(commentData);//调用函数
-	    var parentElement = document.querySelector('.ucomment');//父节点
+	    var newCommentElement = createSingleComment(commentData);//调用函数
+	    var parentElement = document.querySelector('.comments');//父节点
 	    if (parentElement.firstChild) {//若父节点有子节点：插入到首元素之前
             parentElement.insertBefore(newCommentElement, parentElement.firstChild);
+			const sofa=document.getElementById('sofa')	//删除沙发图片
+            if (sofa && sofa.parentNode) {
+		        sofa.parentNode.removeChild(sofa);
+				console.debug('沙发被占')
+		    }
         } else {// 若父节点没有子节点：追加到容器末尾
             parentElement.appendChild(newCommentElement);
         }
+		console.debug('评论生成成功')
 	})
 	.catch(error=>{
-		alert(error.message)
+		alert(`提交评论异常：${error.message}`)
 	})
+	
 	return false;	//阻止提交表单避免跳转
 }
 
 
-function click_comment_like(img,cid,clike){
-	if(img.src.endsWith('comment_like.png')){
-		img.src = "images/comment_like_yes.png" //点赞
-	}else{
-		img.src = "images/comment_like.png"		//取消点赞
-	}
+function click_comment_like(img,cid,gid,cpath,clike){ //【clike】
+	let urlSearchParams=new URLSearchParams();
+	let action=img.src.endsWith('comment_like.png')? 'like': 'unlike';
+	let likeChange=action=='like'? clike+1: clike;//注意后者为取消点赞，因为clike值的实时性问题，故为之
+	urlSearchParams.append('cid',cid)
+	urlSearchParams.append('gid',gid)
+	urlSearchParams.append('cpath',cpath)
+	urlSearchParams.append('likeChange',likeChange)
+console.debug(`likeChange=${likeChange}`)
+	
+	fetch('CommentServlet.do',{
+		method:"POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded' 
+        },
+		body:urlSearchParams	//cid,gid,cpath,【likeChange】
+	})
+	.then(response=>{
+		if(!response.ok){
+			throw new Error('操作失败');
+		}else{
+			console.debug('操作成功。')
+			img.src = action=='like'
+				? "images/comment_like_yes.png"	//点亮
+					: "images/comment_like.png";	//点灭
+			let Span_likeNum = img.nextSibling;
+			while (Span_likeNum.tagName !== "SPAN") {
+			    Span_likeNum = Span_likeNum.nextSibling;
+			}
+			Span_likeNum.textContent =(`${likeChange == 0 ? "" : likeChange }`) 
+		}
+	})
+	.catch(error=>{
+		alert(`评论点击赞异常：${error.message}`)
+	})
 	
 }
 
-function click_comment_reply(img,cid){
-	var textarea=document.createElement('textarea')
-	textarea.className="comment_reply"
-	
-	img.insertAfter(textarea)	//显示回复框
+function click_comment_reply(img,cid,gid,cpath,uname){
+	//创建容器div：
+	const Div_reply=document.createElement('div')
+	Div_reply.className='comment-reply-container'
+    
+	Div_reply.innerHTML=`
+		<h2>回复评论</h2>
+        <form onsubmit="return submit_comment_reply(this,${cid},${gid},  &quot;${cpath}&quot;  ,  &quot;${uname}&quot; )" >
+            <textarea id="comment-textarea" name="comment" placeholder="写下你的回复..."  required></textarea>
+            <div><button type="submit">提交评论</button></div>
+		</form>
+	`;
+
+	let reply_Divs=document.getElementsByClassName('comment-reply-container');
+	if(reply_Divs){	//增加评论框前检查场上有无旧的评论框，删之
+		Array.from(reply_Divs).forEach(function(Div_reply) {
+		    if (Div_reply.parentNode) {
+		        Div_reply.parentNode.removeChild(Div_reply);
+		    }
+		});
+	}
+	insertAfter(Div_reply,img.parentNode)	//增添回复框
+}
+function submit_comment_reply(form,cid,gid,cpath,uname_upper){
+//alert('传参进函数完毕')
+	//从cookie获取当前用户信息：
+	let uid=getCookieValue('Login_uid')
+	let uname=getCookieValue('Login_uname')
+	var urlSearchParams=new URLSearchParams(new FormData(form));
+	urlSearchParams.append('uid',uid);
+	urlSearchParams.append('gid',gid);
+	urlSearchParams.append('uname',uname);
+	urlSearchParams.append('cid_upper',cid);
+	urlSearchParams.append('cpath_upper',cpath);
+	urlSearchParams.append('uname_upper',uname_upper)
+	fetch('CommentServlet.do',{
+		method: "POST",
+		headers:{
+			'Content-Type': 'application/x-www-form-urlencoded'
+		},
+		body: urlSearchParams
+	})
+	.then(response=>{
+		if(!response.ok){
+			throw new Error();
+		}else{
+//alert('Ajax顺利完成')
+			console.debug('操作成功')
+			return response.json();
+		}
+	})
+	.then(json=>{
+//alert('开始读取json')
+		var commentData={
+			cid: json.cid,
+			uid: json.uid,
+			gid: json.gid,
+			uname: json.uname,
+			ctime: json.ctime,
+			comment: json.comment,
+			clike: json.clike,
+			cparentid: json.cparentid,
+			cpath: json.cpath,
+			uname_upper: uname_upper	//上一级评论的uname
+		};
+		//开始生成评论
+//alert('开始生成评论')
+	    var newCommentElement = createSingleComment(commentData);
+		var Div_reply = document.querySelector('.comment-reply-container');
+		insertAfter(newCommentElement,Div_reply); //插入到该评论之后
+        
+		var Div_reply = document.querySelector('.comment-reply-container');
+		if (Div_reply.parentNode) {//删除评论回复框
+		    Div_reply.parentNode.removeChild(Div_reply);
+		}
+		console.debug('评论生成成功')
+//alert('评论生成成功')
+
+	})
+	.catch(error=>{
+		alert(`提交评论时出现异常：${error.message}`)
+	})
+	return false;
 }

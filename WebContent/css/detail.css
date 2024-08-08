@@ -68,6 +68,7 @@ hr {
 	border-radius: 20px;
 }
 
+/***************** <!-- 游戏简介及内容截屏 --> *****************/
 .gdescription {
 	clear: left;
 	position: relative;
@@ -97,7 +98,7 @@ hr {
 }
 
 
-/*************点赞和评论*****************/
+/******************<!-- 游戏的点赞和评论 -->***********************/
 .icon {
 	padding-top: 50px;
 	display: flex;
@@ -116,13 +117,13 @@ hr {
 }
 
 
-/***********************评论模块*********************/
-.gcomment {
+/***********************<!-- 评论模块 -->*********************/
+.comment-module {
 	padding: 50px 20px;
 	position: relative;
 }
 
-.comment {
+.comment-header {
 	font-size: 20px;
 	font-weight: bold;
 	padding-left: 40px;
@@ -137,6 +138,14 @@ hr {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     margin: 30px auto;
+    
+/*     position: fixed; 固定定位在视口中 */
+/*     top: 0; 顶部固定 */
+/*     left: 0; 左侧固定，根据需要调整 */
+/*     right: 0; 右侧固定，根据需要调整 */
+/*     background: rgba(0,0,0,0.5); 背景色 */
+/*     z-index: 100; 确保在其他内容的上方 */
+/*     box-shadow: 0 2px 4px rgba(0,0,0,0.1); 添加阴影，提升层次感 */
 }
 
 .comment-input h2 {
@@ -178,8 +187,8 @@ hr {
 }
 
 
-/*评论区****************/
-.ucomment {
+/*<!-- 评论区 -->***********************/
+.comments {
 	padding: 20px 40px;
 	position: relative;
 }
@@ -188,34 +197,130 @@ hr {
 	width:800px;
 }
 
+/* 评论区容器样式 */
 .comment-container {
-    border: 1px solid #ddd; /* 边框，提供边界和层次感 */
-    border-radius: 8px; /* 圆角边框 */
-    padding: 1em; /* 内边距 */
-    margin-bottom: 1em; /* 与上一个元素的外边距 */
-    background-color: #f9f9f9; /* 轻微的背景颜色 */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1em;
+    margin-bottom: 1em;
+    background-color: #f9f9f9;
+    max-width: 1000px; /* 限制评论容器的最大宽度 */
+    word-wrap: break-word; /* 长单词自动换行 */
 }
 
-.comment-uid {
-    font-size: 1em; /* 字体大小 */
-    font-weight:bold;
-    color: #333; /* 字体颜色 */
+/* 评论者用户名样式 */
+.comment-uname {
+    font-size: 1em;
+    font-weight: bold;
+    color: #333;
+    margin-right: 5px; /* 与日期的间距 */
 }
 
+/* 评论日期样式 */
 .comment-ctime {
-    float: right; /* 靠右显示 */
-    font-size: 0.9em; /* 相对小一些的字体大小 */
+    float: right;
+    font-size: 0.9em;
+    color: #888;
+    margin-left: 10px; /* 与用户名的间距 */
+}
+/* 点赞和回复图标样式 */
+#comment-reply,
+#comment-like{
+	width: 30px; /* 图标宽度 */
+    cursor: pointer;
+	position: relative;
+	float:right;
+    transition: transform 0.3s; /* 平滑变化效果 */
+}
+#comment-reply{
+	padding-right:30px;
+}
+/* 点赞量样式 */
+.comment-likeNum {
+	float:right;
+    font-size: 0.9em; /* 字体大小略小 */
     color: #888; /* 较浅的字体颜色 */
+    /* 定位在点赞图标下方 */
+    position: relative;
+    top: 5px; /* 根据图标大小和内边距调整 */
+    left: 0; /* 根据需要调整，确保位置正确 */
+    white-space: nowrap; /* 防止换行 */
 }
 
-#comment_like,#comment_reply{
-	width:30px;
+#comment-like:hover,
+#comment-reply:hover {
+    transform: scale(1.1); /* 鼠标悬浮时放大 */
 }
 
+/* 点赞图标选中状态 */
+.is-liked {
+    filter: brightness(0.8); /* 调整亮度 */
+}
+
+/* 评论文本样式 */
 .comment-text {
-    margin-top: 0.5em; /* 与上文的间隔 */
-    font-size: 1em; /* 字体大小 */
-    color: #444; /* 字体颜色 */
-    white-space: pre-wrap; /* 保留空格和换行符 */
-    word-wrap: break-word; /* 自动换行 */
+    margin-top: 0.5em;
+    font-size: 1em;
+    color: #444;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/*******************************回复评论的生成评论框*********/
+/* 回复评论容器样式 */
+.comment-reply-container {
+	margin:0 auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1em;
+    margin-bottom: 1em;
+    background-color: #f9f9f9;
+    max-width: 300px; /* 限制评论容器的最大宽度 */
+    word-wrap: break-word; /* 长单词自动换行 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 阴影 */
+}
+
+/* 回复评论标题样式 */
+.comment-reply-container h2 {
+    margin-bottom: 1em; /* 与表单的间距 */
+    color: #333333; /* 字体颜色 */
+    font-size: 1.5em; /* 字体大小 */
+}
+
+/* 回复评论表单样式 */
+.comment-reply-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 回复评论文本域样式 */
+#comment-textarea {
+    flex-grow: 1; /* 让文本域占据可用空间 */
+    margin-bottom: 1em; /* 与提交按钮的间距 */
+    padding: 0.5em; /* 文本域内边距 */
+    border: 1px solid #cccccc; /* 边框 */
+    border-radius: 4px; /* 圆角边框 */
+    resize: vertical; /* 允许垂直方向调整大小 */
+}
+
+/* 回复评论按钮样式 */
+.comment-reply-container button {
+    background-color: #804000; /* 背景颜色 */
+    color: white; /* 字体颜色 */
+    border: none; /* 无边框 */
+    padding: 0.75em 1.5em; /* 内边距 */
+    border-radius: 4px; /* 圆角边框 */
+    cursor: pointer; /* 鼠标悬停时显示手形图标 */
+    transition: background-color 0.3s; /* 平滑过渡背景颜色 */
+}
+
+.comment-reply-container button:hover {
+    background-color: #400000; /* 鼠标悬浮时的背景颜色 */
+}
+
+/* 回复评论按钮容器样式 */
+.comment-reply-container div {
+    display: flex;
+    justify-content: flex-end; /* 将按钮靠右对齐 */
+    margin-top: 0.5em; /* 与文本域的间距 */
 }

@@ -13,7 +13,7 @@ public interface CommentDao extends Dao{
 	List<Comment> queryAllCommentByGid(String gid) throws Exception;
 	
 	//插入评论记录
-	int insertComment(Comment comment)throws Exception;
+	Comment insertComment(Comment comment)throws Exception;
 	
 	//删除评论记录（备用）
 	int deleteCommentByCid(String cid)throws Exception;

@@ -35,8 +35,9 @@
 			<c:when test="${requestScope.game==null }" >
 				<div class="error">
 					<img class="errorImg" src="images/gameNotFound.png" />
-					<br/><br/>
+					<br><br>
 					<span class="errorMsg">游戏不见了！</span>
+					<br><br>
 				</div>
 			</c:when>
 			<c:otherwise>
@@ -100,8 +101,6 @@
 						</c:choose>	
 					</table>
 				</div>
-			</c:otherwise>
-		</c:choose>
 		<!-- 游戏简介及内容截屏 -->
 		<div class="gdescription">
 			<div class="description">游戏简介：</div>
@@ -113,12 +112,12 @@
 			<img src="images/game/${game.gid }/4.jpg" />
 			<img src="images/game/${game.gid }/5.jpg" />
 		</div>
-		<!-- 点赞量和评论量 -->
+		<!-- 游戏的点赞和评论 -->
 		<div class="icon">
-			<table style="border:0;text-align:center">
+			<table>
 				<tr>
 					<td><img onclick="click_like(this,${user.uid},${game.gid })" src="images/like${isLiked? '_yes': '' }.png"/></td>
-					<td><img onclick="click_comment(this,${user.uid},${game.gid })" src="images/comment.png"/></td>
+					<td><img onclick="click_comment(this)" src="images/comment.png"/></td>
 				</tr>
 				<tr>
 					<td id="td_likeNum">${likeNum }</td>
@@ -127,44 +126,49 @@
 			</table>
 		</div>
 		<!-- 评论模块 --><br><br><br>
-		<div class="gcomment" style="display:none">
-			<div class="comment">玩家评论：</div>
+		<div class="comment-module" style="display:none">
+				<!-- 标题 -->
+				<div class="comment-header">玩家评论：</div>
 				<!-- 评论发表文本框 -->
 				<div class="comment-input">
 			        <h2>发表评论</h2>
-			        <form onsubmit="return submit_comment(this,${user.uid},${game.gid },${user.uname },null)" method="post">
+			        <form onsubmit="return submit_comment(this,'${user.uid}','${game.gid }', &quot;${user.uname }&quot;)"  ><!-- 注意这里要用&quot;（双引号符） -->
 			            <textarea id="comment-textarea" name="comment" placeholder="写下你的评论..." required></textarea>
 			            <div><button type="submit">提交评论</button></div>
 	        		</form>
    				</div>
    				<!-- 评论区 -->
-				<div class="ucomment">
+				<div class="comments">
 					<!-- 无评论时显示的沙发图案 -->
 					<c:if test="${empty allComments }"><img id="sofa" src="images/sofa.png" draggable="false"></c:if>
-					
+					<!-- 循环遍历所有评论 -->
 					<c:forEach items="${allComments }" var="comment">
 						<!-- 单条评论（single-comment） -->
-						<div class="comment-container">
-					        <c:set var="sharpNum" value="${fn:length(comment.cpath) - fn:length(comment.cpath.replace('#', ''))}" />
-							<c:set var="indent" value=""/>
-					        <c:forEach begin="1" end="${sharpNum *16}">
-					        	<c:set var="indent" value="${indent += '&nbsp;'}"/>
-							</c:forEach>
-						    ${indent }<span class="comment-uid">${comment.uid} :</span>
+				        <c:set var="sharpNum" value="${fn:length(comment.cpath) - fn:length(comment.cpath.replace('#', ''))}" /><!-- sharpNum 指#号的数量 -->	
+						<c:set var="sharpNum" value="${sharpNum>4? 4: sharpNum }" />
+						<div class="comment-container" style="padding-left:${20+sharpNum * 60}px">	    
+						    <!-- 评论者和日期 -->
+						    <span class="comment-uname">${comment.uname} :</span>
 						    <span class="comment-ctime">[${comment.ctime}]</span>
-						    
-						    <!-- 每条评论的点赞和回复 -->
-						    <img id="comment_like" onclick="click_comment_like(this,${comment.cid },${comment.clike })" src="images/comment_like${isLikedComment? '_yes': '' }.png"/>
-						    点赞量：${comment.clike }
-						    <img id="comment_reply" onclick="click_comment_reply(this,${comment.cid})" src="images/comment_reply.png"/>
-						    
-						    <p style="display:block" class="comment-text"> ${indent} ${comment.comment }</p>
+						    <!-- 评论的点赞和回复图标 -->
+						    <img id="comment-like"  onclick="click_comment_like(this,  
+								${comment.cid},${comment.gid},&quot;${comment.cpath}&quot; ,${comment.clike } )"  
+								src="images/comment_like${isLikedComment? '_yes': '' }.png"/>
+						    <span class="comment-likeNum"  >${comment.clike == 0 ? "" : comment.clike }</span>
+						    <img id="comment-reply" onclick="click_comment_reply(this,  
+								${comment.cid},${comment.gid}, &quot;${comment.cpath}&quot; , &quot;${comment.uname }&quot; )"  
+								src="images/comment_reply.png"/>
+						    <!-- 评论内容 -->
+						    <p style="display:block" class="comment-text"> ${comment.comment }</p>
 						</div>
 					</c:forEach>
 				</div>
 		</div>
+
+
 	
-	
+			</c:otherwise>
+		</c:choose>
 	</div>
 	
 	<!-- 页脚 -->

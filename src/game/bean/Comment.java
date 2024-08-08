@@ -23,7 +23,7 @@ public class Comment {
 		super();
 	}
 	
-	//全9参
+	//全9参（用于query servlet）
 	public Comment(String cid, String uid, String gid, String uname, String ctime, String comment, String clike,
 			String cparentid, String cpath) {
 		super();
@@ -38,8 +38,9 @@ public class Comment {
 		this.cpath = cpath;
 	}
 	
-	//7参（缺cid，cpath）
-	public Comment(String uid, String gid, String uname, String ctime, String comment, String clike, String cparentid) {
+	//8参（除cid，用于写评论入库servlet）
+	public Comment(String uid, String gid, String uname, String ctime, String comment, String clike, String cparentid,
+			String cpath) {
 		super();
 		this.uid = uid;
 		this.gid = gid;
@@ -48,7 +49,10 @@ public class Comment {
 		this.comment = comment;
 		this.clike = clike;
 		this.cparentid = cparentid;
+		this.cpath = cpath;
 	}
+
+
 
 	public String getCid() {
 		return cid;
