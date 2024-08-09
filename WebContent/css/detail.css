@@ -13,24 +13,31 @@
 	min-height: 500px;
 }
 
-
 .error {
-	text-align: center;
+    text-align: center; /* 文本居中 */
+    padding: 120px; /* 内边距 */
+	padding-bottom:20px;
+    background-color: #f8d7da; /* 背景颜色 */
+    color: #721c24; /* 文字颜色 */
+    border-radius: 8px; /* 边框圆角 */
+    max-width: 900px; /* 最大宽度 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 阴影效果 */
 }
 
 .errorImg {
-	width: 600px;
-	padding-top: 40px;
-	margin: 0 auto;
+    width: 600px; /* 图片宽度 */
+    height: auto; /* 高度自适应 */
+    margin-bottom: 20px; /* 图片下方的间距 */
+	border-radius:10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* 阴影效果 */
 }
 
 .errorMsg {
-	color: red;
-	font-family: 宋体;
-	font-size: 50px;
-	font-weight: bold;
+    font-size: 1.4rem; /* 文字大小 */
+    font-weight: bold; /* 字体加粗 */
+    margin-top: 10px; /* 错误信息上方的间距 */
 }
-
+/*************************/
 .gtitle {
 	text-align: center;
 	font-size: 30px;
@@ -193,7 +200,7 @@ hr {
 	position: relative;
 }
 
-#sofa{
+.comments #sofa{
 	width:800px;
 }
 

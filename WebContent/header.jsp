@@ -8,8 +8,14 @@
 <title>页眉</title>
 <link rel="stylesheet" type="text/css" href="css/header.css" />
 <script src="js/header.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/public.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
+	<!-- 小猪loading -->
+	<iframe src="小猪loading.html" id="loadingFrame" style=
+	"display: none;width:100%;height:100%;border:none;
+	position: fixed;z-index: 1000;"></iframe>
+
 			<%
 			//从Cookie获取当前登录者信息：
 	        String Login_uid = "0";
@@ -31,16 +37,16 @@
 			
 			<!-- info（个人信息） -->
 			<div class="info">
-				<img src="images/info.png" height="28px" title="个人资料">
+				<img src="images/info.png" height="28px" title="个人资料" onclick="click_forLoading()">
 			</div>
 			<!-- 登录&注册按钮 -->
 			<div class="login">
 				<%
 				if ("0".equals(Login_uid)) {
-					%><div class="login2"><a href="LR.jsp">登录&注册</a></div><%
+					%><div class="login2"><a href="LR.jsp"  onclick="click_forLoading()" >登录﹠注册</a></div><%
 				} else {%>
 					<div class="ulogin" title="<%=Login_uname %>"><p>欢迎您，<%=Login_uname %></p></div>
-					<div class="login2"><a href="LogoutServlet.do">登出</a></div>
+					<div class="login2"><a href="LogoutServlet.do" onclick="click_forLoading()">登出</a></div>
 				<%}%>
 			</div>
 </body>

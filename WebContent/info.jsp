@@ -8,8 +8,8 @@
 <link rel="stylesheet" type="text/css" href="css/public.css" />
 <link rel="stylesheet" type="text/css" href="css/info.css" />
 <script src="js/jquery-3.6.0.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/jquery.validate.min.js" type="text/javascript"
-	charset="utf-8"></script>
+<script src="js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/public.js" type="text/javascript" charset="utf-8"></script>
 	
 <%
 User user=(User)request.getAttribute("Info_user");
@@ -22,7 +22,7 @@ System.out.println("info.jsp中："+user);
 		<div class="head_zi">
 			<!-- 返回按钮 -->
 			<div class="huan">
-				<a href="index.jsp">返回首页</a>
+				<a href="index.jsp" onclick="click_forLoading()">返回首页</a>
 			</div>
 			<!-- 页眉 -->
 			<jsp:include page="header.jsp"/>
@@ -58,11 +58,11 @@ System.out.println("info.jsp中："+user);
 				</tr>
 				<tr>
 					<td>拥有积分:</td>
-					<td>&emsp;&emsp;&emsp;${Info_user.upoint }&emsp;&emsp;&emsp;<a href="#">点此签到</a></td>
+					<td>&emsp;&emsp;&emsp;${Info_user.upoint }&emsp;&emsp;&emsp;<a href="#" onclick="click_forLoading()">点此签到</a></td>
 				</tr>
 				<tr>
 					<td>购买的游戏:</td>
-					<td><a href='QueryUserGameLogServlet.do?uid=${Info_user.uid }'>点此查看已购买的游戏</a></td>
+					<td><a href='QueryUserGameLogServlet.do?uid=${Info_user.uid }' onclick="click_forLoading()">点此查看已购买的游戏</a></td>
 				</tr>
 				<tr>
 					<td>地址:</td>

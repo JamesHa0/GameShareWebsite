@@ -9,8 +9,7 @@
 <link rel="stylesheet" type="text/css" href="css/public.css" />
 <link rel="stylesheet" type="text/css" href="css/info.css" /><!-- 借用css -->
 <script src="js/jquery-3.6.0.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/jquery.validate.min.js" type="text/javascript"
-	charset="utf-8"></script>
+<script src="js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
 
 </head>
 <body>
@@ -18,7 +17,7 @@
 		<div class="head_zi">
 			<!-- 返回按钮 -->
 			<div class="huan">
-				<a href="index.jsp">返回首页</a>
+				<a href="index.jsp" onclick="click_forLoading()">返回首页</a>
 			</div>
 			<!-- 页眉 -->
 			<jsp:include page="header.jsp"/>
@@ -44,7 +43,7 @@
 					</tr>
 				</c:forEach>
 				<tr>
-					<td colspan="4"><a href="QueryInfoServlet.do">返回</a></td>
+					<td colspan="4"><a href="QueryInfoServlet.do" onclick="click_forLoading()">返回</a></td>
 				</tr>
 			</table>
 		</div>

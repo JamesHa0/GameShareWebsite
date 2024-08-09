@@ -6,15 +6,20 @@
 <link rel="stylesheet" type="text/css" href="css/public.css" />
 <link rel="stylesheet" type="text/css" href="css/LR.css" />
 <script src="js/jquery-3.6.0.js" type="text/javascript" charset="utf-8"></script>
-<script src="js/jquery.validate.min.js" type="text/javascript"
-	charset="utf-8"></script>
+<script src="js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/LR.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/public.js" type="text/javascript" charset="utf-8"></script>
 
 </head>
 <body>
+	<!-- 小猪loading -->
+	<iframe src="小猪loading.html" id="loadingFrame" style=
+	"display: none;width:100%;height:100%;border:none;
+	position: fixed;z-index: 1000;"></iframe>
+	
 	<div class="head">
 		<div class="shouye_head">
-			<a href="index.jsp">返回首页</a>
+			<a href="index.jsp" onclick="click_forLoading()">返回首页</a>
 		</div>
 	</div>
 	<div class="dowebok" id="dowebok">
@@ -36,7 +41,7 @@
 				女<input type="radio" id="woman" name="ugender" value="F"/>
                 <input type="text" id="uaddress" name="uaddress" placeholder="地址" /> 
 
-				<button>注册</button>
+				<button onclick="click_forLoading()">注册</button>
 			</form>
 		</div>
 		<!-- 登录 -->
@@ -49,7 +54,7 @@
 				<img id="checkinput" src="CheckCodeServlet" />
 				<a href="jsp_admin/admin_login.jsp">管理员登录</a>
 
-				<button>登录</button>
+				<button onclick="click_forLoading()">登录</button>
 			</form>
 		</div>
 		<!-- 两边的蒙版 -->
