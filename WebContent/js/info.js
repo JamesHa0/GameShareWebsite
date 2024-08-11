@@ -74,15 +74,21 @@ function createDialog(message,color) {
 /*************************************************业务函数： */
 /*签到处理函数*/
 function click_checkin(Info_user){
-	let Span_pointNum=document.querySelector('.pointNum');
+console.debug(localStorage.getItem('checkin'))
 	const nowTimestamp = Date.now();	//当前时间戳
 	const daysSince1980 = Math.floor(nowTimestamp / 86400000);// 将毫秒差转换为天数（一天有86400000毫秒）
-	let checkin_at=localStorage.getItem('checkin_at')
-	if(checkin_at==daysSince1980){
-		createDialog('今天已签到，明天再来哦','#ffffff');
-		return;
+	if(localStorage.getItem('checkin') !== null){	//非第一次访问
+		let checkin=localStorage.getItem('checkin')
+		let checkin_json=JSON.parse(checkin);
+		if(checkin_json.uid == Info_user.uid &&
+			checkin_json.checkin_at == daysSince1980){
+			createDialog('今天已签到，明天再来哦','#ffffff');
+			return;
+		}
 	}
+	
 	document.querySelector('#loadingFrame').style.display="block";	//小猪loading显示
+	let Span_pointNum=document.querySelector('.pointNum');
 	const point=generateWeightedScore();
 	
 	let urlSearchParams=new URLSearchParams();
@@ -114,7 +120,11 @@ console.debug(Info_user)
 		Span_pointNum.textContent = urlSearchParams.get('upoint');	//数值更新
         Span_pointNum.style.color = '#cc6600'; // 更新样式
         
-        localStorage.setItem('checkin_at',daysSince1980)	//存入本地存储
+        let checkin_json={
+			uid: Info_user.uid,
+			checkin_at: daysSince1980
+		}
+        localStorage.setItem('checkin',JSON.stringify(checkin_json))	//存入本地存储
         
         createDialog(`恭喜获得${point}积分`,`#ffffff`);	//弹窗提示
 	})
