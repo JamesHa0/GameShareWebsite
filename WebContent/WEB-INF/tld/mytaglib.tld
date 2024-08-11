@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+ 
+	<description>tld: 自定义标签</description>
+	<tlib-version>1.1</tlib-version>
+	<short-name>my</short-name>			<!--prefix-->
+	<uri>http://game.com/mytags</uri> 				<!--uri-->
+ 
+<!--     <tag> -->
+<!--         <description>对象转化为json(object to json)</description> -->
+<!-- 		<name>toJson</name>					标签名 -->
+<!-- 		<tag-class>game.other.Taglibs</tag-class>  类地址 -->
+<!-- 		<body-content>empty</body-content>  标签体是否为空 -->
+ 			<!-- 属性 --> 
+<!-- 		<attribute> -->
+<!-- 			<name>object</name>					属性名 -->
+<!-- 			<required>true</required>		是否必需 -->
+<!-- 		</attribute> -->
+<!--     </tag> -->
+    
+    <!-- el表达式可用的自定义函数 -->
+    <function>
+	    <name>toJson</name>
+	    <function-class>game.other.Taglibs</function-class>
+	    <function-signature>java.lang.String toJson(java.lang.Object)</function-signature>
+	</function>
+</taglib>

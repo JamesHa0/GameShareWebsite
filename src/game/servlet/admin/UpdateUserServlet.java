@@ -49,7 +49,7 @@ public class UpdateUserServlet extends  HttpServlet{
         String utel = request.getParameter("utel"); 
         String uemail = request.getParameter("uemail"); 
         String urole = request.getParameter("urole_" + uid); // 用户角色（注意特殊处理）
-        if (urole == null) urole = request.getParameter("urole"); // 处理未传入特定用户角色情况
+        if (urole == null || "null".equals(urole) || "undefined".equals(urole)) urole = request.getParameter("urole"); // 处理未传入特定用户角色情况
         String ugender = request.getParameter("ugender");
         String uaddress = request.getParameter("uaddress"); 
         String upsw = request.getParameter("upsw"); 

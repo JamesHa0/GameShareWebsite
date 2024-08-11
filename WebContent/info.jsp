@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ page import="game.bean.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="my" uri="http://game.com/mytags" %>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -10,11 +11,7 @@
 <script src="js/jquery-3.6.0.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/jquery.validate.min.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/public.js" type="text/javascript" charset="utf-8"></script>
-	
-<%
-User user=(User)request.getAttribute("Info_user");
-System.out.println("info.jsp中："+user);
-%>
+<script src="js/info.js" type="text/javascript" charset="utf-8"></script>
 
 </head>
 <body>
@@ -58,7 +55,8 @@ System.out.println("info.jsp中："+user);
 				</tr>
 				<tr>
 					<td>拥有积分:</td>
-					<td>&emsp;&emsp;&emsp;${Info_user.upoint }&emsp;&emsp;&emsp;<a href="#" onclick="click_forLoading()">点此签到</a></td>
+					<td>&emsp;&emsp;&emsp;<span class="pointNum">${Info_user.upoint }</span>&emsp;&emsp;&emsp;
+					<span class="checkin"  onclick='click_checkin(${my:toJson(Info_user)})'  style="user-select: none;">点此签到</span></td>
 				</tr>
 				<tr>
 					<td>购买的游戏:</td>

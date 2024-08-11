@@ -13,6 +13,7 @@ import game.bean.User;
 import game.bean.UserLog;
 import game.dao.UserDaoImpl;
 
+//通过cookie中的uid查询到user对象后，命名为Info_user装入request，转发到info.jsp
 @WebServlet("/QueryInfoServlet.do")
 public class QueryInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -37,6 +38,7 @@ public class QueryInfoServlet extends HttpServlet {
         	}
         }
         
+        //main
         if("0".equals(Login_uid)) {
         	System.out.println("!404 servlet-Q:info 什么都没查到。");
         	response.setStatus(404);
@@ -50,6 +52,7 @@ public class QueryInfoServlet extends HttpServlet {
 				userlog.logOperation(Login_uid, Login_uname, Login_urole,"查询个人信息" ,"失败" );
 				System.out.println("!500 servlet-queryinfo");
 			}
+			
 			if(user==null)System.out.println("!404 servlet-Q:info 什么都没查到2。");
         	request.setAttribute("Info_user", user);
         	request.getRequestDispatcher("info.jsp").forward(request, response);
