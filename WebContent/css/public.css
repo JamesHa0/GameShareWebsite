@@ -34,7 +34,7 @@ img{
         	position: fixed;
             z-index: 1;
             left: 50%; /* 水平居中 */
-		    top: 60%; /* 垂直方向上，从顶部开始计算，偏下 */
+		    top: 80%; /* 垂直方向上，从顶部开始计算，偏下 */
 		    transform: translate(-50%, -50%); /* 水平向左移动自身宽度的50%，垂直向下移动自身高度的50% */
             background-color: #000000;
             margin: 10px 10px; 

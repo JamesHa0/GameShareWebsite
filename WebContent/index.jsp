@@ -9,46 +9,35 @@
 <script src="js/jquery-3.6.0.js" type="text/javascript" charset="utf-8"></script>
 <script src="js/index.js" type="text/javascript" charset="utf-8"></script>
 </head>
-<body>
-	<div class="head">
-		<div class="head_zi">
-			<!-- 网站名 -->
-			<div class="huan"  onclick="click_forLoading()">
-				<p>GameShareWebsite（点击测试小猪loading）</p>
-			</div>
-			<!-- 页眉（包括欢迎语/登录&注册，个人资料logo） -->
-			<jsp:include page="header.jsp" />
-		</div>
-	</div>
+<body onload="onload();">
+
+	<!-- 页眉 -->
+	<jsp:include page="header.jsp" />
+	
 	<!--搜索框-->
-	<div class="search_kuang">
-		<div class="search">
-			<input type="text" class="text">
-			<button>
-				<img src="images/search.png" width="40px">
-			</button>
-		</div>
+	<div class="search-bar">
+		<input type="text" class="text">
+		<button>
+			<img src="images/search.png" width="40px">
+		</button>
 	</div>
+	
 	<!-- shop（商品栏） -->
 	<article class="shop">
+	
 		<!-- 轮播图 -->
 		<section class="picture">
 			<div class="picture-area">
-				<ul id="item">
-					<li class="item"><img src="images/game/1091500/1.jpg">
-					</li>
-					<li class="item"><img src="images/game/1086940/1.jpg">
-					</li>
-					<li class="item"><img src="images/game/1245620/1.jpg">
-					</li>
-					<li class="item"><img src="images/game/1174180/1.jpg">
-					</li>
-					<li class="item"><img src="images/game/2358720/1.jpg">
-					</li>
+				<ul id="item" >
+					<li class="item"><img src="images/game/1091500/1.jpg"></li>
+					<li class="item"><img src="images/game/1086940/1.jpg"></li>
+					<li class="item"><img src="images/game/1245620/1.jpg"></li>
+					<li class="item"><img src="images/game/1174180/1.jpg"></li>
+					<li class="item"><img src="images/game/2358720/1.jpg"></li>
 				</ul>
 			</div>
-			<div id="btn-left"></div>
-			<div id="btn-right"></div>
+			<div id="btn-left">&lt;</div>
+			<div id="btn-right">&gt;</div>
 			<ul id="circle">
 				<li class="circle"></li>
 				<li class="circle"></li>
@@ -58,6 +47,7 @@
 			</ul>
 		</section>
 		
+		<!-- 游戏一览 -->
 		<section class="content">
 			<!-- 本站游戏 -->
 			<div class="game-box">

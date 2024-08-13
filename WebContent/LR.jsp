@@ -17,11 +17,13 @@
 	"display: none;width:100%;height:100%;border:none;
 	position: fixed;z-index: 1000;"></iframe>
 	
+	<!-- 页眉 -->
 	<div class="head">
 		<div class="shouye_head">
 			<a href="index.jsp" onclick="click_forLoading()">返回首页</a>
 		</div>
 	</div>
+	
 	<div class="dowebok" id="dowebok">
 		<!-- 注册 -->
 		<div class="form-container sign-up">

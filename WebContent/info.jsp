@@ -15,16 +15,8 @@
 
 </head>
 <body>
-	<div class="head">
-		<div class="head_zi">
-			<!-- 返回按钮 -->
-			<div class="huan">
-				<a href="index.jsp" onclick="click_forLoading()">返回首页</a>
-			</div>
-			<!-- 页眉 -->
-			<jsp:include page="header.jsp"/>
-		</div>
-	</div>
+	<!-- 页眉 -->
+	<jsp:include page="header.jsp"/>
 
 
 	<div class="dowebok" id="dowebok">

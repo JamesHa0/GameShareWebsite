@@ -1,22 +1,20 @@
-/* 【搜索框】 */
-.search_kuang{
+/****************<!--搜索框-->***************/
+.search-bar {
     position: relative;
     height: 60px;
-}
-.search{
     margin: 20px auto 0;
     width: 500px;
     height: 45px;
     border: 2px solid #f53c66;
 }
-.search .text{
+.search-bar .text{
     width: 400px;
     height: 37px;
     border: none;
     padding: 4px 10px 0;
     outline: none;
 }
-.search button{
+.search-bar button{
     float: right;
     border: none;
     width: 80px;
@@ -26,13 +24,16 @@
 }
 
 
-
-/* 【轮播图】模块 **************************/
+/**********<!-- shop（商品栏） -->***********/
 .shop{
     display: block;
     margin: 10px auto 0px;
     width: 1200px;
 }
+
+
+/**********<!-- 轮播图 -->*****************/
+
 
 .picture{
   	margin: 0 auto;
@@ -53,25 +54,21 @@
 .picture img{
 	width: 888px;
 }
-
-
 #item{
 	width: 100%;
 	height: 100%;
-	
 }
 .item{
 	position: absolute;
-/* 	opacity: 0; */
+	opacity: 0;
 	transition: all 2s;
 	list-style-type: none;
 }
-
-.item .active{
-	opacity:1;
+.active{
+	opacity:1 !important;	/*规避第一张图片无法加载的bug */
 }
-
 #btn-left{
+	user-select: none;
 	width: 30px;
 	height: 75px;
 	font-size: 30px;
@@ -91,6 +88,7 @@
 }
 
 #btn-right{
+	user-select: none;
 	width: 30px;
 	height: 75px;
 	font-size: 30px;
@@ -125,8 +123,6 @@
 	margin: 5px;
 	list-style-type: none;
 }
-
-
 .white{
 	background-color: #FFFFFF;
 }
@@ -141,7 +137,7 @@
 
 
 
-/* 【本站游戏】模块 ***************************************/
+/************************<!-- 游戏一览 -->*********************/
 .game-box{
     width: 1200px;
     height: 940px;
@@ -157,7 +153,6 @@
     border-bottom: 2px solid #3d3d3d;
 }
 
-/*********************/
 .game-box .game-gallery{
     display: block;
     padding-left: 10px;
@@ -193,47 +188,3 @@
     margin: 8px auto 0;
     overflow: hidden;
 }
-/*****************//*
-.content_pohot{
-    display: block;
-    padding-left: 90px;
-    margin-top: 30px;
-}
-
-.game_tu{
-    display: block;
-    float: left;
-    width: 450px;
-    height: 330px;
-    padding-top: 50px;
-    margin-left: 25px;
-    margin-bottom: 20px;
-    background-color: #ffffff;
-}
-.game_tu .ph{
-    text-align: center;
-    padding-left: 10px;
-}
-.game_tu .ph img{
-	max-height:250px;
-	width: 400px;
-}
-.game_tu .na{
-    display: block;
-    font-size: 16px;
-    color: #000000;
-    text-align: center;
-    height: 50px;
-    line-height: 50px;
-    width: 190px;
-    margin: 8px auto 0;
-    overflow: hidden;
-}
-.game_tu p{
-    text-align: center;
-    color: #fd8f00;
-    font-size: 18px;
-    margin-top: 8px;
-    margin-left: 5px;
-}
-*/

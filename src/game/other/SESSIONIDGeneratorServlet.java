@@ -24,13 +24,10 @@ public class SESSIONIDGeneratorServlet extends HttpServlet{
 			throws ServletException, IOException {
     	HttpSession session=request.getSession();
     	if(session.getAttribute("SESSIONID") == null) {//第一次进index，或是登出后的首次进入
-    		session.setAttribute("SESSIONID",generateSessionId() );
+    		String id=generateSessionId();
+    		session.setAttribute("SESSIONID", id);
     		
-
-    		session.setAttribute("SESSIONID_test",generateSessionId() );
-    		session.setAttribute("x","y" );
-    		
-    		System.out.println("【jsid生成器】x="+(String)session.getAttribute("x"));
+    		System.out.println("【SessionID生成器】id="+(String)session.getAttribute("SESSIONID"));
     	}
     }
     
