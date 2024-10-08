@@ -1,0 +1,48 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的自定义表单</title>
+    <script>
+        function getData() {
+            fetch('/user/109')
+                .then(response => {
+                    // 获取一个自定义头部的值
+                    const token = response.headers.get('authorization');
+                    console.log("后端发的token是："+token);
+                    localStorage.setItem("token",token);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+    </script>
+</head>
+<body>
+    <div style="width:600px; margin:auto">
+        &lt;!&ndash; action是提交表单数据的地址。security.interceptor.loginForm拦截器会拦截表单提交，如果表单提交地址是/login，那么会自动跳转到登录页面。&ndash;&gt;
+        <form method="post">    &lt;!&ndash;action不能写。一写就会出现无论怎样都会重定向到本页的错误。&ndash;&gt;
+            &lt;!&ndash; Security 默认的处理请求参数中的用户名和密码，使用参数名称为username和password。
+                Security框架处理请求参数是通过过滤器： org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.java 实现的。
+            &ndash;&gt;
+            <table>
+                <tr>
+                    <td>用户名：</td>
+                    <td><input type="text" name="utel"></td>
+                </tr>
+                <tr>
+                    <td>密　码：</td>
+                    <td><input type="password" name="upsw"></td>
+                </tr>
+                <tr>
+                    <td><input type="submit" value="登录"></td>
+                    <td><input type="reset" value="重置"></td>
+                </tr>
+            </table>
+
+            <button onclick="getData">点击发送Ajax请求</button>
+
+        </form>
+    </div>
+</body>
+</html>-->

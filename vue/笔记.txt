@@ -1,0 +1,35 @@
+
+准备工作：
+1，全局安装vue-cli：vue目录下管理员cmd，	npm install @npm install -g @vue/cli
+	或者是上位替代品vite：	npm install -g create-vite
+2，安装npm的高级替代品pnpm：管理员cmd，		npm i -g pnpm 
+
+创建项目：
+1，创建vue项目：cmd，		vue create 项目名
+	或者用替代品vite：	create-vite 项目名
+	然后： 	cd 项目地址
+  	下载依赖：	npm install
+  	启动项目：	npm run dev
+
+安装依赖：
+1，下载element-ui Plus（v2.8.1 ,Plus适配vue3）：管理员cmd，		npm install element-plus --save
+2，安装VueRouter4（v4.4.3 ,router4适配vue3）：管理员cmd，		pnpm i vue-router@4
+3，安装axios：管理员cmd，			npm install axios -g
+4，安装vueX4：(Pinia似乎更好)		npm install vuex@next
+5，安装mockjs：管理员cmd，		npm install mockjs
+
+
+
+
+
+
+vue-element-admin项目布局：
+src目录下：
+-api(封装的网络请求)
+-assets(图片)
+-components(通用组件)
+-error(404等页面)
+-layout(布局相关)
+-router(路由相关)
+-store(vueX相关)
+-views(页面组件)

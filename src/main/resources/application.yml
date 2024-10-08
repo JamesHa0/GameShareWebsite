@@ -1,0 +1,8 @@
+#spring:
+#  security:
+#    user:
+#      name: root
+#      password: root
+logging:
+  level:
+    com.game.mapper: TRACE

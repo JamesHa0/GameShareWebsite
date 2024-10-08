@@ -1,0 +1,120 @@
+热部署三件套：
+1，Devtools依赖；
+2，Build,Execution, Deployment -> Compiler 勾选中左侧的Build Project automatically
+3，Setting-Advanced Settings中的Allow-automake……选项
+
+- API接口测试工具：ApiPost.exe（被下面的SpringDoc平替）
+- API文档交互ui框架（maven）： SpringDoc-OpenApi
+
+！ 注意新版本的SpringBoot3需要的MybatisPlus的Maven是： mybatis-plus-spring-boot3-starter。
+
+
+拦截器（interceptor）需要在WebConfig中注册才能激活。
+
+
+
+
+//******************************关于Spring Security：*******************************//
+1，在数据库准备：3实体表 2关系表（用户-角色-权限）
+2，Security强制要求的 PasswordEncoder接口。
+3，定义登录服务类型。Security定义了一个登录服务接口，类型是UserDetailsService，方法是loadUserByUsername(String xxx)。
+    该方法仅用于根据用户凭证查询用户对象并返回。
+
+简述Security认证流程：
+    1，请求地址。除/login 外的地址，框架检查是否已登录，未登录则重定向至 /login。
+        /login get请求：进入登录页面的请求
+        /login post请求：登录请求
+    2，填写用户名密码，点击登录，访问 /login，post请求，Security框架自动收集参数
+    3，Security框架从Spring容器中根据类型获取bean对象， UserDetailsService类型的对象。
+        ApplicationContext.getBean(UserDetailsService.class) 方法。
+    4，Security框架调用方法，loadUserByUsername，根据用户名查询用户对象。
+        若该方法抛出异常（查询失败），重定向至/login?error；
+        若该方法未抛出异常，则校验返回值中保存的密码和请求参数密码是否匹配：
+            获取Spring容器中的PasswordEncoder类型对象，调用方法matches比较密码，true则成功，false失败，重定向至 /login?error。
+认证安全强化：
+    · 强散列加密（BCrypt）可以保证相同的明文，多次加密后，密文有相同的散列数据，而不是相同的结果。匹配时，是基于相同的散列数据（而不是结果）做的匹配。
+
+提供自定义配置信息：
+    定义Configuration配置类型，定义Bean 对象管理方法。方法创建SecurityFilterChain 类型对象。/
+    Security框架自动在spring容器中创建一个 HttpSecurity类型的对象，可以通过方法参数传递一个创建 SecurityFilterChain对象的方法。/
+    SecurityFilterChain对象，不需要手工new，可以通过HttpSecurity对象中的方法 build 构建。
+    在HttpSecurity对象中，存在若干方法，可以提供需要的配置内容。/
+    包含  登录认证配置、授权配置、CSRF配置 等。
+    Security框架官方推荐，在提供Security配置对象的配置类型上增加注解 @EnableWebSecurity，使Security框架强制生效。
+
+细致解析认证流程。观察security框架源码，明确认证流程：
+    *1，请求发送到 UsernamePasswordAuthenticationFilter 过滤器
+    2，过滤器中的 attemptAuthentication 方法执行。此方法由 过滤器的父类 AbstractAuthenticationProcessingFilter 中的doFilter 方法调用。
+    *3，attemptAuthentication 方法执行时，先获取请求参数，默认是username和password。具体由方法 obtainUsername,obtainPassword处理。
+    4，创建认证方法参数对象。UsernamePasswordAuthenticationToken对象中保存登录请求参数。 且标记未登录认证。
+    *5，调用认证方法 authenticate()，方法参数是UsernamePasswordAuthenticationToken 的对象
+    6，authenticate() 方法由接口 AuthenticationManager 实现类型 ProviderManager提供。
+        *7，ProviderManager.authenticate() 的核心代码是：
+            Authentication result = provider.authenticate(authentication)
+            Authentication 是Security框架定义的用户主题类型。是被Security框架保存在会话作用域中的数据。
+            AuthenticationProvider 是接口类型。用于实现具体的登录过程。具体使用抽象实现类
+                AbstractUserDetailsAuthenticationProvider
+    8，AbstractUserDetailsAuthenticationProvider.authenticate() 运行流程是：
+        检查是否已登录，查看Security管理的缓存中，是否存在此用户对象
+        UserDetails user = this.userCache.getUserFromCache(username)
+        如果缓存中没有要登录的用户对象，开始认证登录。
+        UserDetails user = retrieveUser(用户名，UsernamePasswordAuthenticationToken类型对象传递密码);
+        retrieveUser方法是一个抽象方法，由子类型 DaoAuthenticationProvider 提供具体实现。
+    *9，DaoAuthenticationProvider.retrieveUser运行流程：
+        调用UserDetailsService接口中的loadUserByUsername方法，查询用户
+        UserDetails loadedUser = this.getUserDetailsService().loadUserByUsername(username);
+        查询完毕后，返回UserDetails类型对象。
+    10，AbstractUserDetailsAuthenticationProvider.authenticate()
+        catch异常，异常类型是 UsernameNotFoundException ，异常出现，则用户不存在。直接返回错误结果。
+    11，AbstractUserDetailsAuthenticationProvider.authenticate()
+        调用DefaultPreAuthenticationChecks.check 方法，做前置检查，检查用户是否已锁定、不可用、已过期
+        preAuthenticationChecks.check(user);
+        如果已锁定 或 不可用 或 已过期， 抛出异常。
+    12，AbstractUserDetailsAuthenticationProvider.authenticate()
+        开始判断登录用户的密码是否正确
+        DaoAuthenticationProvider.additionalAuthenticationChecks(user,(UserNamePasswordAuthenticationToken) authentication);
+        方法中调用PasswordEncoder类型matches方法，判断密码是否正确，若密码错误，抛出异常。
+        if (!this.passwordEncoder.matches(presentedPassword, userDetails.getPassword()))
+    13，AbstractUserDetailsAuthenticationProvider.authenticate()
+        开始密码判断后的检查。调用DefaultPostAuthenticationChecks.check 方法，检查密码是否已过期，如果过期，抛出异常。
+        this.postAuthenticationChecks.check(user);
+    14，AbstractUserDetailsAuthenticationProvider.authenticate()
+        如果没有任何异常抛出，则代表登录认证成功。创建结果对象。结果对象类型是 Authentication接口类型，
+        具体创建过程由下述方法实现。具体对象类型是 UsernamePasswordAuthenticationToken
+        createSuccessAuthentication(principalToReturn, authentication, user)
+    15，AbstractUserDetailsAuthenticationProvider.authenticate() 结束，返回 Authentication类型对象，
+        代表用户登录认证成功，返回的是查询结果对象。包含用户的身份、凭证和权限列表。
+    16，ProviderManager.authenticate() 方法中，认证成功后，需要隐藏Authentication对象中的密码。具体由下述方法实现。
+    隐藏密码的目的是数据脱敏（摆脱敏感信息）。
+    ((CredentialsContainer) result).eraseCredentials();
+    *17，ProviderManager.authenticate() 方法执行结束，返回隐藏密码后的 Authentication对象。
+    18，UsernamePasswordAuthenticationFilter.attemptAuthentication 方法执行结束，返回结果交给父类型的过滤方法 doFilter
+    *19，AbstractAuthenticationProcessingFilter 中的doFilter 方法继续执行。
+        根据登录结果决定运行 successfulAuthentication 或 unsuccessfulAuthentication。
+        当 attemptAuthentication 方法抛出异常时，运行 unsuccessfulAuthentication， 进入登录认证失败处理流程，
+          调用 AuthenticationFailureHandler  中的 onAuthenticationFailure 方法，处理认证失败。
+        当 attemptAuthentication 方法正常结束时，运行 successfulAuthentication， 进入登录认证成功处理流程，
+          调用 AuthenticationSuccessHandler  中的 onAuthenticationSuccess 方法，处理认证成功。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
