@@ -29,13 +29,13 @@ public class MySecurityConfig {
 //        return new My00LoginAuthenticationProvider(userDetailsService, passwordEncoder);
 //    }
     @Bean
-    public My01JwtAuthenticationFilter my02JwtAuthenticationFilter() throws Exception {
+    public My01JwtAuthenticationFilter my01JwtAuthenticationFilter() throws Exception {
         return new My01JwtAuthenticationFilter();
     }
-//    @Bean
-//    public My03JwtAuthenticationEntryPoint my03JwtAuthenticationEntryPoint() {
-//        return new My03JwtAuthenticationEntryPoint();
-//    }
+    @Bean
+    public My04JwtAuthenticationEntryPoint my04JwtAuthenticationEntryPoint() {
+        return new My04JwtAuthenticationEntryPoint();
+    }
     @Bean
     public My04LoginSuccessHandler my04LoginSuccessHandler() {
         return new My04LoginSuccessHandler();
@@ -47,10 +47,10 @@ public class MySecurityConfig {
 
 
     private static final String[] URL_WHITELIST = {
+            "/register",
             "/login",         //登录
             "/logout",        //登出
             "/captcha",        //验证码
-            "/user/register", //注册
             "/favicon.ico"
     };
 
@@ -60,16 +60,18 @@ public class MySecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(my02JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(my01JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)     // 配置自定义JWT认证过滤器
                 .formLogin(form -> form
                         .usernameParameter("utel").passwordParameter("upsw")
-                        .successHandler(my04LoginSuccessHandler())
-                        .failureHandler(my04LoginFailureHandler())
-//                        .defaultSuccessUrl("http://localhost:5173/")
-//                        .failureUrl("http://localhost:5173/login?err=fail")
+                        .loginPage("/login")
+                        .successHandler(my04LoginSuccessHandler())      // 配置自定义登录成功处理器
+                        .failureHandler(my04LoginFailureHandler())      // 配置自定义登录失败处理器
+                )
+                .exceptionHandling(
+                        exception -> exception.authenticationEntryPoint(my04JwtAuthenticationEntryPoint())  // 配置自定义JWT认证失败处理器
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(URL_WHITELIST).permitAll()
+                        .requestMatchers(URL_WHITELIST).permitAll()     // 配置白名单
                         .anyRequest().authenticated()
                 );
 

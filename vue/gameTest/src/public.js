@@ -33,3 +33,8 @@ export function getToken() {       // 获取token，返回解码后的token
         return null;
     }
 }
+
+
+export function isNull(obj) {
+    return obj == null || obj == undefined || obj == '' ;
+}

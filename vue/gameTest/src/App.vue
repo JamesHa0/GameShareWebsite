@@ -1,12 +1,12 @@
+<template>
+    <router-view ref="routerView"></router-view>
+</template>
+
 <script>
 export default {
   name: 'App',
 }
 </script>
-
-<template>
-   <router-view :key="$route.fullPath"/>
-</template>
 
 <style scoped>
 

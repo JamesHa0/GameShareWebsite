@@ -1,11 +1,15 @@
 <template>
-	<div class="container">
+<button @click="toggle_Validate">
+<span v-if="isValidate">关闭前台验证</span>
+<span v-if="!isValidate">开启前台验证</span></button>
+
+	<div class="container" :class="{ 'right-panel-active': isActive }">
         <!-- 注册 -->
         <Register/>
         <!-- 登录 -->
-        <!-- <Login/> -->
+        <Login/>
         <!-- 两边的蒙版 -->
-		<!-- <overlay/> -->
+		<Overlay @click_Overlay_Btn="click_Overlay_Btn"/>
 	</div>
 </template>
 
@@ -19,6 +23,34 @@ export default {
 	 Register, 
 	 Login,
 	 Overlay, 
+  },
+  data() {
+    return {
+        isValidate: false,       // 前台验证的总开关，管理员手动按需更改；测试用
+        isActive: false,        // 负责蒙版css切换
+    }
+  },
+  created() {
+    if(this.isValidate)
+        localStorage.setItem('isValidate', true);
+    else 
+        localStorage.setItem('isValidate', false);
+  },
+  methods:{
+    clickFlushCheckCode() {
+        this.$refs.checkinput.onclick = () => {
+            const date = new Date().getTime();
+            img.src = "CheckCodeServlet?" + date;
+        } 
+    },
+    click_Overlay_Btn(){
+        this.isActive = !this.isActive;     // 切换css，使得蒙版居右或居左
+    },
+    toggle_Validate(){
+        this.isValidate = !this.isValidate;
+        localStorage.setItem('isValidate', this.isValidate);
+    }
+
   },
 
 }
@@ -92,10 +124,6 @@ button:active {
 button:focus {
     outline:none;
 }
-button.ghost {
-    background:#20b2aa;
-    border-color:#fff;
-}
 .form-container {
     position:absolute;
     top:0;
@@ -116,29 +144,29 @@ button.ghost {
 
 
 /* Move signin to right */
-.container.right-panel-active .sign-in {
+.right-panel-active .sign-in {
     transform:translateY(100%);
 }
 /* Move overlay to left */
-.container.right-panel-active .overlay-container {
+.right-panel-active .overlay-container {
     transform:translateX(-100%);
 }
 /* Bring signup over signin */
-.container.right-panel-active .sign-up {
+.right-panel-active .sign-up {
     transform:translateX(100%);
     opacity:1;
     z-index:5;
 }
 /* Move overlay back to right */
-.container.right-panel-active .overlay {
+.right-panel-active .overlay {
     transform:translateX(50%);
 }
 /* Bring back the text to center */
-.container.right-panel-active .mask-left {
+.right-panel-active .mask-left {
     transform:translateY(0);
 }
 /* Same effect for right */
-.container.right-panel-active .mask-right {
+.right-panel-active .mask-right {
     transform:translateY(50%);
 }
 .error{

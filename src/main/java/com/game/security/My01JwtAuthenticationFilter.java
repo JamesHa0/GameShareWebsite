@@ -46,7 +46,7 @@ public class My01JwtAuthenticationFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);       // set 权限 = 值
             } else {
-                System.out.println("【01jwt过滤器】jwt为空，等待登录认证过滤器继续校验……" + result.getMessage());
+                System.out.println("【01jwt过滤器】jwt校验失败：" + result.getMessage());
             }
         } else {
             if(jwt == null)

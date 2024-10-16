@@ -1,30 +1,36 @@
 <template>
-  <div class="overlay-container">
+        <div class="overlay-container">
 			<div class="overlay">
 				<!-- 登录蒙版 -->
 				<div class="overlay-panel mask-left">
 					<h1>已有帐号？</h1>
 					<p>请使用您的手机号进行登录</p>
-					<button class="ghost" id="signIn">登录</button>
+					<button  @click="click_Overlay_Btn" class="signIn" id="signIn">登录</button>
 				</div>
 				<!-- 注册蒙版 -->
 				<div class="overlay-panel mask-right">
 					<h1>没有帐号？</h1>
 					<p>立即注册加入我们，和我们一起开始旅程吧</p>
-					<button class="ghost" id="signUp">注册</button>
+					<button  @click="click_Overlay_Btn"  class="signUp" id="signUp">注册</button>
 				</div>
 			</div>
 		</div>
 </template>
 
 <script>
+
+
 export default {
 
+  methods:{
+    click_Overlay_Btn() {
+        this.$emit('click_Overlay_Btn');   // 触发父组件的自定义事件
+    }
+  } 
 }
 </script>
 
 <style>
-
 .overlay-container {
     position:absolute;
     top:0;
@@ -65,5 +71,9 @@ export default {
 }
 .mask-left {
     transform:translateY(-50%);
+}
+button.signIn,.singnUp {
+    background:#20b2aa;
+    border-color:#fff;
 }
 </style>

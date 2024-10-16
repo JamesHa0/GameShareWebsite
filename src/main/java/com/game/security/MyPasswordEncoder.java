@@ -19,7 +19,7 @@ public class MyPasswordEncoder implements PasswordEncoder {
 
     /**
      * 验证密码是否正确
-     * @param rawPassword，明文，是登陆时客户端传递的
+     * @param rawPassword，明文，是登录时客户端传递的
      * @param encodedPassword，密文，是服务器中存储的
      * @return
      */

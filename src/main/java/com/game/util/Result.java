@@ -36,6 +36,10 @@ public class Result {
         return new Result(false,ResultCode.ERROR,"error");
     }
 
+    public Result code(Integer code) {
+        this.code = code;
+        return this;
+    }
     public Result message(String message) {
         this.message = message;
         return this;
