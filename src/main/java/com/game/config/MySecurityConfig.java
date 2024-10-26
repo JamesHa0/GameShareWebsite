@@ -25,7 +25,7 @@ public class MySecurityConfig {
     }
 
 //    @Bean
-//    public My00LoginAuthenticationProvider my01LoginAuthenticationProvider() {
+//    public My00LoginAuthenticationProvider my00LoginAuthenticationProvider() {
 //        return new My00LoginAuthenticationProvider(userDetailsService, passwordEncoder);
 //    }
     @Bean
@@ -47,6 +47,7 @@ public class MySecurityConfig {
 
 
     private static final String[] URL_WHITELIST = {
+//            "/error",
             "/register",
             "/login",         //登录
             "/logout",        //登出
@@ -70,10 +71,12 @@ public class MySecurityConfig {
                 .exceptionHandling(
                         exception -> exception.authenticationEntryPoint(my04JwtAuthenticationEntryPoint())  // 配置自定义JWT认证失败处理器
                 )
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(URL_WHITELIST).permitAll()     // 配置白名单
-                        .anyRequest().authenticated()
-                );
+                .authorizeHttpRequests(auth -> {
+                    auth.requestMatchers(URL_WHITELIST).permitAll()
+                            .anyRequest().authenticated();
+                    }
+                )
+        ;
 
         return http.build();
     }

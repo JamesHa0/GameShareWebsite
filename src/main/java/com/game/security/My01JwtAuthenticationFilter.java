@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Component
+
 public class My01JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired

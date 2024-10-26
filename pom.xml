@@ -8,9 +8,12 @@
 		<version>3.3.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.game</groupId>
 	<artifactId>game</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>2.0</version>
+<!--	<packaging>pom</packaging>-->
+
 	<name>game</name>
 	<description>game</description>
 	<url/>

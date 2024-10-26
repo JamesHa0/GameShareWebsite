@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
-@Component
+
 public class My04LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Autowired private UserMapper userMapper;
