@@ -29,7 +29,7 @@ public class Result {
 
 
     public static Result ok() {
-        return new Result(true, ResultCode.SUCCESS,"success");
+        return new Result(true,ResultCode.SUCCESS,"success");
     }
 
     public static Result error() {

@@ -11,34 +11,33 @@
 
 	<groupId>com.game</groupId>
 	<artifactId>game</artifactId>
-	<version>2.0</version>
-<!--	<packaging>pom</packaging>-->
+	<version>1.0</version>
 
-	<name>game</name>
-	<description>game</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+
+	<description>
+		父模块
+		---项目启动入口是web模块。
+		控制器：位于web模块；
+		框架、配置等：位于framework模块；
+		持久层：位于dao模块；
+		工具类、实体类：位于common模块
+	</description>
+
+	<modules>
+		<module>GameShare-web</module>
+		<module>GameShare-framework</module>
+		<module>GameShare-common</module>
+		<module>GameShare-dao</module>
+	</modules>
+	<packaging>pom</packaging>
+
+
 	<properties>
 		<java.version>17</java.version>
 	</properties>
-	<dependencies>
 
-		<!-- web依赖 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+<!--<dependencyManagement>-->
+	<dependencies>
 
 		<!-- 测试依赖 -->
 		<dependency>
@@ -47,88 +46,21 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- devtools热部署依赖 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
-		</dependency>
-
-		<!-- springdoc 依赖 -->
-		<dependency>
-			<groupId>org.springdoc</groupId>
-			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>2.0.4</version>
-		</dependency>
-
-		<!-- myBatisPlus依赖 -->
-		<dependency>
-			<groupId>com.baomidou</groupId>
-			<artifactId>mybatis-plus-spring-boot3-starter</artifactId>
-			<version>3.5.7</version>
-		</dependency>
-
-		<!-- mysql依赖 -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.32</version>
-		</dependency>
-
-		<!-- 数据库连接池druid 依赖 -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>1.1.20</version>
-		</dependency>
-
-		<!-- lombok依赖 -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-
-		<!-- JWT 依赖 -->
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-api</artifactId>
-			<version>0.11.1</version>
-		</dependency>
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-impl</artifactId>
-			<version>0.11.2</version>
-		</dependency>
-		<dependency>
-			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt-jackson</artifactId>
-			<version>0.11.2</version>
-		</dependency>
-		<!-- Spring Boot Security -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
 
 		<!-- thymeleaf模板引擎 -->
-		<!--<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>-->
-
-
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-thymeleaf</artifactId>-->
+<!--		</dependency>-->
+		<!-- Jackson核心库 -->
+<!--		<dependency>-->
+<!--			<groupId>com.fasterxml.jackson.core</groupId>-->
+<!--			<artifactId>jackson-databind</artifactId>-->
+<!--			<version>2.13.0</version> &lt;!&ndash; 请使用适合您项目的版本 &ndash;&gt;-->
+<!--		</dependency>-->
 
 	</dependencies>
+<!--</dependencyManagement>-->
 
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-		</plugins>
-	</build>
 
 </project>

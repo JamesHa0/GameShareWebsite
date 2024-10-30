@@ -46,7 +46,7 @@ router.beforeEach((to, from, next) => {
         && (localStorage.getItem("Token") == undefined 
         || localStorage.getItem("Token") == ''
         || localStorage.getItem("Token") == null)) {
-        next('/login')
+        next('/LR')
     } else {
         next()
     }

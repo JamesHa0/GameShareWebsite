@@ -28,6 +28,7 @@
 
 <script>
 import {isNull } from '@/public.js'
+import axios from 'axios'
 
 export default {
 	data() {

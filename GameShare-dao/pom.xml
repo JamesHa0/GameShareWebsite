@@ -8,11 +8,10 @@
         <version>1.0</version>
     </parent>
 
-    <artifactId>framework</artifactId>
-
+    <artifactId>dao</artifactId>
 
     <description>
-        框架模块
+        dao模块
     </description>
 
 
@@ -22,16 +21,11 @@
 
 
     <dependencies>
-        <!-- Spring Boot Security -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
 
-        <!-- 模块dao 依赖 -->
+        <!-- 模块common 依赖 -->
         <dependency>
             <groupId>com.game</groupId>
-            <artifactId>dao</artifactId>
+            <artifactId>common</artifactId>
             <version>${project.version}</version>
         </dependency>
 
