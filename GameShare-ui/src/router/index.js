@@ -26,6 +26,9 @@ const routers = [{
         path:"/login", 
         component: () => import("@/views/LR/login.vue"),  //无需认证
     },{
+        path:"/test_el", 
+        component: () => import("@/views/test_el.vue"),  //无需认证
+    },{
         path:"/test", 
         component: () => import("@/views/test.vue"),   //无需认证
     },{

@@ -72,8 +72,8 @@ export default {
 .mask-left {
     transform:translateY(-50%);
 }
-button.signIn,.singnUp {
+button {
     background:#20b2aa;
-    border-color:#fff;
+    border-color:#fff !important;
 }
 </style>

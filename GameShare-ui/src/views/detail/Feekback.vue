@@ -349,7 +349,7 @@ export default {
 /* 回复评论标题样式 */
 .comment-reply-container h2 {
     margin-bottom: 1em; /* 与表单的间距 */
-    color: #333333; /* 字体颜色 */
+    color: #333334; /* 字体颜色 */
     font-size: 1.5em; /* 字体大小 */
 }
 

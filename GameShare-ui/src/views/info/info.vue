@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
+import Header from '@/components/Header2.vue'
 import Footer from '@/components/Footer.vue'
 
 import axios from 'axios'

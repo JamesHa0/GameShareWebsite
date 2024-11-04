@@ -17,14 +17,15 @@
 
 
 <script>
-import axios from 'axios';
-import {getToken } from '@/public.js';
-
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import Cover from './Cover.vue'
 import Sketch from './Sketch.vue'
 import Feedback from './Feekback.vue'
+
+import axios from 'axios';
+import {getToken } from '@/public.js';
+
 
 export default {
     props:['data'],      //接收组件参数
@@ -51,8 +52,7 @@ export default {
         const decodedToken = getToken();    //从localStorage中获取token（解码后）
         if (decodedToken) {  //若存在token，则获取uid
             uid = decodedToken.sub;
-            // console.log('这里是解析后的token：');
-            // console.log(decodedToken);
+            // console.log('这里是解析后的token：'+decodedToken);
         }
         if (gid === '0' || gid === undefined) {  //若查询参数gid为0或未定义，则路由至 /404
             this.$router.push('/404');

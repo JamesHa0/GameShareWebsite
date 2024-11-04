@@ -1,98 +1,93 @@
 <template>
-  <div class="header">
-			<!-- 最左侧的文本 -->
-			<div class="left-text">
-                <p v-if=" $route.fullPath =='/' ">GameShareWebsite</p><!-- 判断uri，若为index页面则发生修改；当前路径为：{{ $route.fullPath }} -->
-                <router-link v-else to="/">返回首页</router-link>
-			</div>
+  <el-menu
+    :default-active="activeIndex"
+    class="el-menu-demo"
+    mode="horizontal"
+    background-color="#4d4343"
+    text-color="#fff"
+    active-text-color="#ffd04b"
+    @select="handleSelect"
+  >
+    <el-col :span="4">
+      <el-menu-item index="1" class="left-text">
+          <p v-if=" $route.fullPath =='/' ">GameShareWebsite</p><!-- 判断uri，若为index页面则发生修改；当前路径为：{{ $route.fullPath }} -->
+          <router-link v-else to="/">返回首页</router-link>
+      </el-menu-item>
+    </el-col>
 
-			<!-- 最右侧的个人资料logo-->
-			<router-link to="/info" class="info">
-				<img src="../assets/images/info.png" height="28px" title="个人资料" >
-			</router-link>
+    <el-col :span="3" :push="1">
+      <el-sub-menu index="2">
+        <template #title>这是多级菜单</template>
+        <el-menu-item index="2-1">item one</el-menu-item>
+        <el-menu-item index="2-2">item two</el-menu-item>
+        <el-menu-item index="2-3">item three</el-menu-item>
+        <el-sub-menu index="2-4">
+          <template #title>item four</template>
+          <el-menu-item index="2-4-1">item one</el-menu-item>
+          <el-menu-item index="2-4-2">item two</el-menu-item>
+          <el-menu-item index="2-4-3">item three</el-menu-item>
+        </el-sub-menu>
+      </el-sub-menu>
+    </el-col>
 
-			<!-- 中间的文本 -->
-			<div class="middle-text">
+    <el-col :span="5" :push="9">
+      <el-menu-item index="4">
 				<router-link v-if="1" to="/LR" >登录﹠注册</router-link>
-                <p v-if="0" class="hello" title="xxx">欢迎您，xxx<a href="">登出</a></p>
-			</div>
-	</div>
+        <p v-if="0" class="hello" title="xxx">欢迎您，{{uname}}<a href="">登出</a></p>
+      </el-menu-item>
+    </el-col>
+    
+    <el-col :span="2" :push="9">
+      <el-menu-item index="5">
+        <el-avatar :src="circleUrl" class="info"/>
+      </el-menu-item>
+    </el-col>
+  </el-menu>
 </template>
 
-<script>
-import { getToken } from '@/public.js'
+<script lang="ts" setup>
+ import { ref } from 'vue'
+import { reactive, toRefs } from 'vue'
 
-export default {
-	data(){
-		return {
-			uid: null
-		}
-	},
-	created(){
-		this.uid = getToken().sub
-	},
-
-}
+const uname = 'dd';
+const state = reactive({
+  circleUrl:
+    'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
+  squareUrl:
+    'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
+})
+const { circleUrl, squareUrl } = toRefs(state)
+ const activeIndex = ref('1')
+ const handleSelect = (key: string, keyPath: string[]) => {
+   console.log(key, keyPath)
+ }
 </script>
 
 <style>
-/*****************************<!-- 页眉 -->*********/
-
-*{
-	margin: 0;
-	padding: 0;
-}
-/* <!-- 网站名 --> */
-.header {
-	position: relative;
-	height: 45px;
-	color:#ffffff;
-	background-color: #4d4343;
-	margin: 0px auto;
-}
-
-.header *{
-	line-height:45px; /*  子元素全部垂直居中  */
-}
-
-
-.header .left-text *{ 
-	margin-left: 20px;
-	float: left;
-	font-size: 22px;
-	font-weight: 600;
-	color:#ffffff;
-	line-height: 45px;
-}
-
-.header .middle-text{
-	float:right;
-	right:100px;
-	padding-right:30px;
-	display:flex;
-	flex-direction:row;
-	font-size:15px;
-}
-.header .middle-text a {
-	padding-left:60px;;
-	color:#ffffff;
-}
-.header .right-text  a:hover {
-	color: #f10215;
-}
-
-/* <!-- info（个人信息） --> */
-.header .info {
-	float:right;
-	position: relative;
-	height: 45px;
-	background-color: #919198;
-}
-
-
-.header .info img {
-	margin-top: 8px;
-	margin-left: 10px;
-	margin-right: 10px;
-}
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  .el-menu-demo{
+    height: 55px;
+  }
+  .left-text{ 
+    margin-left: 20px;
+    float: left;
+    font-size: 18px;
+    font-weight: 600;
+    color:#ffffff;
+    line-height: 45px;
+  }
+  .info{
+    text-align: center;
+  }
+  a {
+    color: #ffffff;
+    text-decoration: inherit;
+  }
+  .left-text :hover{
+    color: #FFD04b
+  }
+  
 </style>

@@ -96,7 +96,7 @@ export default {
 
         },
         login(){
-            axios.post('http://localhost:8080/login', 
+            axios.post('/login', 
             this.formData,
             {
                 headers: {
@@ -121,5 +121,6 @@ export default {
 </script>
 
 <style>
+
 
 </style>

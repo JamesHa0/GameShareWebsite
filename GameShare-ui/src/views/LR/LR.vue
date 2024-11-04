@@ -56,7 +56,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 h1 {
     font-weight:bold;
 }
@@ -74,6 +74,8 @@ a {
     text-decoration:none;
     margin:15px 0;
 }
+
+
 .container {
     margin: 20px auto 0px;
     background:#fff;
@@ -85,7 +87,8 @@ a {
     max-width:100%;
     height:750px;
 }
-.form-container form {
+
+.container >>>.form-container form {
     background:#fff;
     display:flex;
     flex-direction:column;
@@ -96,7 +99,7 @@ a {
     /* text-align:center; */
 }
 
-.form-container input {
+.container >>>.form-container input {
     background:#eee;
     border:none;
     padding:12px 15px;
@@ -104,9 +107,9 @@ a {
     width:300px;
     outline:none;
 }
-button {
+.container >>>button {
     border-radius:15px;
-    border:1px solid #20b2aa;
+    border:1px solid #20b2aa ;
     background:#20b2aa;
     width: 100px;
     height: 40px;
@@ -118,24 +121,24 @@ button {
     transition:transform 80ms ease-in;
     cursor:pointer;
 }
-button:active {
-    transform:scale(.95);
+.container >>>button:active {
+    transform:scale(.90);
 }
-button:focus {
+.container >>>button:focus {
     outline:none;
 }
-.form-container {
+.container >>>.form-container {
     position:absolute;
     top:0;
     height:100%;
     transition:all .6s ease-in-out;
 }
-.sign-in {
+.container >>>.sign-in {
     left:0;
     width:50%;
     z-index:2;
 }
-.sign-up {
+.container >>>.sign-up {
     left:0;
     width:50%;
     z-index:1;

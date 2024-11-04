@@ -3,11 +3,6 @@
     <!--页眉-->
     <Header />
     <!--搜索栏-->
-    <!-- {{count}}
-    <button @click="add">+1</button>
-    <ul>
-      <li v-for="todo in doneTodos" :key="todo.id">{{todo.text}}</li>
-    </ul> -->
     <SearchBar />
     <!-- shop（商品栏） -->
     <article class="shop">
@@ -35,9 +30,9 @@ import SearchBar from './SearchBar.vue';
 import Carousel from '@/views/index/Carousel.vue';
 import GameGallery from '@/views/index/GameGallery.vue';
 import Footer from '@/components/Footer.vue';
+
 import axios from 'axios';
 import {getToken} from '@/public.js';
-
 import {mapGetters, mapState} from 'vuex';
 
 export default {
@@ -51,39 +46,8 @@ export default {
   created() {
     let Token = localStorage.getItem('Token');
     this.uid = getToken(Token).sub;
-    this.fetchUser(this.uid);
+    // this.fetchUser(this.uid);
   },
-  mounted() {
-    // this.login(); 
-    // axios.post('http://localhost:8080/game/100000001',{},{
-    //   headers: {
-    //     'Authorization': 'Bearer eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJyb290IiwiaWF0IjoxNzI3NzY1MTE3LCJleHAiOjE3MjgzNjk5MTd9.9TZ2fb4QplqTvPeiyBf6KiOckfX1wcvrTYRXu8uShJg',
-    //   }
-    // })
-    //     .then(res=>{
-    //         console.log('这里是res：');
-    //         console.log(res);
-    //         let token = res.data.data.token;
-    //         console.log('这里是token：');
-    //         console.log(token);
-    //         this.token=token;
-
-            // if(this.token){
-            //     // 将token存储在本地存储中以便后续使用
-            //     localStorage.setItem('token', this.token);
-            //     let decodedToken = parseJwt(this.token);
-            //     console.log('这里是解析后的token：');
-            //     console.log(decodedToken);
-            //     this.uid = decodedToken.sub; // 使用 sub 字段（JWT主题）
-            //     this.uname = decodedToken.uname; // 使用自定义声明 uname
-            //     this.urole = decodedToken.urole; // 使用自定义声明 urole
-            // }
-        // })
-        // .catch(err=>{
-        //     console.log(err);
-        // })
-  },
-  
   data() {
       return {
         uid:null,
@@ -162,30 +126,20 @@ export default {
   },
 
   computed:{
-    ...mapState ([
-      //映射 this.count 为 store.state.count
-      // 'count','todos',
-      // 'isLogin'
+    ...mapState ([           
+      // 'count','todos', //映射 this.count 为 store.state.count
     ]),
-    // ...mapGetters([
-    //   'doneTodos'
-    // ])
   },
   methods:{
-    fetchUser(){
-      axios.get('/user/' + this.uid)
-      .then(response => {
-        // console.log('响应数据data = :', response.data);
-        this.user = response.data;
-        this.$store.dispatch('setUser', this.user);   // 触发action，异步提交mutation，往vuex中存入user
-      })
-      .catch(error => {
-        console.error('请求失败:', error);
-      });
-    }
-    // add(){
-    // 调用mutations中的increment，传参n=2
-    //   this.$store.commit("increment" , 3) 
+    // fetchUser(){
+    //   axios.get('/user/' + this.uid)
+    //   .then(response => {
+    //     this.user = response.data;
+    //     this.$store.dispatch('setUser', this.user);   // 触发action，异步提交mutation，往vuex中存入user
+    //   })
+    //   .catch(error => {
+    //     console.error('请求失败:', error);
+    //   });
     // }
   }
 };
