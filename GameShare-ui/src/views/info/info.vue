@@ -51,7 +51,7 @@ import Header from '@/components/Header2.vue'
 import Footer from '@/components/Footer.vue'
 
 import axios from 'axios'
-import { getToken } from '@/public.js'
+import { getToken } from '@/assets/js/myPublic.js'
 
 export default {
     components: {

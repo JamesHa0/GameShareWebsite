@@ -6,7 +6,7 @@ package com.game.common.utils;
  * Date :2022/4/12
  */
 public class SnowflakeIdGenerator{
-    /** 开始时间截 (这个用自己业务系统上线的时间) */
+    /** 开始时间戳 (这个用自己业务系统上线的时间) */
     private final long twepoch = 1575365018000L;
 
     /** 机器id所占的位数 */
@@ -21,7 +21,7 @@ public class SnowflakeIdGenerator{
     /** 机器ID向左移12位 */
     private final long workerIdShift = sequenceBits;
 
-    /** 时间截向左移22位(10+12) */
+    /** 时间戳向左移22位(10+12) */
     private final long timestampLeftShift = sequenceBits + workerIdBits;
 
     /** 生成序列的掩码，这里为4095 (0b111111111111=0xfff=4095) */
@@ -33,7 +33,7 @@ public class SnowflakeIdGenerator{
     /** 毫秒内序列(0~4095) */
     private long sequence = 0L;
 
-    /** 上次生成ID的时间截 */
+    /** 上次生成ID的时间戳 */
     private long lastTimestamp = -1L;
 
     //==============================Constructors=====================================
@@ -76,7 +76,7 @@ public class SnowflakeIdGenerator{
             sequence = 0L;
         }
 
-        //上次生成ID的时间截
+        //上次生成ID的时间戳
         lastTimestamp = timestamp;
 
         //移位并通过或运算拼到一起组成64位的ID
@@ -87,7 +87,7 @@ public class SnowflakeIdGenerator{
 
     /**
      * 阻塞到下一个毫秒，直到获得新的时间戳
-     * @param lastTimestamp 上次生成ID的时间截
+     * @param lastTimestamp 上次生成ID的时间戳
      * @return 当前时间戳
      */
     protected long tilNextMillis(long lastTimestamp) {

@@ -8,6 +8,7 @@
       @mouseenter="handleMouseEnter"
       @mouseleave="handleMouseLeave"
       aria-label="Search"
+      placeholder="搜索你喜欢的游戏……"
     />
     <button @click="handleSearch" aria-label="Search button">
       <img src="../../assets/images/search.png" width="40px" alt="Search icon" />
@@ -23,9 +24,11 @@ const input = ref(null);
 
 const handleMouseEnter = () => {
   input.value.focus();
+  input.value.placeholder="";
 };
 const handleMouseLeave = () => {
   input.value.blur();
+  input.value.placeholder="搜索你喜欢的游戏……";
 };
 
 const handleSearch = () => {
@@ -42,7 +45,6 @@ const handleSearch = () => {
     margin: 20px auto 0;
     width: 500px;
     height: 45px;
-    background-color:darkgray;
     border-radius: 2px;
     border: 2px solid #f53c66;
 }
@@ -52,7 +54,8 @@ const handleSearch = () => {
     border: none;
     padding: 4px 10px 0;
     outline: none;
-    background-color: rgb(237, 235, 235);
+    background-color:  #f7f8f9;
+;
 }
 .search-bar:hover{
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* 阴影效果 */

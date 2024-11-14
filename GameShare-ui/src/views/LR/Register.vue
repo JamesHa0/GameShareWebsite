@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import {isNull } from '@/public.js'
+import { isNull } from '@/assets/js/myPublic.js'
 import axios from 'axios'
 
 export default {

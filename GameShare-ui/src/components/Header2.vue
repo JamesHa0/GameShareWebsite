@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { getToken } from '@/public.js'
+import { getToken } from '@/assets/js/myPublic.js'
 
 export default {
 	data(){

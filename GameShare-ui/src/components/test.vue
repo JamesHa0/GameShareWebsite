@@ -3,7 +3,7 @@
   <button @click="doLogin">登录</button>
   <button @click="doFetch">获取游戏信息</button>
   <button @click="mock">mock测试</button>
-  <button @click="detail">detail</button>
+  <button  @click="detail">detail</button>
 
   
 

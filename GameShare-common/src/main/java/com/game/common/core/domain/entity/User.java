@@ -36,7 +36,7 @@ public class User {
     @TableField(value="upsw",exist = true)
     private String upsw;
 
-    private String upoint;
+    private Float upoint;
 
     private Json uliked_games;
 

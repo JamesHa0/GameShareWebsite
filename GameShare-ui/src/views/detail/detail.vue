@@ -5,9 +5,9 @@
         <!-- 封面模块 -->
         <Cover :user="user" :game="game" :order="order"/>
         <!-- 剪影模块 -->
-        <Sketch :game="game"/>
+        <!-- <Sketch :game="game"/> -->
         <!-- 反馈模块 -->
-        <Feedback :gid="gid" :user="user" :game="game" :order="order"/>
+        <!-- <Feedback :gid="gid" :user="user" :game="game" :order="order"/> -->
     </article>
 
     <Footer/>
@@ -17,14 +17,14 @@
 
 
 <script>
-import Header from '@/components/Header.vue'
-import Footer from '@/components/Footer.vue'
+import Header from '@comp/Header.vue'
+import Footer from '@comp/Footer.vue'
 import Cover from './Cover.vue'
 import Sketch from './Sketch.vue'
 import Feedback from './Feekback.vue'
 
 import axios from 'axios';
-import {getToken } from '@/public.js';
+import { getToken } from '@/assets/js/myPublic.js'
 
 
 export default {

@@ -14,7 +14,6 @@ public interface UserMapper extends BaseMapper<User> {
     @Select("select * from user where utel=#{utel}")
     User selectUserByUtel(String utel);
 
-
     @Select("select * from user")
     @Results(
             {
@@ -31,9 +30,6 @@ public interface UserMapper extends BaseMapper<User> {
                             many = @Many(select = "com.game.mapper.OrderMapper.selectByUid"))      //声明其调用的哪个Mapper的哪个方法
             })
     List<User> selectAllUsersAndOrders();
-
-
-
     @Select("select * from user where uid=#{uid}")
     @Results({
                     @Result(property = "uid",column = "uid"),
@@ -77,4 +73,11 @@ public interface UserMapper extends BaseMapper<User> {
         WHERE JSON_EXTRACT(${column}, ${json_column}) = true;
         """)
     int queryGameLikeNum(String column, String json_column);
+
+    @Update("""
+        update user
+        set upoint = upoint - #{price}
+        where uid = #{uid};
+    """)
+    int deductPoint(String uid, Float price);
 }

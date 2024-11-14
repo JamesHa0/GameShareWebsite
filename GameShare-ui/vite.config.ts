@@ -7,8 +7,11 @@ export default defineConfig({
   resolve: {          // 路径别名
     alias: {
       '@': '/src',
+      
       '@game': '/src/assets/game',
       '@images': '/src/assets/images',
+      
+      '@comp': '/src/components',
     },
   },
 })

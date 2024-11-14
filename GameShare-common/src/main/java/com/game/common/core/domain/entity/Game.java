@@ -20,7 +20,7 @@ public class Game {
     @TableField(exist = true)
     private String gname;
 
-    private String gprice;
+    private Float gprice;
 
     private String gdeveloper;
 

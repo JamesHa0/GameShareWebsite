@@ -3,10 +3,7 @@ package com.game.dao.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.game.common.core.domain.entity.Order;
 import com.game.common.core.domain.entity.User;
-import org.apache.ibatis.annotations.One;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -32,4 +29,11 @@ public interface OrderMapper extends BaseMapper<Order> {
             )
     })
     List<Order> listAllOrdersAndItsUser();
+
+
+    @Insert("""
+        insert into `order` values
+        (#{onumber}, #{uid}, #{gid}, #{otime})
+    """)
+    int insertOrder(Order order);
 }

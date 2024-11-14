@@ -32,7 +32,7 @@ import GameGallery from '@/views/index/GameGallery.vue';
 import Footer from '@/components/Footer.vue';
 
 import axios from 'axios';
-import {getToken} from '@/public.js';
+import { getToken } from '@/assets/js/myPublic.js'
 import {mapGetters, mapState} from 'vuex';
 
 export default {

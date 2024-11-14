@@ -23,15 +23,19 @@ const routers = [{
         path:"/404",
         component: () => import("@/error/404.vue"), // 无需认证
     },{
+        path:"/500",
+        component: () => import("@/error/500.vue"), // 无需认证
+    },{
         path:"/login", 
         component: () => import("@/views/LR/login.vue"),  //无需认证
     },{
         path:"/test_el", 
-        component: () => import("@/views/test_el.vue"),  //无需认证
+        component: () => import("@comp/test_el.vue"),  //无需认证
     },{
         path:"/test", 
-        component: () => import("@/views/test.vue"),   //无需认证
-    },{
+        component: () => import("@comp/test.vue"),   //无需认证
+    },
+    {
         path: "/:catchAll(.*)",     // 匹配其他所有未定义的路径
         redirect: "/404"
     }

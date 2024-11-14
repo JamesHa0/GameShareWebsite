@@ -1,10 +1,16 @@
 package com.game.web.controller;
 
 import com.game.common.core.domain.entity.Game;
+import com.game.common.utils.Result;
 import com.game.dao.mapper.GameMapper;
-import com.game.dao.service.GameService;
+import com.game.dao.service.impl.GameServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -13,7 +19,7 @@ import java.util.List;
 public class GameController {
 
     @Autowired private GameMapper gameMapper;
-    @Autowired private GameService gameService;
+    @Autowired private GameServiceImpl gameServiceImpl;
 
     @GetMapping("/{gid}")
     public Game listOneGame(@PathVariable String gid) {
@@ -26,12 +32,33 @@ public class GameController {
     }
 
     @PostMapping("/like")  // 1，用户id；2，游戏id；3，指定点赞还是取消点赞；
-    public int doLike(@RequestParam String uid, @RequestParam String gid, @RequestParam String action) {
-        return gameService.like(uid, gid, action);
+    public Result doLike(@RequestParam String uid, @RequestParam String gid, @RequestParam String action) {
+        return gameServiceImpl.like(uid, gid, action);
     }
 
     @GetMapping("/likeNum/{gid}")
-    public int queryGameLikeNum(@PathVariable String gid) {
-        return gameService.queryGameLikeNum(gid);
+    public Result queryGameLikeNum(@PathVariable String gid) {
+        return gameServiceImpl.queryGameLikeNum(gid);
     }
+
+    @GetMapping("/download/{fileName:.+}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
+        Resource resource = gameServiceImpl.downloadGame(fileName);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(resource);
+    }
+
+    @PostMapping("/upload")
+    public Result upload(MultipartFile game) {
+        return gameServiceImpl.uploadGame(game);
+    }
+
+    @PostMapping("/purchase/{uid}/{gid}")
+    public Result purchaseGame(@PathVariable String uid, @PathVariable String gid){
+        return gameServiceImpl.purchaseGame(uid, gid);
+    }
+
+
 }

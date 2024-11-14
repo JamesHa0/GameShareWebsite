@@ -1,5 +1,6 @@
 package com.game.framework.security;
 
+import com.game.common.utils.StrUtil;
 import com.game.dao.mapper.UserMapper;
 import com.game.common.utils.JwtUtil;
 import com.game.common.utils.Result;
@@ -27,7 +28,7 @@ public class My01JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         System.out.println("【01jwt过滤器】进入");
-        final String authorizationHeader = request.getHeader("Authorization");
+        String authorizationHeader = request.getHeader("Authorization");
         System.out.println("【01jwt过滤器】请求头附带的jwt是：" + authorizationHeader);
 
         String jwt = getString(authorizationHeader);
