@@ -1,5 +1,5 @@
 <template>
-	<article v-if="user && game" class="gcover">
+	<article v-if="user!=null && game!=null" class="gcover">
       	<div class="gtitle">{{game.gzhname}}</div>
       	<hr/>
 		<img :src="'/src/assets/game/' + game.gid + '/1.jpg'"/>
@@ -36,10 +36,10 @@
 		<!-- 2，本站游戏下载业务 -->
 			<tr><!-- 业已购买 -->
 				<td>购买情况：</td>
-				<td v-if="order == false">尚未购买</td>
+				<td v-if="order == null">尚未购买</td>
 				<td v-else>您已购买此游戏</td>
 			</tr>
-			<template  v-if="order == false"><!-- 尚未购买 -->
+			<template  v-if="order == null"><!-- 尚未购买 -->
 				<tr>
 					<td>是否购买？<br/><span style="color:#777777;font-size:12px">剩余积分:{{user.upoint }}</span></td>
 					<td><div class="btn">

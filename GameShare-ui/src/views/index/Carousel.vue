@@ -7,13 +7,21 @@
 </template>
 
 <script setup>
-const images= [
+import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+const router = useRouter();
+
+const images= ref([
         { src: '/src/assets/game/1091500/1.jpg' },
         { src: '/src/assets/game/1086940/1.jpg' },
         { src: '/src/assets/game/1245620/1.jpg' },
         { src: '/src/assets/game/1174180/1.jpg' },
         { src: '/src/assets/game/2358720/1.jpg' }
-      ];
+      ]);
+const handleClick = (index) => {
+  const gid = images.value[index].src.match(/\/(\d+)\//)[1];
+  router.push('/detail?gid='+gid);
+};
 </script>
 
 
@@ -21,7 +29,6 @@ const images= [
 img{
     height:350px;
 }
-
 
 .el-carousel__item h3 {
   color: #475669;

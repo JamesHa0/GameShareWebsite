@@ -44,7 +44,12 @@ const routers = [{
 
 const router = createRouter({
     history: createWebHistory(),
-    routes: routers
+    routes: routers,
+  //x，横滚；y，纵滚
+  scrollBehavior(to, from, savedPosition) {
+    // 始终滚动到顶部
+    return { top: 0}
+  },
 })
 
 router.beforeEach((to, from, next) => {

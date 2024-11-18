@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import io.swagger.v3.core.util.Json;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @TableName("user")     //把类名和表名映射
-@Data   //get&set;toString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
@@ -37,10 +36,6 @@ public class User {
     private String upsw;
 
     private Float upoint;
-
-    private Json uliked_games;
-
-    private Json uliked_comments;
 
 
     @TableField(exist = false)      //不是实际字段；用于描述订单

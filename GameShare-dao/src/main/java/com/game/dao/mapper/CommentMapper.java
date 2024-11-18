@@ -8,9 +8,12 @@ import java.util.List;
 
 public interface CommentMapper extends BaseMapper<Comment> {
 
-    @Select("select count(*)  from `comment` where gid=#{gid}")
+    @Select("select count(*)  from game_comment where gid=${gid}")
     int queryCommentNumByGid(String gid);
 
-    @Select("select * from `comment` where gid = #{gid}")
+    @Select("select * from game_comment where gid = ${gid}")
     List<Comment> queryCommentsByGid(String gid);
+
+    @Select("select * from game_comment_like where uid = ${uid} and gid = ${gid}")
+    List<String> queryLikedComments(String uid, String gid);
 }

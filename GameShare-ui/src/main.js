@@ -34,9 +34,7 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
     response => {
-        console.log('response code:', response.status)
         if (response.status != 200) {
-            console.log(response)
             router.push({ path: '/500' })   // 跳转错误页面
         }
 
@@ -75,7 +73,7 @@ app
 //开始 加载loading
 let startLoading=()=>{
     elLoading = ElLoading.service({
-      lock: true,
+    //   lock: true,
     //   text: window.$Vue.$t('common.loading'),//加载动画的文字
       background: 'rgba(0, 0, 0, 0.7)'//加载动画的背景
     })

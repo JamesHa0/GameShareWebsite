@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@TableName("comment")
+@TableName("game_comment")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

@@ -51,33 +51,11 @@ public interface UserMapper extends BaseMapper<User> {
     String getUtelByUid(String uid);
 
 
-    /**
-     * 根据用户id和游戏id，点赞 / 取消点赞
-     */
-    @Update("""
-        update user
-        set uliked_games = JSON_SET(
-            uliked_games,
-            '$.gid_'+#{gid}, #{action}
-        )
-        WHERE uid = #{uid};
-        """)
-    int updateGameLike(String uid, String gid, String action);
-
-    /**
-     * 对于user表，对指定【表字段】、指定【json_column字段】，查询对应值为ture的总数。（注意用的是${}）
-     */
-    @Select("""
-        SELECT COUNT(*)
-        FROM user
-        WHERE JSON_EXTRACT(${column}, ${json_column}) = true;
-        """)
-    int queryGameLikeNum(String column, String json_column);
 
     @Update("""
         update user
         set upoint = upoint - #{price}
         where uid = #{uid};
     """)
-    int deductPoint(String uid, Float price);
+    void deductPoint(String uid, Float price);
 }

@@ -4,7 +4,17 @@
   <button @click="doFetch">获取游戏信息</button>
   <button @click="mock">mock测试</button>
   <button  @click="detail">detail</button>
+  <button  @click="allDetails">allDetails</button>
+  <button @click="fetch">fetch一下</button>
 
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
   
 
 </template>
@@ -81,9 +91,39 @@ export default {
                     console.error('请求出错:', err);
                 });
         },
-    // computed: {
-    // ...mapState(['isLogin'])
-    // },
+        allDetails(){
+            axios.get('/game/details/1/100000001')
+            .then(res=>{
+                console.log(res);
+            })
+        },
+        
+        fetch(){
+            const gid=100000001;
+            // 使用 fetch 发送 POST 请求
+            fetch('http://localhost:8080/game/'+gid, { // 您的服务器端点
+            method: 'GET', // 请求方法
+            headers: {
+                'Content-Type': 'application/json', // 设置请求头，告诉服务器我们发送的是JSON数据
+                'Authorization': 'Bearer '+localStorage.getItem('Token')
+            }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    // 如果响应状态码不是2xx，抛出错误
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // 解析JSON响应体
+            })
+            .then(data => {
+                // 处理响应数据
+                console.log(data);
+            })
+            .catch(error => {
+                // 处理错误
+                console.error('There was a problem with the fetch operation:', error);
+            });
+        }
     }
 }
 </script>

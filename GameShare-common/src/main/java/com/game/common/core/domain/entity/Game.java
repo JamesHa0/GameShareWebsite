@@ -17,7 +17,7 @@ public class Game {
     @TableId(value="gid",type = IdType.AUTO)
     private String gid;
 
-    @TableField(exist = true)
+    @TableField
     private String gname;
 
     private Float gprice;

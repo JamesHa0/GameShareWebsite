@@ -26,7 +26,7 @@ public class Result {
         this.code = code;
         this.message = message;
     }
-
+    public static Result init() {return new Result();}
 
     public static Result ok() {
         return new Result(true,ResultCode.SUCCESS,"success");
@@ -36,6 +36,10 @@ public class Result {
         return new Result(false,ResultCode.ERROR,"error");
     }
 
+    public Result success(Boolean success) {
+        this.success = success;
+        return this;
+    }
     public Result code(Integer code) {
         this.code = code;
         return this;

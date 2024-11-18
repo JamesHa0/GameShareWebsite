@@ -1,16 +1,16 @@
 <template>
   <!-- 游戏的点赞和评论 -->
     <!-- 点赞模块 -->
-<article v-if="user && game">
+<article>
     
     <section class="icon">
         <table>
             <tr>
-                <td><img @click="click_like(this)" :src="isLikedImg"/></td>
-                <td><img @click="click_comment(this)" src="@images/comment.png"/></td>
+                <td><img @click="doLike()" :src="likeImg"/></td>
+                <td><img src="@images/comment.png"/></td>
             </tr>
             <tr>
-                <td id="td_likeNum">{{likeNum }}</td>
+                <td>{{newLikeNum }}</td>
                 <td>{{commentNum }}</td>
             </tr>
         </table>
@@ -18,7 +18,7 @@
 
     
     <!-- 评论模块 --><br><br><br>
-    <section class="comment-module" style="display:">
+    <section class="comment-module">
             <!-- 标题 -->
         <div class="comment-header">玩家评论：</div>
             <!-- 评论发表文本框 -->
@@ -30,29 +30,23 @@
             </form>
         </div>
 
-        
         <!-- 评论区 -->
         <div class="comments">
             <!-- 无评论时显示的沙发图案 -->
             <img v-if="comments == null" id="sofa" src="@images/sofa.png" draggable="false">
-            
             <!-- 循环遍历所有评论 -->
-                <div v-for="comment in comments"  :key="comment.cid"
-                        class="comment-container" :style="'padding-left:' + this.getCommentIndent(comment.cpath) + 'px'">	    
-                    <!-- 评论者和日期 -->
-                    <span class="comment-uname" v-html="comment.uname + ' ：'"></span>
-                    <span class="comment-ctime">[{{comment.ctime}}]</span>
-                    <!-- 评论的点赞和回复图标 -->
-                    <img id="comment-like"  onclick="click_comment_like(this,  
-                        ${comment.cid},${comment.gid},&quot;${comment.cpath}&quot; ,${comment.clike } )"  
-                        src="@images/comment_like.png"/>
-                    <span class="comment-likeNum"  >{{ getCommentLikeNum(comment.clike) }}</span>
-                    <img id="comment-reply" onclick="click_comment_reply(this,  
-                        ${comment.cid},${comment.gid}, &quot;${comment.cpath}&quot; , &quot;${comment.uname }&quot; )"  
-                        src="@images/comment_reply.png"/>
-                    <!-- 评论内容 -->
-                    <p style="display:block" class="comment-text"> {{comment.comment }}</p>
-                </div>
+            <div v-for="comment in comments"  :key="comment.cid"
+                    class="comment-container" :style="'padding-left:' + this.getCommentIndent(comment.cpath) + 'px'">	    
+                <!-- 评论者和日期 -->
+                <span class="comment-uname" v-html="comment.uname + ' ：'"></span>
+                <span class="comment-ctime">[{{comment.ctime}}]</span>
+                <!-- 评论的点赞和回复图标 -->
+                <img id="comment-like" @click="doCommentLike()" src="@images/comment_like.png"/>
+                <span class="comment-likeNum"  >{{ showClike(comment.clike)}}</span>
+                <img id="comment-reply" @click="doCommentReply()"   src="@images/comment_reply.png"/>
+                <!-- 评论内容 -->
+                <p style="display:block" class="comment-text"> {{comment.comment }}</p>
+            </div>
         </div>
     </section>
     
@@ -63,26 +57,17 @@
 import axios from 'axios'
 
 export default {
-    props:['gid', 'user', 'game', 'order'],
+    props:['user', 'game', 'order',
+        'isLiked', 'likeNum',
+        'comments', 'likedComments', 'commentNum'
+    ],
     data(){
         return{
-            likeNum: 0,
-            commentNum: 0,
-            comments: null,
+            newIsLiked: this.isLiked,
+            newLikeNum: this.likeNum,
+            likeImg: this.isLiked ? 'src/assets/images/like_yes.png': 'src/assets/images/like.png'
         }
     },
-    created() {
-        this.fetchLikeNum();
-        this.fetchComments();
-        
-    },
-    computed:{
-        isLikedImg(){
-            return 'src/assets/images/like.png'
-        },
-    },
-
-
     methods:{
         getCommentIndent(cpath){   // 计算每条评论的缩进宽度（px）
             if(cpath == null) return 0;
@@ -91,71 +76,37 @@ export default {
                 sharpNum = 4
             return sharpNum*60 + 20; 
         },
-        getCommentLikeImg(){
-
+        showClike(clike){
+            return clike==null? 0: clike
         },
-        getCommentLikeNum(clike){
-            return clike == 0? '' : clike;
-        },
-        fetchLikeNum(){
-            axios.get('/game/likeNum/' + this.gid)
-            .then(response => {
-                // console.log('响应数据data = :', response.data);
-                this.likeNum = response.data;
-            })
-            .catch(error => {
-                console.error('请求失败:', error);
-            });
-        },
-        fetchComments(){
-            axios.get('/comment/' + this.gid)
-            .then(response => {
-                this.comments = response.data;
-                console.log('评论数据：', this.comments);
-                this.commentNum = this.comments.length;
-                console.log('评论数据量：', this.comments.length);
-            })
-            .catch(error => {
-                console.error('请求失败:', error);
-            });
-        },
-        // Like模块：
-        click_like(img){
-            console.log("点赞！");
-            console.log("用户ID:", uid);
-            console.log("游戏ID:", gid);
-
-            var action=img.src.endsWith('like.png')? 'like': 'dislike';
+        doLike(){
+            const action=this.likeImg.endsWith('like.png')? 'like': 'dislike';
             // 请求数据，传递action(like/dislike)参数
-            axios.get('/like', {
-                uid: uid,
-                gid: gid,
+            axios.post('/game/doLike', {
+                uid: this.user.uid,
+                gid: this.game.gid,
                 action: action,
+            },{
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
             })
             .then(response => {
-                if (!response.ok) {
+                if (response.status !== 200) {
                     throw new Error('操作失败');
                 }else{
-                    console.log('操作成功')
-                    var td_likeNum=document.getElementById('td_likeNum')
-                    var num=parseInt(td_likeNum.textContent, 10);	//获取td内容（数字）
                     if(action==="like"){
-                        img.src = "images/like_yes.png"	//点亮
-                        td_likeNum.textContent=num+1;	//更新赞数：+1
+                        this.likeImg = 'src/assets/images/like_yes.png'	//点亮
+                        this.newLikeNum ++;	//更新赞数：+1
                     }else{
-                        img.src = "images/like.png" //点灭
-                        td_likeNum.textContent=num-1;
+                        this.likeImg = 'src/assets/images/like.png' //点灭
+                        this.newLikeNum --;
                     }
                 }
             })
             .catch(error=>{
-                alert(`游戏点击赞异常：${error.message}`)
+                alert(`点赞操作异常：${error.message}`)
 	        })
-            // 获取点赞图标元素
-            const likeIcon = obj.children[0];
-
-            // 发送AJAX请求，更新点赞状态
-            axios.get('/like/'+uid+'/'+gid)
         }
     }
 

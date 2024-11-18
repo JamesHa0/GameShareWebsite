@@ -21,26 +21,48 @@ public class GameController {
     @Autowired private GameMapper gameMapper;
     @Autowired private GameServiceImpl gameServiceImpl;
 
-    @GetMapping("/{gid}")
-    public Game listOneGame(@PathVariable String gid) {
-        return gameMapper.selectById(gid);
+
+    /**
+     * 获取detail页面所需数据
+     * @param uid uid
+     * @param gid gid
+     * @return Result(): user, game, order, isLiked, likeNum
+     */
+    @GetMapping("/details/{uid}/{gid}")
+    public Result getAllDetails(@PathVariable String uid, @PathVariable String gid) {
+        return gameServiceImpl.getAllDetails(uid, gid);
     }
+
+
+//    @GetMapping("/{gid}")
+//    public Game listOneGame(@PathVariable String gid) {
+//        return gameMapper.selectById(gid);
+//    }
 
     @GetMapping("/AllGames")
     public List<Game> listAllGames() {
         return gameMapper.selectList(null);
     }
 
-    @PostMapping("/like")  // 1，用户id；2，游戏id；3，指定点赞还是取消点赞；
+//    @GetMapping("/isLiked/{uid}/{gid}")
+//    public Result isLiked(@PathVariable String uid, @PathVariable String gid) {
+//        return gameServiceImpl.isLiked(uid, gid);
+//    }
+//
+//    @GetMapping("/likeNum/{gid}")
+//    public Result queryGameLikeNum(@PathVariable String gid) {
+//        return gameServiceImpl.queryLikeNum(gid);
+//    }
+    @PostMapping("/doLike")  // 1，用户id；2，游戏id；3，指定点赞还是取消点赞；
     public Result doLike(@RequestParam String uid, @RequestParam String gid, @RequestParam String action) {
-        return gameServiceImpl.like(uid, gid, action);
+        return gameServiceImpl.doLike(uid, gid, action);
     }
 
-    @GetMapping("/likeNum/{gid}")
-    public Result queryGameLikeNum(@PathVariable String gid) {
-        return gameServiceImpl.queryGameLikeNum(gid);
-    }
-
+    /**
+     * 文件相关
+     * @description 1，下载文件
+     * @description 2，上传文件
+     */
     @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
         Resource resource = gameServiceImpl.downloadGame(fileName);
@@ -55,6 +77,10 @@ public class GameController {
         return gameServiceImpl.uploadGame(game);
     }
 
+    /**
+     * 购买业务
+     * @description 购买游戏操作
+     */
     @PostMapping("/purchase/{uid}/{gid}")
     public Result purchaseGame(@PathVariable String uid, @PathVariable String gid){
         return gameServiceImpl.purchaseGame(uid, gid);
