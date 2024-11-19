@@ -1,5 +1,7 @@
 package com.game.dao.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.game.common.core.domain.entity.Comment;
 import com.game.common.core.domain.entity.Game;
 import com.game.common.core.domain.entity.Order;
@@ -65,9 +67,9 @@ public class GameServiceImpl implements GameService {
         // 3，订单 order
         Order order = orderMapper.selectByUidAndGid(uid, gid);
         result.data("order", order);
-        // 4，评论 comment
-        List<Comment> comments =  commentMapper.queryCommentsByGid(gid);
-        result.data("comments", comments);
+//        // 4，评论 comment
+//        List<Comment> comments = selectCommentByPage(gid, 1, 10);
+//        result.data("comments", comments);
         // 4-1，该用户在该游戏的评论中点过赞的评论id集合 list<cid>
         List<String> likedComments = commentMapper.queryLikedComments(uid, gid);
         result.data("likedComments", likedComments);
@@ -77,28 +79,7 @@ public class GameServiceImpl implements GameService {
         return result.success(true).code(ResultCode.SUCCESS);
     }
 
-    /**
-     * 查询用户是否点赞某游戏
-     * @param uid 用户id
-     * @param gid 游戏id
-     * @return Result
-     */
-    @Override
-    public Result isLiked(String uid, String gid) {
-        return Result.init().success(gameMapper.queryIsLiked(uid, gid) > 0);
-    }
 
-    /**
-     * 查询某游戏的总获赞数（所有用户点赞的总数）
-     * @param gid 游戏id
-     * @return Result
-     */
-    public Result queryLikeNum(String gid) {
-        if(gid == null || !gid.matches("\\d+")){     // 验证一下gid是否规范
-            throw new RuntimeException("【】gid参数不正确，考虑SQL注入的可能。gid = " + gid);
-        }
-        return Result.ok().data("likeNum", gameMapper.queryLikeNum(gid));
-    }
 
     /**
      * 点赞业务
@@ -126,7 +107,7 @@ public class GameServiceImpl implements GameService {
 
 
     /**
-     * 文件相关
+     * 文件相关业务
      * @description 1，下载文件
      * @description 2，上传文件
      */

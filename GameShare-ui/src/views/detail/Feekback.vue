@@ -7,7 +7,7 @@
         <table>
             <tr>
                 <td><img @click="doLike()" :src="likeImg"/></td>
-                <td><img src="@images/comment.png"/></td>
+                <td><a href="#comment-input"><img src="@images/comment.png"/></a></td>
             </tr>
             <tr>
                 <td>{{newLikeNum }}</td>
@@ -22,7 +22,7 @@
             <!-- 标题 -->
         <div class="comment-header">玩家评论：</div>
             <!-- 评论发表文本框 -->
-        <div class="comment-input">
+        <div class="comment-input" id="comment-input">
             <h2>发表评论</h2>
             <form onsubmit="return submit_comment(this,'${user.uid}','${game.gid }', &quot;${user.uname }&quot;)"  ><!-- 注意这里要用&quot;（双引号符） -->
                 <textarea id="comment-textarea" name="comment" placeholder="写下你的评论..." required></textarea>
@@ -47,6 +47,19 @@
                 <!-- 评论内容 -->
                 <p style="display:block" class="comment-text"> {{comment.comment }}</p>
             </div>
+            <!-- 分页 -->
+            <el-pagination
+                class="pagination"
+                v-model:current-page="currentPage"
+                v-model:page-size="pageSize"
+                :total="commentNum"
+                :background="true"
+                layout="sizes, prev, pager, next, jumper"
+                :page-sizes="[10, 20, 50, 100, 500]"
+                :hide-on-single-page="false"
+                @current-change="handleCurrentChange"
+                @size-change="handleSizeChange"
+                />
         </div>
     </section>
     
@@ -59,16 +72,37 @@ import axios from 'axios'
 export default {
     props:['user', 'game', 'order',
         'isLiked', 'likeNum',
-        'comments', 'likedComments', 'commentNum'
+        'likedComments', 'commentNum'
     ],
     data(){
         return{
+            currentPage: 1,
+            pageSize: 10,
+            comments: null,
             newIsLiked: this.isLiked,
             newLikeNum: this.likeNum,
             likeImg: this.isLiked ? 'src/assets/images/like_yes.png': 'src/assets/images/like.png'
         }
     },
+    created(){
+        this.getCommentByPage(this.currentPage, this.pageSize)
+    },
     methods:{
+        getCommentByPage(current, size){
+            axios.get('/comment/listByPage/'+this.game.gid+'/'+current+'/'+size)
+            .then(res=>{
+                console.log('=> 评论数据：')
+                console.log(res.data.data);
+                this.comments = res.data.data.comments
+            })
+            .catch(error=>{console.error('请求失败:', error);})
+        },
+        handleCurrentChange(val){
+            this.getCommentByPage(val, this.pageSize)
+        },
+        handleSizeChange(val){
+            this.getCommentByPage(this.currentPage, val)
+        },
         getCommentIndent(cpath){   // 计算每条评论的缩进宽度（px）
             if(cpath == null) return 0;
             let sharpNum = cpath.length - cpath.replace(/#/g, '').length
@@ -340,5 +374,11 @@ export default {
     display: flex;
     justify-content: flex-end; /* 将按钮靠右对齐 */
     margin-top: 0.5em; /* 与文本域的间距 */
+}
+/* 分页样式 */
+.pagination{
+    display: flex;
+    justify-content: center;
+    padding: 30px;
 }
 </style>

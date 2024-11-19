@@ -9,7 +9,7 @@
         <!-- 反馈模块 -->
         <Feedback v-if="user" :user="user" :game="game" :order="order"
                 :isLiked="isLiked" :likeNum="likeNum"
-                :comments="comments" :likedComments="likedComments" :commentNum="commentNum"
+                :likedComments="likedComments" :commentNum="commentNum"
             />
     </article>
 
@@ -48,7 +48,6 @@ export default {
             isLiked:null,
             likeNum:null,
             // comment:
-            comments:null,
             likedComments:null,
             commentNum:null,
         }
@@ -83,7 +82,6 @@ export default {
                 this.isLiked = res.data.data.isLiked
                 this.likeNum = res.data.data.likeNum
                 // comment:
-                this.comments = res.data.data.comments
                 this.likedComments = res.data.data.likedComments
                 this.commentNum = res.data.data.commentNum
             })
@@ -91,27 +89,6 @@ export default {
                 console.error('请求失败:', error);
             });
         },
-        // fetchUserGameOrder(uid, gid){
-        //     // console.log(`正在并发查询用户(${uid})、游戏(${gid})的信息...`);
-        //     const user_promise = axios.get('/user/'+uid);
-        //     const game_promise = axios.get('/game/'+gid);
-        //     const order_promise = axios.get('/order/'+uid+'/'+gid);
-
-        //     Promise.all([user_promise, game_promise, order_promise])
-        //         .then(([user_promise, game_promise, order_promise])=> {
-        //             // 处理响应数据
-        //             this.user = user_promise.data
-        //             this.game = game_promise.data
-        //             this.order = order_promise.data
-
-        //             console.log('游戏信息:', this.game);
-        //             console.log('用户信息:', this.user);
-        //             console.log('订单信息:', this.order);
-        //         })
-        //         .catch(err => {
-        //             console.error('请求出错:', err);
-        //         });
-        // },
 
     }
 }
