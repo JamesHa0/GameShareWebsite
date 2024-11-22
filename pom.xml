@@ -16,51 +16,134 @@
 
 	<description>
 		父模块
-		---项目启动入口是web模块。
-		控制器：位于web模块；
-		框架、配置等：位于framework模块；
-		持久层：位于dao模块；
-		工具类、实体类：位于common模块
+		---> 项目启动入口位于web模块。
+		common模块：工具类、实体类
+		dao模块：持久层
+		framework模块：框架、配置等
+		web模块：控制器
 	</description>
 
 	<modules>
-		<module>GameShare-web</module>
-		<module>GameShare-framework</module>
-		<module>GameShare-common</module>
-		<module>GameShare-dao</module>
+		<module>GameShare-common</module>	<!-- 工具类、实体类 -->
+		<module>GameShare-dao</module>	<!-- 持久层 -->
+		<module>GameShare-framework</module>	<!-- 框架、配置等 -->
+		<module>GameShare-web</module>	<!-- 控制器 -->
 	</modules>
 	<packaging>pom</packaging>
 
 
 	<properties>
 		<java.version>17</java.version>
+		<mybatis-plus.version>3.5.7</mybatis-plus.version>
+		<jjwt-api.version>0.11.1</jjwt-api.version>
+		<jjwt-impl.version>0.11.2</jjwt-impl.version>
+		<jjwt-jackson.version>0.11.2</jjwt-jackson.version>
+		<mysql.version>8.0.32</mysql.version>
+		<druid.version>1.1.20</druid.version>
+		<springdoc-ui.version>2.2.0</springdoc-ui.version>
+		<springdoc-api.version>2.2.0</springdoc-api.version>
+		<springdoc-security.version>1.8.0</springdoc-security.version>
 	</properties>
 
-<!--<dependencyManagement>-->
-	<dependencies>
 
+	<dependencies>
 		<!-- 测试依赖 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+	</dependencies>
+
+	<!-- 依赖声明 -->
+<dependencyManagement>
+	<dependencies>
+
+		<!-- 定义模块依赖 -->
+		<!--======================================> common 及相关依赖： -->
+		<dependency>
+			<groupId>com.game</groupId>
+			<artifactId>common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- myBatisPlus依赖 -->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+			<version>${mybatis-plus.version}</version>
+		</dependency>
+		<!-- JWT 依赖 -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>${jjwt-api.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>${jjwt-impl.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>${jjwt-jackson.version}</version>
+		</dependency>
 
 
-		<!-- thymeleaf模板引擎 -->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-thymeleaf</artifactId>-->
-<!--		</dependency>-->
-		<!-- Jackson核心库 -->
-<!--		<dependency>-->
-<!--			<groupId>com.fasterxml.jackson.core</groupId>-->
-<!--			<artifactId>jackson-databind</artifactId>-->
-<!--			<version>2.13.0</version> &lt;!&ndash; 请使用适合您项目的版本 &ndash;&gt;-->
-<!--		</dependency>-->
+
+		<!--======================================> dao 及相关依赖： -->
+		<dependency>
+			<groupId>com.game</groupId>
+			<artifactId>dao</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+
+		<!--======================================> framework 及相关依赖： -->
+		<dependency>
+			<groupId>com.game</groupId>
+			<artifactId>framework</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+
+		<!--======================================> web 及相关依赖： -->
+		<dependency>
+			<groupId>com.game</groupId>
+			<artifactId>web</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- mysql依赖 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+        </dependency>
+        <!-- 数据库连接池druid 依赖 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid.version}</version>
+        </dependency>
+        <!-- springdoc swagger依赖 -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-ui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+            <version>${springdoc-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-security</artifactId>
+            <version>${springdoc-security.version}</version>
+        </dependency>
 
 	</dependencies>
-<!--</dependencyManagement>-->
+</dependencyManagement>
 
 
 </project>

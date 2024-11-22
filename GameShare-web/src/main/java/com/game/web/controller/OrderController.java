@@ -2,7 +2,7 @@ package com.game.web.controller;
 
 import com.game.common.core.domain.entity.Order;
 import com.game.dao.mapper.OrderMapper;
-import io.swagger.v3.oas.annotations.Operation;
+//import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,19 +19,19 @@ public class OrderController {
 
 
     @GetMapping("/{uid}")
-    @Operation(summary = "查询某用户的【全部】订单")
+//    @Operation(summary = "查询某用户的【全部】订单")
     public List<Order> listByUid(@PathVariable String uid) {
         return orderMapper.selectByUid(uid);
     }
 
     @GetMapping("/{uid}/{gid}")
-    @Operation(summary = "查询某用户在某游戏的的【单个】订单")
+//    @Operation(summary = "查询某用户在某游戏的的【单个】订单")
     public Order listByUidAndGid(@PathVariable String uid, @PathVariable String gid){
         return orderMapper.selectByUidAndGid(uid,gid);
     }
 
     @GetMapping("listAllOrders")
-    @Operation(summary = "查询【全部】订单")
+//    @Operation(summary = "查询【全部】订单")
     public List<Order> listAllOrders() {
         return orderMapper.selectList(null);
     }

@@ -55,8 +55,9 @@ public class MySecurityConfig {
             "/login",         //登录
             "/logout",        //登出
             "/captcha",        //验证码
-//            "/game/download/**",    // 游戏下载
-            "/favicon.ico"
+            "/favicon.ico",
+//            "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**",
+            "/v3/api-docs/**","/swagger**/**",
     };
 
     @Autowired

@@ -1,11 +1,9 @@
 package com.game.dao.service;
 
-import com.game.common.core.domain.entity.Comment;
 import com.game.common.utils.Result;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 
 public interface GameService {
 

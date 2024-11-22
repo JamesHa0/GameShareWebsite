@@ -11,7 +11,7 @@ import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class FileHandler {
+public class FileUtil {
     public static String getFilePath(String fileName) {
         return fileName.substring(0, fileName.lastIndexOf("/"));
     }

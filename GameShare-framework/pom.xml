@@ -22,17 +22,18 @@
 
 
     <dependencies>
+
         <!-- Spring Boot Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+
         <!-- 模块dao 依赖 -->
         <dependency>
             <groupId>com.game</groupId>
             <artifactId>dao</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
     </dependencies>

@@ -1,12 +1,9 @@
 package com.game.dao.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.game.common.core.domain.entity.Comment;
 import com.game.common.core.domain.entity.Game;
 import com.game.common.core.domain.entity.Order;
 import com.game.common.core.domain.entity.User;
-import com.game.common.utils.FileHandler;
+import com.game.common.utils.FileUtil;
 import com.game.common.utils.Result;
 import com.game.common.utils.ResultCode;
 import com.game.dao.mapper.CommentMapper;
@@ -22,8 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 @Service
 @Transactional  // 开启事务
@@ -47,7 +42,7 @@ public class GameServiceImpl implements GameService {
      * 获取detail页面所需数据
      * @param uid uid
      * @param gid gid
-     * @return Result(): user, game, order, isLiked, likeNum
+     * @return Result(): user, game, order, isLiked, likeNum, likedComments, commentNum
      */
     @Override
     public Result getAllDetails(String uid, String gid) {
@@ -71,7 +66,7 @@ public class GameServiceImpl implements GameService {
 //        List<Comment> comments = selectCommentByPage(gid, 1, 10);
 //        result.data("comments", comments);
         // 4-1，该用户在该游戏的评论中点过赞的评论id集合 list<cid>
-        List<String> likedComments = commentMapper.queryLikedComments(uid, gid);
+        List<String> likedComments = commentMapper.queryLikedCommentIds(uid, gid);
         result.data("likedComments", likedComments);
         // 4-2，该游戏评论数 commentNum
         Integer commentNum = commentMapper.queryCommentNumByGid(gid);
@@ -114,14 +109,14 @@ public class GameServiceImpl implements GameService {
     public Result uploadGame(MultipartFile game) {
         System.err.println("待上传文件名：" + game.getOriginalFilename() +", 类型：" +game.getContentType() +", 上传地址：" +FILE_UPLOAD_DIRECTORY);
 
-        FileHandler.saveFile(game, FILE_UPLOAD_DIRECTORY);
+        FileUtil.saveFile(game, FILE_UPLOAD_DIRECTORY);
         return Result.ok().message("游戏上传成功");
     }
 
     public Resource downloadGame(String fileName) {
         System.err.println("准备下载文件：" + fileName +",地址：" + FILE_DOWNLOAD_DIRECTORY);
 
-        return FileHandler.downloadFile(fileName, FILE_DOWNLOAD_DIRECTORY);
+        return FileUtil.downloadFile(fileName, FILE_DOWNLOAD_DIRECTORY);
     }
 
 

@@ -9,14 +9,15 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Date;
-import org.apache.commons.lang3.time.DateFormatUtils;
+//import org.apache.commons.lang3.time.DateFormatUtils;
 
 /**
  * 时间工具类
  *
  * @author ruoyi
  */
-public class DateUtil extends org.apache.commons.lang3.time.DateUtils
+//extends org.apache.commons.lang3.time.DateUtils
+public class DateUtil
 {
     public static String YYYY = "yyyy";
 
@@ -95,39 +96,39 @@ public class DateUtil extends org.apache.commons.lang3.time.DateUtils
     /**
      * 日期路径 即年/月/日 如2018/08/08
      */
-    public static final String datePath()
-    {
-        Date now = new Date();
-        return DateFormatUtils.format(now, "yyyy/MM/dd");
-    }
-
-    /**
-     * 日期路径 即年/月/日 如20180808
-     */
-    public static final String dateTime()
-    {
-        Date now = new Date();
-        return DateFormatUtils.format(now, "yyyyMMdd");
-    }
-
-    /**
-     * 日期型字符串转化为日期 格式
-     */
-    public static Date parseDate(Object str)
-    {
-        if (str == null)
-        {
-            return null;
-        }
-        try
-        {
-            return parseDate(str.toString(), parsePatterns);
-        }
-        catch (ParseException e)
-        {
-            return null;
-        }
-    }
+//    public static final String datePath()
+//    {
+//        Date now = new Date();
+//        return DateFormatUtils.format(now, "yyyy/MM/dd");
+//    }
+//
+//    /**
+//     * 日期路径 即年/月/日 如20180808
+//     */
+//    public static final String dateTime()
+//    {
+//        Date now = new Date();
+//        return DateFormatUtils.format(now, "yyyyMMdd");
+//    }
+//
+//    /**
+//     * 日期型字符串转化为日期 格式
+//     */
+//    public static Date parseDate(Object str)
+//    {
+//        if (str == null)
+//        {
+//            return null;
+//        }
+//        try
+//        {
+//            return parseDate(str.toString(), parsePatterns);
+//        }
+//        catch (ParseException e)
+//        {
+//            return null;
+//        }
+//    }
 
     /**
      * 获取服务器启动时间

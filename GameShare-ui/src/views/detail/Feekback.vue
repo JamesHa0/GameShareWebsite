@@ -41,7 +41,7 @@
                 <span class="comment-uname" v-html="comment.uname + ' ：'"></span>
                 <span class="comment-ctime">[{{comment.ctime}}]</span>
                 <!-- 评论的点赞和回复图标 -->
-                <img id="comment-like" @click="doCommentLike()" src="@images/comment_like.png"/>
+                <img id="comment-like" @click="doCommentLike(comment)" src="@images/comment_like.png"/>
                 <span class="comment-likeNum"  >{{ showClike(comment.clike)}}</span>
                 <img id="comment-reply" @click="doCommentReply()"   src="@images/comment_reply.png"/>
                 <!-- 评论内容 -->
@@ -92,7 +92,7 @@ export default {
             axios.get('/comment/listByPage/'+this.game.gid+'/'+current+'/'+size)
             .then(res=>{
                 console.log('=> 评论数据：')
-                console.log(res.data.data);
+                console.log(res.data.data.comments);
                 this.comments = res.data.data.comments
             })
             .catch(error=>{console.error('请求失败:', error);})
@@ -141,7 +141,23 @@ export default {
             .catch(error=>{
                 alert(`点赞操作异常：${error.message}`)
 	        })
-        }
+        },
+        doCommentLike(comment){
+            console.log(comment)
+            axios.post('/comment/doLike/'+this.user.uid+'/'+comment.cid+'/', 
+            {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(response => {
+                if (response.status !== 200) {
+                    throw new Error('操作失败');
+                }else{
+                    console.log('点赞/取消赞成功')
+                }
+            })
+        },
     }
 
 }

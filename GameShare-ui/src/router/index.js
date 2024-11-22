@@ -34,11 +34,13 @@ const routers = [{
     },{
         path:"/test", 
         component: () => import("@comp/test.vue"),   //无需认证
+    },{
+        path:"/swagger-ui.html#/"
     },
-    {
-        path: "/:catchAll(.*)",     // 匹配其他所有未定义的路径
-        redirect: "/404"
-    }
+    // {
+    //     path: "/:catchAll(.*)",     // 匹配其他所有未定义的路径
+    //     redirect: "/404"
+    // }
     
 ]
 
