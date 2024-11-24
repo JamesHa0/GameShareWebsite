@@ -3,11 +3,11 @@
     <!--页眉-->
     <Header />
     <!--搜索栏-->
-    <SearchBar />
+    <!-- <SearchBar /> -->
     <!-- shop（商品栏） -->
     <article class="shop">
       <!-- 轮播图 -->
-      <Carousel/>
+      <!-- <Carousel/> -->
       <!-- 游戏一览 -->
 		  <section class="content">
         <!-- 本站游戏 -->

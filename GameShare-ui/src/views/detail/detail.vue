@@ -3,13 +3,13 @@
     <!--正文-->
     <article class="detail" id="detail">
         <!-- 封面模块 -->
-        <Cover :user="user" :game="game" :order="order"/>
+        <!-- <Cover :user="user" :game="game" :order="order"/> -->
         <!-- 剪影模块 -->
         <!-- <Sketch :game="game"/> -->
         <!-- 反馈模块 -->
         <Feedback v-if="user" :user="user" :game="game" :order="order"
                 :isLiked="isLiked" :likeNum="likeNum"
-                :likedComments="likedComments" :commentNum="commentNum"
+                :likedCids="likedCids" :commentNum="commentNum"
             />
     </article>
 
@@ -48,7 +48,7 @@ export default {
             isLiked:null,
             likeNum:null,
             // comment:
-            likedComments:null,
+            likedCids:null,
             commentNum:null,
         }
     },
@@ -82,7 +82,7 @@ export default {
                 this.isLiked = res.data.data.isLiked
                 this.likeNum = res.data.data.likeNum
                 // comment:
-                this.likedComments = res.data.data.likedComments
+                this.likedCids = res.data.data.likedCids
                 this.commentNum = res.data.data.commentNum
             })
             .catch(error=>{

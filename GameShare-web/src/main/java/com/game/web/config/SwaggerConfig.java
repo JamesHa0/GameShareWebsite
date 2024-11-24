@@ -11,8 +11,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
     private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final String BEARER_TOKEN = "Bearer eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiIxIiwiaWF0IjoxNzMxODM5OTUyLCJleHAiOjE3MzI0NDQ3NTIsInVuYW1lIjoicm9vdCIsImF1dGhvcml0aWVzIjoiW1JPTEVfQURNSU4sIGxvZ2luOmxvZ2luLCBsb2dpbjp0b0xvZ2luLCBsb2dvdXQsIHJlZzpyZWdpc3RlciwgcmVnOnRvUmVnaXN0ZXIsIHVzZXI6YWRkLCB1c2VyOmxpc3QsIHVzZXI6bWFuYWdlciwgdXNlcjptb2RpZnksIHVzZXI6cmVtb3ZlLCB1c2VyOnRvQWRkLCB1c2VyOnRvTW9kaWZ5XSJ9.fyo79kAz1Alw33lmId8vifRCkQzPr-mwyb_sSaDxdRE";
-
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
@@ -24,7 +22,7 @@ public class SwaggerConfig {
                     .type(SecurityScheme.Type.HTTP)
                     .scheme("bearer")
                     .bearerFormat("JWT"))
-                .addHeaders(AUTHORIZATION_HEADER, new Header().description("Bearer Token").required(true).example(BEARER_TOKEN)));
+                .addHeaders(AUTHORIZATION_HEADER, new Header().description("Bearer Token").required(true)));
     }
 //
 //    @Bean

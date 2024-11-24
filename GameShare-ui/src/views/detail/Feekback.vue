@@ -6,7 +6,7 @@
     <section class="icon">
         <table>
             <tr>
-                <td><img @click="doLike()" :src="likeImg"/></td>
+                <td><img @click="doLike()" :src="newLikeImg"/></td>
                 <td><a href="#comment-input"><img src="@images/comment.png"/></a></td>
             </tr>
             <tr>
@@ -37,13 +37,18 @@
             <!-- 循环遍历所有评论 -->
             <div v-for="comment in comments"  :key="comment.cid"
                     class="comment-container" :style="'padding-left:' + this.getCommentIndent(comment.cpath) + 'px'">	    
+                
                 <!-- 评论者和日期 -->
                 <span class="comment-uname" v-html="comment.uname + ' ：'"></span>
                 <span class="comment-ctime">[{{comment.ctime}}]</span>
+
+
                 <!-- 评论的点赞和回复图标 -->
-                <img id="comment-like" @click="doCommentLike(comment)" src="@images/comment_like.png"/>
-                <span class="comment-likeNum"  >{{ showClike(comment.clike)}}</span>
+                <img id="comment-like" @click="doCommentLike(comment)" :src="showClikeImg(comment)"/>
+                <span class="comment-likeNum"  >{{ showClike(comment)}}</span>
                 <img id="comment-reply" @click="doCommentReply()"   src="@images/comment_reply.png"/>
+
+                <span style="color:#ff8000;font-weight:bold">{{comment.cid}}</span>
                 <!-- 评论内容 -->
                 <p style="display:block" class="comment-text"> {{comment.comment }}</p>
             </div>
@@ -72,16 +77,29 @@ import axios from 'axios'
 export default {
     props:['user', 'game', 'order',
         'isLiked', 'likeNum',
-        'likedComments', 'commentNum'
+        'likedCids', 'commentNum'
     ],
     data(){
         return{
+            // const常量：
             currentPage: 1,
             pageSize: 10,
+            constLikeImg: {// 游戏点赞图标
+                'off': 'src/assets/images/like.png',   // 点灭图标
+                'on': 'src/assets/images/like_yes.png',   // 点亮图标
+            },
+            constCommentLikeImg: {// 单一评论点赞图标
+                'off': 'src/assets/images/comment_like.png', 
+                'on': 'src/assets/images/comment_like_yes.png', 
+            },            
+            // 数据库数据：
             comments: null,
+            // 临时数据：
             newIsLiked: this.isLiked,
             newLikeNum: this.likeNum,
-            likeImg: this.isLiked ? 'src/assets/images/like_yes.png': 'src/assets/images/like.png'
+            newLikeImg: this.isLiked ? 'src/assets/images/like_yes.png': 'src/assets/images/like.png',
+            tempComments: {},   // comments对象的临时数组，随用随改；包含clike 和 isLiked 这两个属性。
+
         }
     },
     created(){
@@ -110,9 +128,6 @@ export default {
                 sharpNum = 4
             return sharpNum*60 + 20; 
         },
-        showClike(clike){
-            return clike==null? 0: clike
-        },
         doLike(){
             const action=this.likeImg.endsWith('like.png')? 'like': 'dislike';
             // 请求数据，传递action(like/dislike)参数
@@ -130,10 +145,10 @@ export default {
                     throw new Error('操作失败');
                 }else{
                     if(action==="like"){
-                        this.likeImg = 'src/assets/images/like_yes.png'	//点亮
+                        this.likeImg = this.constLikeImg.on	//点亮
                         this.newLikeNum ++;	//更新赞数：+1
                     }else{
-                        this.likeImg = 'src/assets/images/like.png' //点灭
+                        this.likeImg = this.constLikeImg.off //点灭
                         this.newLikeNum --;
                     }
                 }
@@ -142,10 +157,33 @@ export default {
                 alert(`点赞操作异常：${error.message}`)
 	        })
         },
+        showClike(comment){
+            const cid = comment.cid
+            // 找缓存中tempComments[cid].clike的值：
+            if(this.tempComments[cid] == undefined || this.tempComments[cid].clike == undefined){
+                return comment.clike    // 不存在，则取数据库中的值；
+            }else{
+                return this.tempComments[cid].clike    // 存在，取之。
+            }
+        },
+        showClikeImg(comment){
+            const cid = comment.cid
+            // 找缓存中isLiked的值：（当前会话的点赞行为检验：isLiked值存在则证实了有过点赞操作，反之亦然）
+            if(this.tempComments[cid] == undefined || this.tempComments[cid].isLiked == undefined){
+                // 不存在，则取数据库中值：
+                return this.likedCids.includes(cid) ? this.constCommentLikeImg.on : this.constCommentLikeImg.off
+            }else{
+                // 存在，则取之
+                return this.tempComments[cid].isLiked ? this.constCommentLikeImg.on : this.constCommentLikeImg.off
+            }
+        },
         doCommentLike(comment){
-            console.log(comment)
-            axios.post('/comment/doLike/'+this.user.uid+'/'+comment.cid+'/', 
-            {
+            const cid = comment.cid
+            axios.post('/comment/doLike', {
+                uid: this.user.uid,
+                gid: this.game.gid,
+                cid: comment.cid,
+            },{
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
@@ -154,9 +192,21 @@ export default {
                 if (response.status !== 200) {
                     throw new Error('操作失败');
                 }else{
-                    console.log('点赞/取消赞成功')
+                    console.log('操作成功')
+                    // 给rawCid赋值：若是第一次点击，则赋值为数据库中的comment.clike；若是第二或更多次点击，则赋值为缓存中的tempComments[cid].clike。
+                    const rawCid = this.tempComments[cid] == undefined ? comment.clike : this.tempComments[cid].clike
+                    if (response.data.data.action == "doLike"){  // 得知当前进行的是点赞操作
+                        this.tempComments[cid] = {clike: parseInt(rawCid) + 1}  // 改变点赞数
+                        this.tempComments[cid].isLiked = true   // 点赞状态，连带改变亮灭图标
+                    } else {  // 取消赞操作
+                        this.tempComments[cid] = {clike: parseInt(rawCid) - 1}
+                        this.tempComments[cid].isLiked = false
+                    }
                 }
             })
+            .catch(error=>{
+                alert(`点赞操作异常：${error.message}`)
+	        })
         },
     }
 

@@ -42,7 +42,7 @@ public class GameServiceImpl implements GameService {
      * 获取detail页面所需数据
      * @param uid uid
      * @param gid gid
-     * @return Result(): user, game, order, isLiked, likeNum, likedComments, commentNum
+     * @return Result(): user, game, order, isLiked, likeNum, likedCids, commentNum
      */
     @Override
     public Result getAllDetails(String uid, String gid) {
@@ -66,8 +66,8 @@ public class GameServiceImpl implements GameService {
 //        List<Comment> comments = selectCommentByPage(gid, 1, 10);
 //        result.data("comments", comments);
         // 4-1，该用户在该游戏的评论中点过赞的评论id集合 list<cid>
-        List<String> likedComments = commentMapper.queryLikedCommentIds(uid, gid);
-        result.data("likedComments", likedComments);
+        List<String> likedCids = commentMapper.queryLikedCommentIds(uid, gid);
+        result.data("likedCids", likedCids);
         // 4-2，该游戏评论数 commentNum
         Integer commentNum = commentMapper.queryCommentNumByGid(gid);
         result.data("commentNum", commentNum);
