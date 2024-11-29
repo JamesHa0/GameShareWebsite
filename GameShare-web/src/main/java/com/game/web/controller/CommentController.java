@@ -20,12 +20,6 @@ public class CommentController {
     @Autowired
     private CommentServiceImpl commentServiceImpl;
 
-//    @Operation(summary = "查询某游戏的【全部】评论")
-//    @GetMapping("/{gid}")
-//    public List<Comment> listCommentsByGid(@PathVariable String gid) {
-//        return commentMapper.queryCommentsByGid(gid);
-//    }
-
     @Operation(summary = "查询某游戏评论数")
     @GetMapping("/CommentNum/{gid}")
     public int queryCommentNumByUid(@PathVariable String gid) {
@@ -42,6 +36,12 @@ public class CommentController {
     @PostMapping("/doLike")
     public Result doCommentLike(@RequestParam String uid, @RequestParam String gid, @RequestParam String cid) {
         return commentServiceImpl.doCommentLike(uid, gid, cid);
+    }
+
+    @Operation(summary = "评论")
+    @PostMapping("/doComment")
+    public Result doComment(@RequestParam String uid, @RequestParam String gid, @RequestParam String comment){
+        return commentServiceImpl.doComment(uid, gid, comment);
     }
 
 }

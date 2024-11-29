@@ -17,16 +17,16 @@ public interface GameMapper extends BaseMapper<Game> {
      * @description 2，查询赞数
      * @description 3，点赞/4，取消点赞
      */
-    @Select("select count(*) from game_like where uid = ${uid} and gid = ${gid}")
+    @Select("select count(*) from game_like where uid = #{uid} and gid = #{gid}")
     int queryIsLiked(String uid, String gid);
 
-    @Select("select count(*) from game_like where gid = ${gid}")
+    @Select("select count(*) from game_like where gid = #{gid}")
     int queryLikeNum(@RequestParam String gid);
 
-    @Insert("insert game_like values(${uid},${gid})")
+    @Insert("insert game_like values(#{uid},#{gid})")
     int doLike(@RequestParam String uid, @RequestParam String gid);
 
-    @Delete("delete from game_like where uid = ${uid} and gid = ${gid}")
+    @Delete("delete from game_like where uid = #{uid} and gid = #{gid}")
     int disLike(@RequestParam String uid, @RequestParam String gid);
 
 }

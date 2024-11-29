@@ -36,7 +36,7 @@ public class Order {
         this.onumber = String.valueOf(snowflakeIdGenerator.nextId());
         this.uid = uid;
         this.gid = gid;
-        this.otime = DateUtil.getTime();
+        this.otime = DateUtil.getSQLTimeNow();
     }
 
     @TableId(type = IdType.ASSIGN_ID)

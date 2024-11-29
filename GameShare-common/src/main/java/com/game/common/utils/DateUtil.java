@@ -36,21 +36,14 @@ public class DateUtil
 
 
 
-    /**
-     * 获取当前Date型日期
-     *
-     * @return Date() 当前日期
-     */
-    public static Date getNowDate()
-    {
-        return new Date();
+    public static String format(Date date, String format){
+        SimpleDateFormat sdf=new SimpleDateFormat(format);
+        return sdf.format(date);
+    }
+    public static String getSQLTimeNow(){
+        return format(new Date(), YYYY_MM_DD_HH_MM_SS); // yyyy-MM-dd HH:mm:ss
     }
 
-    /**
-     * 获取当前日期, 默认格式为yyyy-MM-dd
-     *
-     * @return String
-     */
     public static String getDate()
     {
         return dateTimeNow(YYYY_MM_DD);

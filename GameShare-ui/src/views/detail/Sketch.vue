@@ -22,6 +22,7 @@ export default {
 
 <style>
 .gdescription {
+    /*height: 500px;*/
 	clear: left;
 	position: relative;
 }
@@ -39,6 +40,7 @@ export default {
 }
 
 .gimg {
+    /*height: 2600px;*/
 	padding: 20px;
 	text-align: center;
 }

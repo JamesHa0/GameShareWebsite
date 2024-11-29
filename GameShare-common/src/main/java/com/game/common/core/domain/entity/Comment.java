@@ -1,6 +1,7 @@
 package com.game.common.core.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
@@ -20,15 +21,24 @@ public class Comment {
 
     private String gid;
 
-    private String uname;
-
     private String ctime;
 
     private String comment;
 
     private String clike;
 
-    private String cparentid;
+    private String parentCid;
 
+    private  String parentUid;
+
+    private String delFlag;
+
+    @TableField(value = "cpath", exist = false)
     private String cpath;
+
+    @TableField(value = "parent_uname", exist = false)
+    private String parentUname;
+
+    @TableField(value = "uname", exist = false)
+    private String uname;
 }

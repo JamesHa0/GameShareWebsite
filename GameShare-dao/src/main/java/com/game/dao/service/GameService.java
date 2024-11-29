@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface GameService {
 
     Result getAllDetails(String uid, String gid);
-    Result doLike(String uid, String gid, String action);
+    Result doLike(String uid, String gid);
     Result uploadGame(MultipartFile game);
     Resource downloadGame(String fileName);
     Result purchaseGame(String uid, String gid);

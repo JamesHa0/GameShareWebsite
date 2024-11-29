@@ -62,13 +62,10 @@ public class GameServiceImpl implements GameService {
         // 3，订单 order
         Order order = orderMapper.selectByUidAndGid(uid, gid);
         result.data("order", order);
-//        // 4，评论 comment
-//        List<Comment> comments = selectCommentByPage(gid, 1, 10);
-//        result.data("comments", comments);
-        // 4-1，该用户在该游戏的评论中点过赞的评论id集合 list<cid>
+        // 4，该用户在该游戏的评论中点过赞的评论id集合 list<cid>
         List<String> likedCids = commentMapper.queryLikedCommentIds(uid, gid);
         result.data("likedCids", likedCids);
-        // 4-2，该游戏评论数 commentNum
+        // 4-1，该游戏评论数 commentNum
         Integer commentNum = commentMapper.queryCommentNumByGid(gid);
         result.data("commentNum", commentNum);
         return result.success(true).code(ResultCode.SUCCESS);
@@ -83,20 +80,20 @@ public class GameServiceImpl implements GameService {
      * @param action 点赞/取消点赞
      * @return Result
      */
-    public Result doLike(String uid, String gid, String action) {
-        if("like".equals(action)){
-            if(gameMapper.doLike(uid, gid) > 0) {
-                return Result.ok().message("点赞成功");
-            }
-        }else if("dislike".equals(action)){
-            if(gameMapper.disLike(uid, gid) > 0){
-                return Result.ok().message("取消点赞成功");
+    public Result doLike(String uid, String gid) {
+        String action = "";
+        if (gameMapper.queryIsLiked(uid, gid) == 0){   // 记录中没有数据，故进行点赞操作
+            action = "doLike";
+            if (gameMapper.doLike(uid, gid) > 0) {
+                return Result.ok().message("点赞成功").data("action", action);
             }
         } else {
-            System.err.println("action 不符合 like或dislike。action = " + action);
-            return Result.error().message("action 不符合 like或dislike。action = " + action);
+            action = "disLike";
+            if (gameMapper.disLike(uid, gid) > 0){
+                return Result.ok().message("取消点赞成功").data("action", action);
+            }
         }
-        return Result.error().message("点赞/取消点赞操作失败");
+        return Result.error().message("点赞或取消赞操作失败").data("action", action);
     }
 
 

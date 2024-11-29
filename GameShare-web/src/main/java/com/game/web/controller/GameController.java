@@ -54,8 +54,8 @@ public class GameController {
 //        return gameServiceImpl.queryLikeNum(gid);
 //    }
     @PostMapping("/doLike")  // 1，用户id；2，游戏id；3，指定点赞还是取消点赞；
-    public Result doLike(@RequestParam String uid, @RequestParam String gid, @RequestParam String action) {
-        return gameServiceImpl.doLike(uid, gid, action);
+    public Result doLike(@RequestParam String uid, @RequestParam String gid) {
+        return gameServiceImpl.doLike(uid, gid);
     }
 
     /**

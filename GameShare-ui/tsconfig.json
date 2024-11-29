@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    // "types": ["element-plus/global"], // 声明element-ui
+    "types": ["element-plus/global"], // 声明element-ui
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
     /* Projects */

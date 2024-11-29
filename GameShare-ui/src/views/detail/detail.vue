@@ -63,7 +63,7 @@ export default {
             // console.log('这里是解析后的token：'+decodedToken);
         }
         if (gid === '0' || gid === undefined) {  //若查询参数gid为0或未定义，则路由至 /404
-            this.$router.push('/404');
+            // this.$router.push('/404');
         }else{
             // this.fetchUserGameOrder(uid, gid)   // 并发批量查询用户、游戏、订单信息
             this.getAllDetails(uid, gid)
@@ -73,8 +73,8 @@ export default {
         getAllDetails(uid, gid){
             axios.get('/game/details/'+uid+'/'+gid)
             .then(res=>{
-                console.log('===> 游戏details 数据：')
-                console.log(res.data.data);
+                console.debug('===> 游戏details 数据：')
+                console.debug(res.data.data);
                 this.user = res.data.data.user
                 this.game = res.data.data.game
                 this.order = res.data.data.order

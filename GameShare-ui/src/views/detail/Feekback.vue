@@ -6,11 +6,11 @@
     <section class="icon">
         <table>
             <tr>
-                <td><img @click="doLike()" :src="newLikeImg"/></td>
-                <td><a href="#comment-input"><img src="@images/comment.png"/></a></td>
+                <td><img @click="doLike()" :src="showLikeImg()"/></td>
+                <td><a href="#comment-input"><img :src="constCImg"/></a></td>
             </tr>
             <tr>
-                <td>{{newLikeNum }}</td>
+                <td>{{tempLikeNum }}</td>
                 <td>{{commentNum }}</td>
             </tr>
         </table>
@@ -24,8 +24,8 @@
             <!-- 评论发表文本框 -->
         <div class="comment-input" id="comment-input">
             <h2>发表评论</h2>
-            <form onsubmit="return submit_comment(this,'${user.uid}','${game.gid }', &quot;${user.uname }&quot;)"  ><!-- 注意这里要用&quot;（双引号符） -->
-                <textarea id="comment-textarea" name="comment" placeholder="写下你的评论..." required></textarea>
+            <form  @submit.prevent="doComment()">
+                <textarea id="comment-textarea" name="comment" v-model="commentText" placeholder="写下你的评论..." required></textarea>
                 <div><button type="submit">提交评论</button></div>
             </form>
         </div>
@@ -33,24 +33,30 @@
         <!-- 评论区 -->
         <div class="comments">
             <!-- 无评论时显示的沙发图案 -->
-            <img v-if="comments == null" id="sofa" src="@images/sofa.png" draggable="false">
+            <img v-if="comments == null" id="sofa" :src="constSofa" draggable="false">
             <!-- 循环遍历所有评论 -->
-            <div v-for="comment in comments"  :key="comment.cid"
-                    class="comment-container" :style="'padding-left:' + this.getCommentIndent(comment.cpath) + 'px'">	    
+            <div v-for="comment in comments" :key="comment.cid"
+                    class="comment-container" :style="getCStyle(comment)">	    
                 
                 <!-- 评论者和日期 -->
-                <span class="comment-uname" v-html="comment.uname + ' ：'"></span>
-                <span class="comment-ctime">[{{comment.ctime}}]</span>
-
+                <span class="comment-uname">{{comment.uname}} <span v-if="comment.parentUname">{{'&emsp;回复&emsp;' +comment.parentUname }}</span> ：</span>
+                <div class="comment-ctime">[{{comment.ctime }}]</div>
 
                 <!-- 评论的点赞和回复图标 -->
-                <img id="comment-like" @click="doCommentLike(comment)" :src="showClikeImg(comment)"/>
-                <span class="comment-likeNum"  >{{ showClike(comment)}}</span>
-                <img id="comment-reply" @click="doCommentReply()"   src="@images/comment_reply.png"/>
+                <img id="comment-like" @click="doCLike(comment)" :src="showCLikeImg(comment)"/>
+                <span class="comment-likeNum"  >{{ showCLike(comment)}}</span>
+                <img id="comment-reply" @click="doCReply(comment)"   :src="constCommentReply"/>
 
-                <span style="color:#ff8000;font-weight:bold">{{comment.cid}}</span>
                 <!-- 评论内容 -->
-                <p style="display:block" class="comment-text"> {{comment.comment }}</p>
+                <p v-if="comment.delFlag == '2'" style="display:block;color:#d0d0d0"  class="comment-text">该评论已被删除！</p >
+                <p v-else style="display:block" class="comment-text"> {{comment.comment }}</p>
+
+                <!-- 回复区 -->
+                <div v-if="showCReply(comment)">
+                    <el-divider content-position="left">回复 Ta：</el-divider>
+                    <div id="commentBox" contenteditable="true"></div>
+                </div>
+                
             </div>
             <!-- 分页 -->
             <el-pagination
@@ -73,6 +79,7 @@
 
 <script>
 import axios from 'axios'
+import { ElMessage } from 'element-plus'
 
 export default {
     props:['user', 'game', 'order',
@@ -81,25 +88,28 @@ export default {
     ],
     data(){
         return{
-            // const常量：
-            currentPage: 1,
-            pageSize: 10,
+            /*  const常量： */
+            currentPage: 1,// 当前页码
+            pageSize: 10,// 每页条数
+            constSofa: 'src/assets/images/sofa.png',// 沙发图案
+            constCImg: 'src/assets/images/comment.png',
             constLikeImg: {// 游戏点赞图标
                 'off': 'src/assets/images/like.png',   // 点灭图标
                 'on': 'src/assets/images/like_yes.png',   // 点亮图标
             },
+            constCommentReply: 'src/assets/images/comment_reply.png',// 回复图标
             constCommentLikeImg: {// 单一评论点赞图标
                 'off': 'src/assets/images/comment_like.png', 
                 'on': 'src/assets/images/comment_like_yes.png', 
             },            
-            // 数据库数据：
+            /*  数据库数据： */
             comments: null,
-            // 临时数据：
-            newIsLiked: this.isLiked,
-            newLikeNum: this.likeNum,
-            newLikeImg: this.isLiked ? 'src/assets/images/like_yes.png': 'src/assets/images/like.png',
-            tempComments: {},   // comments对象的临时数组，随用随改；包含clike 和 isLiked 这两个属性。
-
+            /*  临时数据： */
+            tempIsLiked: this.isLiked,
+            tempLikeNum: this.likeNum,
+            tempComments: {},   // comments对象的临时数组，随用随改；包含属性：clike、isLiked
+            /* 表单数据： */
+            commentText: '',
         }
     },
     created(){
@@ -109,8 +119,8 @@ export default {
         getCommentByPage(current, size){
             axios.get('/comment/listByPage/'+this.game.gid+'/'+current+'/'+size)
             .then(res=>{
-                console.log('=> 评论数据：')
-                console.log(res.data.data.comments);
+                console.debug('=> 评论数据：')
+                console.debug(res.data.data.comments);
                 this.comments = res.data.data.comments
             })
             .catch(error=>{console.error('请求失败:', error);})
@@ -121,54 +131,83 @@ export default {
         handleSizeChange(val){
             this.getCommentByPage(this.currentPage, val)
         },
-        getCommentIndent(cpath){   // 计算每条评论的缩进宽度（px）
-            if(cpath == null) return 0;
-            let sharpNum = cpath.length - cpath.replace(/#/g, '').length
-            if(sharpNum > 4)
-                sharpNum = 4
-            return sharpNum*60 + 20; 
+        showLikeImg(){
+            return this.tempIsLiked ? this.constLikeImg.on : this.constLikeImg.off
         },
         doLike(){
-            const action=this.likeImg.endsWith('like.png')? 'like': 'dislike';
-            // 请求数据，传递action(like/dislike)参数
             axios.post('/game/doLike', {
                 uid: this.user.uid,
                 gid: this.game.gid,
-                action: action,
             },{
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             })
-            .then(response => {
+            .then (response => {
                 if (response.status !== 200) {
                     throw new Error('操作失败');
-                }else{
-                    if(action==="like"){
-                        this.likeImg = this.constLikeImg.on	//点亮
-                        this.newLikeNum ++;	//更新赞数：+1
-                    }else{
-                        this.likeImg = this.constLikeImg.off //点灭
-                        this.newLikeNum --;
+                } else {
+                    const action = response.data.data.action
+                    if (action==="doLike"){
+                        this.tempIsLiked = true
+                        this.tempLikeNum ++;	//更新赞数：+1
+                    } else {
+                        this.tempIsLiked = false
+                        this.tempLikeNum --;
                     }
                 }
             })
-            .catch(error=>{
+            .catch (error => {
                 alert(`点赞操作异常：${error.message}`)
 	        })
         },
-        showClike(comment){
+        doComment(){
+            axios.post('/comment/doComment', {
+                uid: this.user.uid,
+                gid: this.game.gid,
+                comment: this.commentText
+            },{
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then (response => {
+                if (response.status !== 200) {
+                   throw new Error('操作失败');
+                } else {
+                    this.commentText = ''
+                    ElMessage({
+                        message: '评论成功',
+                        type: 'success',
+                    })
+                    this.getCommentByPage(this.currentPage, this.pageSize)
+                }
+            })
+            .catch (error => {
+                alert(`评论操作异常：${error.message}`)
+	        })
+        },
+        getCStyle(comment){
+            const cpath = comment.cpath
+            let padding = null  // 每条评论的缩进宽度（px）
+            let sharpNum = cpath.length - cpath.replace(/#/g, '').length
+            if(sharpNum > 4)
+                sharpNum = 4
+            padding = cpath == null? 0 : sharpNum*60+20
+            return  'padding-left:' + padding + 'px'
+        },
+        showCLike(comment){
             const cid = comment.cid
-            // 找缓存中tempComments[cid].clike的值：
+            // 找内存中tempComments[cid].clike的值：
             if(this.tempComments[cid] == undefined || this.tempComments[cid].clike == undefined){
                 return comment.clike    // 不存在，则取数据库中的值；
             }else{
                 return this.tempComments[cid].clike    // 存在，取之。
             }
         },
-        showClikeImg(comment){
+        showCLikeImg(comment){
             const cid = comment.cid
-            // 找缓存中isLiked的值：（当前会话的点赞行为检验：isLiked值存在则证实了有过点赞操作，反之亦然）
+            // 找内存中isLiked的值：（当前会话的点赞行为检验：isLiked值存在则证实了有过点赞操作，反之亦然）
             if(this.tempComments[cid] == undefined || this.tempComments[cid].isLiked == undefined){
                 // 不存在，则取数据库中值：
                 return this.likedCids.includes(cid) ? this.constCommentLikeImg.on : this.constCommentLikeImg.off
@@ -177,7 +216,7 @@ export default {
                 return this.tempComments[cid].isLiked ? this.constCommentLikeImg.on : this.constCommentLikeImg.off
             }
         },
-        doCommentLike(comment){
+        doCLike(comment){
             const cid = comment.cid
             axios.post('/comment/doLike', {
                 uid: this.user.uid,
@@ -193,7 +232,7 @@ export default {
                     throw new Error('操作失败');
                 }else{
                     console.log('操作成功')
-                    // 给rawCid赋值：若是第一次点击，则赋值为数据库中的comment.clike；若是第二或更多次点击，则赋值为缓存中的tempComments[cid].clike。
+                    // 给rawCid赋值：若是第一次点击，则赋值为数据库中的comment.clike；若是第二或更多次点击，则赋值为内存中的tempComments[cid].clike。
                     const rawCid = this.tempComments[cid] == undefined ? comment.clike : this.tempComments[cid].clike
                     if (response.data.data.action == "doLike"){  // 得知当前进行的是点赞操作
                         this.tempComments[cid] = {clike: parseInt(rawCid) + 1}  // 改变点赞数
@@ -207,6 +246,24 @@ export default {
             .catch(error=>{
                 alert(`点赞操作异常：${error.message}`)
 	        })
+        },
+        showCReply(comment){
+            const cid = comment.cid
+            // 找内存中isReplied的值：
+            if(this.tempComments[cid] == undefined || this.tempComments[cid].isReplied == undefined){
+                return false    // 不存在，则取false；
+            }else{
+                return this.tempComments[cid].isReplied    // 存在，取之。
+            }
+        },
+        doCReply(comment){
+            const cid = comment.cid
+            console.log('doCommentReply:')
+            if(this.tempComments[cid] == undefined || this.tempComments[cid].isReplied == undefined){
+                this.tempComments[cid] = {isReplied: true}
+            }else{
+                this.tempComments[cid].isReplied = !this.tempComments[cid].isReplied
+            }
         },
     }
 
@@ -447,4 +504,19 @@ export default {
     justify-content: center;
     padding: 30px;
 }
+
+#commentBox {
+  border: 1px solid #ccc;
+  min-height: 30px;
+  padding: 10px;
+  margin: 20px 20px 10px 10px;
+  border-radius: 5px;
+  overflow: auto; /* 确保内容超出时可以滚动 */
+}
+
+#commentBox:focus {
+  outline: none; /* 移除焦点时的轮廓线 */
+  border-color: #007bff; /* 当聚焦时改变边框颜色 */
+}
+
 </style>
