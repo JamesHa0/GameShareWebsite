@@ -40,8 +40,14 @@ public class CommentController {
 
     @Operation(summary = "评论")
     @PostMapping("/doComment")
-    public Result doComment(@RequestParam String uid, @RequestParam String gid, @RequestParam String comment){
-        return commentServiceImpl.doComment(uid, gid, comment);
+    public Result doComment(@RequestParam String uid, @RequestParam String gid, @RequestParam String commentText){
+        return commentServiceImpl.doComment(uid, gid, commentText);
+    }
+
+    @Operation(summary = "回复评论")
+    @PostMapping("/doReply")
+    public Result doReply(@RequestBody Comment comment){
+        return commentServiceImpl.doReply(comment);
     }
 
 }

@@ -51,4 +51,11 @@ public class CommentServiceImpl {
         comment.setCtime(date);
         return commentMapper.doComment(comment) > 0 ? Result.ok() : Result.error();
     }
+
+
+    public Result doReply(Comment comment) {
+        String date = DateUtil.getSQLTimeNow();
+        comment.setCtime(date);
+        return commentMapper.doComment(comment) > 0 ? Result.ok() : Result.error();
+    }
 }

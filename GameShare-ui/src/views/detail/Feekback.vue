@@ -1,9 +1,7 @@
 <template>
-  <!-- 游戏的点赞和评论 -->
-    <!-- 点赞模块 -->
-<article>
-    
-    <section class="icon">
+<main>
+    <!-- 游戏的点赞和评论图标 -->
+    <article class="icon">
         <table>
             <tr>
                 <td><img @click="doLike()" :src="showLikeImg()"/></td>
@@ -14,50 +12,61 @@
                 <td>{{commentNum }}</td>
             </tr>
         </table>
-    </section>
-
+    </article>
     
     <!-- 评论模块 --><br><br><br>
-    <section class="comment-module">
-            <!-- 标题 -->
-        <div class="comment-header">玩家评论：</div>
-            <!-- 评论发表文本框 -->
-        <div class="comment-input" id="comment-input">
-            <h2>发表评论</h2>
-            <form  @submit.prevent="doComment()">
-                <textarea id="comment-textarea" name="comment" v-model="commentText" placeholder="写下你的评论..." required></textarea>
-                <div><button type="submit">提交评论</button></div>
+    <article class="comment-module">
+        <!-- 标题 -->
+        <div class="header">玩家评论：</div>
+
+        <!-- 评论发表 -->
+        <section class="comment-release">
+            <h2 class="title">发表评论</h2>
+            <form class="release-form" @submit.prevent="doComment()" @keyup.ctrl.enter="doComment()" >
+                <textarea class="input" v-model="commentText" placeholder="文明发言，友善互动 (*^▽^*)       （Ctrl+Enter 提交评论）" required></textarea>
+                <div class="submit"><button class="btn" type="submit">提交评论</button></div>
             </form>
-        </div>
+        </section>
 
         <!-- 评论区 -->
-        <div class="comments">
+        <section class="comments-container">
             <!-- 无评论时显示的沙发图案 -->
-            <img v-if="comments == null" id="sofa" :src="constSofa" draggable="false">
+            <img v-if="comments == null" class="sofa" :src="constSofa" draggable="false">
             <!-- 循环遍历所有评论 -->
-            <div v-for="comment in comments" :key="comment.cid"
-                    class="comment-container" :style="getCStyle(comment)">	    
+            <article v-for="comment in comments" :key="comment.cid"
+                    class="single-comment" :style="getCStyle(comment)">	    
                 
-                <!-- 评论者和日期 -->
-                <span class="comment-uname">{{comment.uname}} <span v-if="comment.parentUname">{{'&emsp;回复&emsp;' +comment.parentUname }}</span> ：</span>
-                <div class="comment-ctime">[{{comment.ctime }}]</div>
-
-                <!-- 评论的点赞和回复图标 -->
-                <img id="comment-like" @click="doCLike(comment)" :src="showCLikeImg(comment)"/>
-                <span class="comment-likeNum"  >{{ showCLike(comment)}}</span>
-                <img id="comment-reply" @click="doCReply(comment)"   :src="constCommentReply"/>
-
+                <!-- 评论信息 -->
+                <section class="comment-info">
+                    <div class="observer">{{comment.uname}} <span v-if="comment.parentUname"><span style="font-size: 15px;color: #ccc;">&nbsp;回复&nbsp;</span>{{comment.parentUname }}</span> ：</div>
+                    <article class="info-right-items">
+                        <time class="time">[{{comment.ctime }}]</time>
+                        <img class="reply" :class="{ 'disable': comment.delFlag==2 ? true : false }" @click="enableCReply(comment)"   :src="constCommentReply"/>
+                        <img class="like" :class="{ 'disable': comment.delFlag==2 ? true : false }" @click="doCLike(comment)" :src="showCLikeImg(comment)"/>
+                        <div class="like-num"  >{{ showCLike(comment)}}</div>
+                    </article>
+                </section>
                 <!-- 评论内容 -->
-                <p v-if="comment.delFlag == '2'" style="display:block;color:#d0d0d0"  class="comment-text">该评论已被删除！</p >
-                <p v-else style="display:block" class="comment-text"> {{comment.comment }}</p>
-
+                <section class="comment-text" v-if="comment.delFlag == '2'" style="display:block;color:#d0d0d0" >该评论已被删除！</section >
+                <section class="comment-text" v-else style="display:block"> {{comment.comment }}</section>
                 <!-- 回复区 -->
-                <div v-if="showCReply(comment)">
+                <section v-if="showCReply(comment)">
                     <el-divider content-position="left">回复 Ta：</el-divider>
-                    <div id="commentBox" contenteditable="true"></div>
-                </div>
-                
-            </div>
+                    <el-container>
+                        <el-main class="reply-container">
+                            <div class="reply-box" 
+                                contenteditable="true" 
+                                @input="updateReplyContext($event, comment)"
+                                ></div>
+                        </el-main>
+                        <el-aside width="70px">
+                            <el-button class="reply-btn"
+                                type="primary" 
+                                @click="doCReply(comment)">回复</el-button>
+                        </el-aside>
+                    </el-container>
+                </section>
+            </article>
             <!-- 分页 -->
             <el-pagination
                 class="pagination"
@@ -71,10 +80,10 @@
                 @current-change="handleCurrentChange"
                 @size-change="handleSizeChange"
                 />
-        </div>
-    </section>
+        </section>
+    </article>
     
-</article>
+</main>
 </template>
 
 <script>
@@ -165,7 +174,7 @@ export default {
             axios.post('/comment/doComment', {
                 uid: this.user.uid,
                 gid: this.game.gid,
-                comment: this.commentText
+                commentText: this.commentText
             },{
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'
@@ -256,14 +265,46 @@ export default {
                 return this.tempComments[cid].isReplied    // 存在，取之。
             }
         },
-        doCReply(comment){
+        enableCReply(comment){
             const cid = comment.cid
-            console.log('doCommentReply:')
-            if(this.tempComments[cid] == undefined || this.tempComments[cid].isReplied == undefined){
+            if (this.tempComments[cid] == undefined || this.tempComments[cid].isReplied == undefined){   // 不存在，则创建之。
                 this.tempComments[cid] = {isReplied: true}
-            }else{
+            } else {
                 this.tempComments[cid].isReplied = !this.tempComments[cid].isReplied
             }
+
+        },
+        updateReplyContext(event, comment){
+            event.preventDefault(); 
+            let cid = comment.cid
+            this.tempComments[cid].replyText = event.target.innerText
+            console.log(event.target.innerText)
+        },
+        doCReply(comment){
+            let cid = comment.cid
+            axios.post('/comment/doReply' , {
+                uid: this.user.uid,
+                gid: this.game.gid,
+                comment: this.tempComments[cid].replyText,
+                parentCid: comment.cid,
+                parentUid: comment.uid
+            },{
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res=>{
+                this.tempComments[cid].isReplied = false
+                this.tempComments[cid].replyText = ''
+                ElMessage({
+                    message: '回复成功',
+                    type: 'success',
+                })
+                this.getCommentByPage(this.currentPage, this.pageSize)
+            })
+            .catch(error=>{
+                console.error('请求失败:', error);
+            });
         },
     }
 
@@ -296,23 +337,19 @@ export default {
 	padding: 50px 20px;
 	position: relative;
 }
-
-.comment-header {
+.comment-module > .header {
 	font-size: 20px;
 	font-weight: bold;
 	padding-left: 40px;
 	position: relative;
 }
-
-/*发表评论****************/
-.comment-input {
+.comment-module > .comment-release {
     background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     margin: 30px auto;
-    
 /*     position: fixed; 固定定位在视口中 */
 /*     top: 0; 顶部固定 */
 /*     left: 0; 左侧固定，根据需要调整 */
@@ -321,18 +358,15 @@ export default {
 /*     z-index: 100; 确保在其他内容的上方 */
 /*     box-shadow: 0 2px 4px rgba(0,0,0,0.1); 添加阴影，提升层次感 */
 }
-
-.comment-input h2 {
+.comment-release > .title {
 	font-size: 25px;
     color: #400000;
 }
-
-.comment-input form {
+.comment-release > .release-form {
     display: flex;
     flex-direction: column;
 }
-
-.comment-input form textarea {
+.release-form > .input {
     margin-top: 10px;
     padding: 10px;
     border: 1px solid #ddd;
@@ -340,13 +374,11 @@ export default {
     min-height: 30px;
     resize: vertical;
 }
-
-.comment-input form div{
+.release-form > .submit{
     margin-top: 20px;
     text-align: right;
 }
-
-.comment-input form button {
+.release-form > .submit > .btn {
     background-color: #804000;
     color: white;
     border: none;
@@ -355,24 +387,21 @@ export default {
     cursor: pointer;
     transition: background-color 0.3s;
 }
-
-.comment-input form button:hover {
+.release-form > .submit > .btn:hover {
     background-color: #400000;
 }
 
-
 /*<!-- 评论区 -->***********************/
-.comments {
+.comments-container {
 	padding: 20px 40px;
 	position: relative;
+    display: flex;
+    flex-direction: column;
 }
-
-.comments #sofa{
+.comments-container > .sofa{
 	width:800px;
 }
-
-/* 评论区容器样式 */
-.comment-container {
+.single-comment {
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 1em;
@@ -380,57 +409,54 @@ export default {
     background-color: #f9f9f9;
     max-width: 1000px; /* 限制评论容器的最大宽度 */
     word-wrap: break-word; /* 长单词自动换行 */
+    display: flex;
+    flex-direction: column;
 }
-
-/* 评论者用户名样式 */
-.comment-uname {
+.comment-info{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.comment-info > .observer {
     font-size: 1em;
     font-weight: bold;
     color: #333;
-    margin-right: 5px; /* 与日期的间距 */
+    max-width: 500px; /* 限制容器的最大宽度 */
 }
-
-/* 评论日期样式 */
-.comment-ctime {
-    float: right;
+.info-right-items{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 260px;
+}
+.info-right-items > .time {
     font-size: 0.9em;
     color: #888;
-    margin-left: 10px; /* 与用户名的间距 */
 }
-/* 点赞和回复图标样式 */
-#comment-reply,
-#comment-like{
+.info-right-items > .like{
 	width: 30px; /* 图标宽度 */
+    margin: 10px 0 10px 0;
     cursor: pointer;
-	position: relative;
-	float:right;
     transition: transform 0.3s; /* 平滑变化效果 */
 }
-#comment-reply{
-	padding-right:30px;
+.info-right-items > .reply{
+	width: 34px;  /*图标宽度 */
+	margin:5px;
+    cursor: pointer;
+    transition: transform 0.3s; /* 平滑变化效果 */
 }
-/* 点赞量样式 */
-.comment-likeNum {
-	float:right;
+.info-right-items > .like-num {
     font-size: 0.9em; /* 字体大小略小 */
     color: #888; /* 较浅的字体颜色 */
-    /* 定位在点赞图标下方 */
-    position: relative;
-    top: 5px; /* 根据图标大小和内边距调整 */
-    left: 0; /* 根据需要调整，确保位置正确 */
     white-space: nowrap; /* 防止换行 */
+    position: relative;
+    margin-left: -6px
 }
-
-#comment-like:hover,
-#comment-reply:hover {
-    transform: scale(1.1); /* 鼠标悬浮时放大 */
+.info-right-items > .like:hover,
+.info-right-items > .reply:hover {
+    transform: scale(1.1); 
 }
-
-/* 点赞图标选中状态 */
-.is-liked {
-    filter: brightness(0.8); /* 调整亮度 */
-}
-
 /* 评论文本样式 */
 .comment-text {
     margin-top: 0.5em;
@@ -441,62 +467,24 @@ export default {
 }
 
 /*******************************回复评论的生成评论框*********/
-/* 回复评论容器样式 */
-.comment-reply-container {
-	margin:0 auto;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1em;
-    margin-bottom: 1em;
-    background-color: #f9f9f9;
-    max-width: 300px; /* 限制评论容器的最大宽度 */
-    word-wrap: break-word; /* 长单词自动换行 */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 阴影 */
+.reply-container{
+    padding:0   /* 去除el-main容器自带边距 */
 }
-
-/* 回复评论标题样式 */
-.comment-reply-container h2 {
-    margin-bottom: 1em; /* 与表单的间距 */
-    color: #333334; /* 字体颜色 */
-    font-size: 1.5em; /* 字体大小 */
+.reply-box {
+    border: 1px solid #ccc;
+    min-height: 30px;
+    padding: 10px 10px 3px 10px;
+    margin: 0 20px 10px 10px;
+    border-radius: 5px;
+    overflow: auto; 
 }
-
-/* 回复评论表单样式 */
-.comment-reply-container form {
-    display: flex;
-    flex-direction: column;
+.reply-box:focus {
+  outline: none; /* 移除焦点时的轮廓线 */
+  border-color: #007bff; /* 当聚焦时改变边框颜色 */
 }
-
-/* 回复评论文本域样式 */
-#comment-textarea {
-    flex-grow: 1; /* 让文本域占据可用空间 */
-    margin-bottom: 1em; /* 与提交按钮的间距 */
-    padding: 0.5em; /* 文本域内边距 */
-    border: 1px solid #cccccc; /* 边框 */
-    border-radius: 4px; /* 圆角边框 */
-    resize: vertical; /* 允许垂直方向调整大小 */
-}
-
-/* 回复评论按钮样式 */
-.comment-reply-container button {
-    background-color: #804000; /* 背景颜色 */
-    color: white; /* 字体颜色 */
-    border: none; /* 无边框 */
-    padding: 0.75em 1.5em; /* 内边距 */
-    border-radius: 4px; /* 圆角边框 */
-    cursor: pointer; /* 鼠标悬停时显示手形图标 */
-    transition: background-color 0.3s; /* 平滑过渡背景颜色 */
-}
-
-.comment-reply-container button:hover {
-    background-color: #400000; /* 鼠标悬浮时的背景颜色 */
-}
-
-/* 回复评论按钮容器样式 */
-.comment-reply-container div {
-    display: flex;
-    justify-content: flex-end; /* 将按钮靠右对齐 */
-    margin-top: 0.5em; /* 与文本域的间距 */
+.reply-btn{
+    margin-left: 5px;
+    margin-top: 5px
 }
 /* 分页样式 */
 .pagination{
@@ -505,18 +493,15 @@ export default {
     padding: 30px;
 }
 
-#commentBox {
-  border: 1px solid #ccc;
-  min-height: 30px;
-  padding: 10px;
-  margin: 20px 20px 10px 10px;
-  border-radius: 5px;
-  overflow: auto; /* 确保内容超出时可以滚动 */
+/************************动态生成的css样式*******/
+/* 点赞图标选中状态 */
+.is-liked {
+    filter: brightness(0.8); /* 调整亮度 */
 }
-
-#commentBox:focus {
-  outline: none; /* 移除焦点时的轮廓线 */
-  border-color: #007bff; /* 当聚焦时改变边框颜色 */
+/* 被禁止点击状态（已删除评论的图标） */
+.disable{
+  pointer-events: none;
+  opacity: 0.5; /*使元素看起来被禁用 */
+  user-select: none;
 }
-
 </style>

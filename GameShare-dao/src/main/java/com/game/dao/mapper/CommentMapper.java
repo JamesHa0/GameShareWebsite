@@ -71,6 +71,6 @@ public interface CommentMapper extends BaseMapper<Comment> {
     @Delete("delete from game_comment_like where uid=#{uid} and cid=#{cid}")
     int disCommentLike(String uid, String cid);
 
-    @Insert("insert into game_comment(uid, gid, ctime, `comment`) values(#{uid}, #{gid}, #{ctime}, #{comment})")
+    @Insert("insert into game_comment(uid, gid, ctime, `comment`, parent_cid, parent_uid) values(#{uid}, #{gid}, #{ctime}, #{comment}, #{parentCid}, #{parentUid})")
     int doComment(Comment comment);
 }
