@@ -1,18 +1,18 @@
 <template>
     <!-- 游戏列表模板 -->
-			<div class="game-box">
-				<h2 class="title">&emsp;{{title}}</h2>
-			    <section class="game-gallery">
-                    <article class="game-item" v-for="game in data" :key="game.id">
-		               <figure>
-                            <router-link :to="'/detail?gid=' + game.gid">
-                                <img :src="game.img" :alt="game.name">
-                            </router-link>
-		                    <figcaption>{{game.name}}</figcaption>
-		               </figure>
-			        </article>
-			    </section>
-			</div>
+    <div class="game-box">
+        <h2 class="title">&emsp;{{title}}</h2>
+        <section class="game-gallery">
+            <article class="game-item" v-for="game in data" :key="game.id">
+                <figure>
+                    <router-link class="game-link" :to="'/detail?gid=' + game.gid">
+                        <img :src="game.img" :alt="game.name">
+                    </router-link>
+                    <figcaption class="game-name">{{game.name}}</figcaption>
+                </figure>
+            </article>
+        </section>
+    </div>
 </template>
 
 <script>
@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 /************************<!-- 游戏一览 -->*********************/
 .game-box{
@@ -34,7 +34,7 @@ export default {
     background-color: #f5f5f5;
     margin-top: 50px;
 }
-.game-box .title{
+.game-box > .title{
     margin: 0;
     font-size: 22px;
     font-weight: 200;
@@ -43,7 +43,7 @@ export default {
     border-bottom: 2px solid #3d3d3d;
 }
 
-.game-box .game-gallery{
+.game-box > .game-gallery{
     display: block;
     padding-left: 10px;
     margin-top: 30px;
@@ -63,11 +63,10 @@ export default {
 	display:block;
     text-align: center;
 }
-.game-item img{
-/* 	max-height:250px; */
+.game-link > img{
 	width: 400px;
 }
-.game-item figcaption{
+.game-name{
     display: block;
     font-size: 16px;
     color: #000000;

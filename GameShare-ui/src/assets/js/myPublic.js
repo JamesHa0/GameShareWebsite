@@ -1,3 +1,7 @@
+import router from '@/router'
+import { ElMessage } from 'element-plus'
+import { ElLoading } from 'element-plus'
+
 export function getCookie(name) {       // 获取cookie
     let cookieArray = document.cookie.split(';');
     for(let i = 0; i < cookieArray.length; i++) {
@@ -24,48 +28,33 @@ export function getToken() {       // 获取token，返回解码后的token
         if (decodedToken.exp > Date.now() / 1000) {     //验证过期时间
             return decodedToken;
         } else {
-            return null;
+            console.error('Token 已过期。');
+            throw new Error('Token 已过期。');
         }
     } else {
         console.error('本地存储的Token 为空。');
-        return null;
+        throw new Error('本地存储的Token 为空。');
     }
 }
 
 
-export function isNull(obj) {
+export function isNull(obj) {   // 判断是否为空
     return obj == null || obj == undefined || obj == '' ;
 }
+export function isUndefined(obj){ // 判断是否为undefined
+    return typeof obj === 'undefined';
+}
 
 
-//开始 加载loading
-  let startLoading=()=>{
-    loading = Loading.service({
-      lock: true,
-    //   text: window.$Vue.$t('common.loading'),//加载动画的文字
-      background: 'rgba(0, 0, 0, 0.7)'//加载动画的背景
+
+export function startLoading() {    //开始 加载loading
+    const elLoading = ElLoading.service({
+      background: 'rgba(0, 0, 0, 0.7)'
     })
-  }
-  //结束 取消loading加载
-  let endLoading=()=>{
-    loading.close()
-  }
-   
-  //showFullScreenLoading() 与 tryHideFullScreenLoading() 目的是合并同一页面多个请求触发loading
-   
-  let needLoadingRequestCount = 0 //声明一个变量
-   
-  let showFullScreenLoading=()=> {
-    if (needLoadingRequestCount === 0) { //当等于0时证明第一次请求 这时开启loading
-      startLoading()
-    }
-    needLoadingRequestCount++ //全局变量值++
-  }
-   
-  let tryHideFullScreenLoading=()=> {
-    if (needLoadingRequestCount <= 0) return //小于等于0 证明没有开启loading 此时return
-    needLoadingRequestCount-- //正常响应后 全局变量 --
-    if (needLoadingRequestCount === 0) {  //等于0 时证明全部加载完毕 此时结束loading 加载
-      endLoading()
-    }
-  }
+}
+export function endLoading() {  //结束 销毁loading
+    const elLoading = ElLoading.service({    // 由于是单例loading，这里不会创建一个新的实例，而仅是返回那个单例
+        background: 'rgba(0, 0, 0, 0.7)'
+      })   
+    elLoading.close()   // 销毁
+}

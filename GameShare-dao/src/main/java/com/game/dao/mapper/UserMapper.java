@@ -51,11 +51,23 @@ public interface UserMapper extends BaseMapper<User> {
     String getUtelByUid(String uid);
 
 
-
     @Update("""
         update user
         set upoint = upoint - #{price}
         where uid = #{uid};
     """)
     void deductPoint(String uid, Float price);
+
+    @Update("""
+        update user
+        set upoint = upoint + #{point}
+        where uid = #{uid};
+    """)
+    void risePoint(String uid, Float point);
+
+    @Update("insert into sign_in values(#{uid}, #{date})")
+    void insertSignIn(String uid, String date);
+
+    @Select("select count(*) from sign_in where uid = #{uid} and created_on = #{date}")
+    int queryIsSignedIn(String uid, String date);
 }

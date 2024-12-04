@@ -64,9 +64,9 @@ CREATE TABLE IF NOT EXISTS `game_comment` (
   `parent_uid` int unsigned DEFAULT NULL COMMENT '回复贴的贴主uid',
   `del_flag` int unsigned DEFAULT '0' COMMENT '删除标记，0表示存在，2表示删除',
   PRIMARY KEY (`cid`)
-) ENGINE=InnoDB AUTO_INCREMENT=266 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='评论表。\r\n内容是每个玩家对于每个游戏的评论。';
+) ENGINE=InnoDB AUTO_INCREMENT=268 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='评论表。\r\n内容是每个玩家对于每个游戏的评论。';
 
--- 正在导出表  game_db.game_comment 的数据：~19 rows (大约)
+-- 正在导出表  game_db.game_comment 的数据：~12 rows (大约)
 INSERT IGNORE INTO `game_comment` (`cid`, `uid`, `gid`, `ctime`, `comment`, `clike`, `parent_cid`, `parent_uid`, `del_flag`) VALUES
 	(132, 109, 100000001, '2024-08-06 16:31:25', '沙发！', 2, NULL, NULL, 0),
 	(134, 109, 100000001, '2024-08-06 16:33:12', '好游戏，盗了', 9, NULL, NULL, 0),
@@ -75,12 +75,14 @@ INSERT IGNORE INTO `game_comment` (`cid`, `uid`, `gid`, `ctime`, `comment`, `cli
 	(195, 115, 100000001, '2024-08-08 13:22:50', '卧槽，真的假的', 0, 194, 115, 2),
 	(196, 115, 100000001, '2024-08-08 13:28:01', '6', 0, 134, 109, 0),
 	(197, 115, 100000001, '2024-08-08 13:28:49', '你可以拿积分买，每个人都有积分。用不着盗。还要黑管理员服务器，多麻烦', 1, 134, 109, 0),
-	(198, 109, 100000001, '2024-08-08 13:31:38', '能一样吗？我是盗卖，不是买着玩', 1, 197, 115, 0),
+	(198, 109, 100000001, '2024-08-08 13:31:38', '能一样吗？我是盗卖，不是买着玩', 0, 197, 115, 0),
 	(199, 115, 100000001, '2024-08-08 13:32:13', '6', 1, 198, 109, 0),
 	(200, 114, 100000001, '2024-08-08 13:32:44', '6', 0, 198, 109, 0),
 	(201, 114, 100000001, '2024-08-08 13:33:12', '哥们，你要真盗，麻烦偷偷说', 0, 198, 109, 0),
-	(246, 1, 100000001, '2024-11-28 16:56:36', '首评！', 1, NULL, NULL, 0),
-	(265, 1, 100000001, '2024-11-30 16:52:06', 'This is a comment.', 0, 196, 115, 0);
+	(246, 1, 100000001, '2024-11-28 16:56:36', '首评！', 0, NULL, NULL, 0),
+	(265, 1, 100000001, '2024-11-30 16:52:06', 'This is a comment.', 0, 196, 115, 0),
+	(266, 1, 100000001, '2024-12-02 14:38:19', '今日天气佳，清吹与鸣弹。感彼柏下人，安得不为欢？新歌散新声，绿酒开芳颜。未知明日事，余襟良已惮。', 0, NULL, NULL, 0),
+	(267, 1, 100000001, '2024-12-03 19:28:53', '楚天千里清秋，水随天去秋无际', 1, NULL, NULL, 0);
 
 -- 导出  表 game_db.game_comment2 结构
 CREATE TABLE IF NOT EXISTS `game_comment2` (
@@ -148,22 +150,21 @@ CREATE TABLE IF NOT EXISTS `game_comment_like` (
   PRIMARY KEY (`cid`,`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='记录用户和评论之间的点赞关系的表';
 
--- 正在导出表  game_db.game_comment_like 的数据：~15 rows (大约)
+-- 正在导出表  game_db.game_comment_like 的数据：~13 rows (大约)
 INSERT IGNORE INTO `game_comment_like` (`uid`, `gid`, `cid`) VALUES
 	(1, 100000001, 132),
 	(1, 100000001, 134),
 	(1, 100000001, 193),
 	(1, 100000001, 194),
 	(1, 100000001, 197),
-	(1, 100000001, 198),
 	(1, 100000001, 199),
 	(1, 100000001, 204),
-	(1, 100000001, 246),
 	(1, 100000001, 249),
 	(1, 100000001, 250),
 	(1, 100000001, 251),
 	(1, 100000001, 261),
-	(1, 100000001, 264);
+	(1, 100000001, 264),
+	(1, 100000001, 267);
 
 -- 导出  表 game_db.game_like 结构
 CREATE TABLE IF NOT EXISTS `game_like` (
@@ -172,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `game_like` (
   PRIMARY KEY (`uid`,`gid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='记录用户-游戏是否具有点赞状态的关系的表';
 
--- 正在导出表  game_db.game_like 的数据：~6 rows (大约)
+-- 正在导出表  game_db.game_like 的数据：~5 rows (大约)
 INSERT IGNORE INTO `game_like` (`uid`, `gid`) VALUES
 	(1, 1245620),
 	(1, 1623730),
@@ -223,6 +224,18 @@ INSERT IGNORE INTO `role_permission` (`role_id`, `permission_id`) VALUES
 	(2, 4),
 	(2, 5),
 	(2, 6);
+
+-- 导出  表 game_db.sign_in 结构
+CREATE TABLE IF NOT EXISTS `sign_in` (
+  `uid` int NOT NULL,
+  `created_on` date NOT NULL,
+  PRIMARY KEY (`uid`,`created_on`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户每日签到表';
+
+-- 正在导出表  game_db.sign_in 的数据：~1 rows (大约)
+INSERT IGNORE INTO `sign_in` (`uid`, `created_on`) VALUES
+	(1, '2024-12-03'),
+	(1, '2024-12-04');
 
 -- 导出  表 game_db.sys_permission 结构
 CREATE TABLE IF NOT EXISTS `sys_permission` (
@@ -282,7 +295,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 
 -- 正在导出表  game_db.user 的数据：~5 rows (大约)
 INSERT IGNORE INTO `user` (`uid`, `uname`, `utel`, `uemail`, `urole`, `ugender`, `uaddress`, `upsw`, `upoint`) VALUES
-	(1, 'root', 'root', '12283726693@163.com', 'admin', '男', '河南省信阳市', '$2a$04$UtK4DHwHmMcPo30pKbmxIeVjGuYKUpV.Q4tvbN39bV9A4clp6OENK', 25),
+	(1, 'root', 'root', '12283726693@163.com', 'admin', '男', '河南省信阳市', '$2a$04$UtK4DHwHmMcPo30pKbmxIeVjGuYKUpV.Q4tvbN39bV9A4clp6OENK', 1288),
 	(2, '2号密码为12345678的女士。啊啦啊啦呦呦呦，名字太长了呀，这可为难码农了吧，bulabula', '12345678901', 'zhangjing@139.com', 'vip', '女', '上海市浦东新区', '$2a$04$Yks0YwbGrD92jOdDgZeAuebeUGuKvScJnpctM83QyAlXhNoQmjm3.', 60),
 	(109, '109号121天堂先生', '12121212121', '12121212121@tel.com', 'user', '保密', '121之家', '$2a$04$zURcxFNPk1zw8KlVtGF7vOkcMMJYmNbZGcAXx.3eadJCKl1pcAKZa', 394),
 	(114, '114号小菩提的188倍率', '10000000188', '10000000188@163.com', 'user', '保密', '天堂', '$2a$04$86AN/m8qKCLrcpFuKMTLUuZUGwwhlrts4MqIPWnjkvwHvHF3OXgIq', 20),

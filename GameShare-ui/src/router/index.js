@@ -37,10 +37,10 @@ const routers = [{
     },{
         path:"/swagger-ui.html#/"
     },
-    // {
-    //     path: "/:catchAll(.*)",     // 匹配其他所有未定义的路径
-    //     redirect: "/404"
-    // }
+    {
+        path: "/:catchAll(.*)",     // 匹配其他所有未定义的路径
+        redirect: "/404"
+    }
     
 ]
 const router = createRouter({

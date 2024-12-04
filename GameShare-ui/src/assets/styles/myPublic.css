@@ -1,6 +1,6 @@
 .el-loading-spinner{
     /*这个是自己想设置的 gif 加载动图*/
-    background-image:url('@images/chopCircleLoading.gif');
+    background-image:url('@img/chopCircleLoading.gif');
     background-repeat: no-repeat;
     background-size: 200px 200px;
     height:300px;
@@ -17,4 +17,14 @@
 .el-loading-spinner .el-loading-text{
   /*为了使得文字在loading图下面*/
    margin:85px 0px; 
+}
+
+article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}
+*{
+    margin:0;
+    padding:0;
+}
+a{
+   text-decoration: none;
+	color:#ffffff;
 }

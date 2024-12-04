@@ -1,109 +1,111 @@
 <template>
-  <el-menu
-    :default-active="activeIndex"
-    class="el-menu-demo"
-    mode="horizontal"
-    background-color="#4d4343"
-    text-color="#fff"
-    active-text-color="#ffd04b"
-    @select="handleSelect"
-  >
-    <el-col :span="4">
-      <el-menu-item index="1" class="left-text" v-if="$route.fullPath =='/'"> 
-          <p >GameShareWebsite</p><!-- 判断uri，若为index页面则发生修改；当前路径为：{{ $route.fullPath }} -->
-      </el-menu-item>
-      <router-link to="/" v-else><el-menu-item  class="left-text" index="1">
-          <p>返回首页</p>
-      </el-menu-item></router-link>
+<article class="header">
+	<!-- 最左侧的文本 -->
+	<section class="left-text">
+		<p v-if=" $route.fullPath =='/' ">GameShareWebsite</p><!-- 判断uri，若为index页面则发生修改；当前路径为：{{ $route.fullPath }} -->
+		<router-link v-else to="/">返回首页</router-link>
+	</section>
 
-    </el-col>
+	<!-- 中间的文本 -->
+	<section class="middle-text">
+		<router-link v-if="isAuth" to="/LR" >登录﹠注册</router-link>
+		<p v-else class="hello" title="xxx">欢迎您，{{ getName }}<a href="">登出</a></p>
+	</section>
 
-    <el-col :span="3" :push="1">
-      <el-sub-menu index="2">
-        <template #title>这是多级菜单</template>
-        <el-menu-item index="2-1">item one</el-menu-item>
-        <el-menu-item index="2-2">item two</el-menu-item>
-        <el-menu-item index="2-3">item three</el-menu-item>
-        <el-sub-menu index="2-4">
-          <template #title>item four</template>
-          <el-menu-item index="2-4-1">item one</el-menu-item>
-          <el-menu-item index="2-4-2">item two</el-menu-item>
-          <el-menu-item index="2-4-3">item three</el-menu-item>
-        </el-sub-menu>
-      </el-sub-menu>
-    </el-col>
-
-    <el-col :span="4" :push="9">
-      <el-menu-item index="4">
-				<router-link v-if="0" to="/LR" >登录﹠注册</router-link>
-        <div v-if="1"  :title="uname" class="hello">
-          欢迎您，{{uname}}
-        </div>
-      </el-menu-item>
-    </el-col>
-    
-    <el-col :span="3" :push="10">
-      
-      <el-menu-item index="5">
-        <router-link to="/info" title="个人信息">
-          <el-avatar :src="circleUrl" class="info" style="display:block"/>
-        </router-link>
-        <el-sub-menu index="5-1">
-          <router-link to="/info" ><el-menu-item index="5-1-1">个人信息</el-menu-item></router-link>
-          <router-link to="/info" ><el-menu-item index="5-1-2">登出</el-menu-item></router-link>
-        </el-sub-menu>
-      </el-menu-item>
-      
-    </el-col>
-  </el-menu>
+	<!-- 最右侧的个人资料logo-->
+	 <section class="right-text">
+		<router-link to="/info" class="info">
+			<img src="../assets/images/info.png" height="28px" title="个人资料" >
+		</router-link>
+	</section>
+</article>
 </template>
 
-<script lang="ts" setup>
- import { ref } from 'vue'
-import { reactive, toRefs } from 'vue'
+<script>
+import { getToken, startLoading, endLoading } from '@js/myPublic.js'
+import { ElMessage } from 'element-plus'
 
-const uname = 'dssssssssssssssss333333333333';
-const state = reactive({
-  circleUrl:
-    'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png',
-  squareUrl:
-    'https://cube.elemecdn.com/9/c2/f0ee8a3c7c9638a54940382568c9dpng.png',
-})
-const { circleUrl, squareUrl } = toRefs(state)
- const activeIndex = ref('1')
- const handleSelect = (key: string, keyPath: string[]) => {
-   console.log(key, keyPath)
- }
+export default {
+	data() {
+		return {
+			jwt: null
+		}
+	},
+	created() {
+		// console.debug('Header.vue created()');
+		try {
+			this.jwt = getToken();
+		} catch {
+			// 所有页面出现jwt无效的异常，全都交给header页面处理（弹窗+重定向）
+			startLoading()
+			ElMessage({
+				message: 'Oops！登录状态异常，请重新登录。 ',
+				type: 'error',
+				onClose: () => {
+					endLoading()
+					this.$router.push('/LR')
+				},
+			})
+		}
+		// return;    	// 如后续不再可能报错（如：无后续代码），则无需用return中止程序防止意外执行
+	},
+	computed: {
+		isAuth() {
+			return this.jwt === null;
+		},
+		getName() {
+			return this.jwt.uname
+		}
+	}
+}
 </script>
 
-<style>
-  *{
-    margin: 0;
-    padding: 0;
-  }
-  .el-menu-demo{
-    height: 55px;
-  }
-  .left-text{ 
-    margin-left: 20px;
-    float: left;
-    font-size: 18px;
-    font-weight: 600;
-    color:#ffffff;
-    line-height: 45px;
-  }
-  .info{
-    text-align: center;
-  }
-  a {
-    color: #ffffff;
-    text-decoration: inherit;
-  }
-  .left-text :hover{
-    color: #FFD04b
-  }
-  .hello{
-      overflow: hidden; /* 隐藏溢出内容 */
-      text-overflow: ellipsis; /* 溢出时显示省略号 */
-  }
+<style scoped>
+/*****************************<!-- 页眉 -->*********/
+*{
+	line-height:45px; /*  子元素全部垂直居中  */
+}
+.header {
+	height: 45px;
+	color:#ffffff;
+	background-color: #4d4343;
+	margin: 0px auto;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-direction: row;
+}
+.left-text{
+	margin-left: 20px;
+	font-size: 22px;
+	font-weight: 600;
+	color:#ffffff;
+	line-height: 45px;
+	min-width: 216px;
+}
+.middle-text{
+	font-size:15px;
+	margin-left: 700px;
+}
+.middle-text a{	/* 注意这里是router-link内置的a标签的样式，只能用后代选择器 */
+	padding-left:60px;
+	color:#ffffff;
+}
+.right-text a :hover {
+	color: #f10215;
+	color:#f22334;
+}
+
+/* <!-- info（个人信息） --> */
+.info {
+	float:right;
+	position: relative;/**/
+	height: 45px;
+	background-color: #919198;
+}
+.info > img {
+	margin-top: 8px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
 </style>

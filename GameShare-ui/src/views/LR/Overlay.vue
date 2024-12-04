@@ -18,10 +18,7 @@
 </template>
 
 <script>
-
-
 export default {
-
   methods:{
     click_Overlay_Btn() {
         this.$emit('click_Overlay_Btn');   // 触发父组件的自定义事件
@@ -30,7 +27,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .overlay-container {
     position:absolute;
     top:0;

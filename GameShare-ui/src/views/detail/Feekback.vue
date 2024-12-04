@@ -2,10 +2,10 @@
 <main>
     <!-- 游戏的点赞和评论图标 -->
     <article class="icon">
-        <table>
+        <table class="icon-table">
             <tr>
-                <td><img @click="doLike()" :src="showLikeImg()"/></td>
-                <td><a href="#comment-input"><img :src="constCImg"/></a></td>
+                <td><img class="icon-img" @click="doLike()" :src="showLikeImg()"/></td>
+                <td><a href="#comment-input"><img class="icon-img" :src="constCImg"/></a></td>
             </tr>
             <tr>
                 <td>{{tempLikeNum }}</td>
@@ -88,6 +88,7 @@
 
 <script>
 import axios from 'axios'
+import { isUndefined } from '@/assets/js/myPublic.js'
 import { ElMessage } from 'element-plus'
 
 export default {
@@ -240,15 +241,17 @@ export default {
                 if (response.status !== 200) {
                     throw new Error('操作失败');
                 }else{
-                    console.log('操作成功')
-                    // 给rawCid赋值：若是第一次点击，则赋值为数据库中的comment.clike；若是第二或更多次点击，则赋值为内存中的tempComments[cid].clike。
-                    const rawCid = this.tempComments[cid] == undefined ? comment.clike : this.tempComments[cid].clike
+                    if (isUndefined(this.tempComments[cid])) this.tempComments[cid] = {}  // 确保tempComments[cid]存在
+                    // 给rawCid赋值：1，若是第一次点击，则赋值为数据库中的comment.clike；2，若是第二或更多次点击，则赋值为内存中的tempComments[cid].clike。
+                    const rawCid = isUndefined(this.tempComments[cid].clike) ? comment.clike : this.tempComments[cid].clike;
                     if (response.data.data.action == "doLike"){  // 得知当前进行的是点赞操作
-                        this.tempComments[cid] = {clike: parseInt(rawCid) + 1}  // 改变点赞数
+                        this.tempComments[cid].clike = parseInt(rawCid) + 1  // 改变点赞数
                         this.tempComments[cid].isLiked = true   // 点赞状态，连带改变亮灭图标
+                        console.log('点赞成功')
                     } else {  // 取消赞操作
-                        this.tempComments[cid] = {clike: parseInt(rawCid) - 1}
+                        this.tempComments[cid].clike = parseInt(rawCid) - 1
                         this.tempComments[cid].isLiked = false
+                        console.log('取消赞成功')
                     }
                 }
             })
@@ -311,7 +314,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 /******************<!-- 游戏的点赞和评论 -->***********************/
 .icon {
@@ -321,11 +324,11 @@ export default {
 	align-items: center;
 }
 
-.icon table {
+.icon-table {
 	text-align: center;
 }
 
-.icon img {
+.icon-img {
 	padding: 0 50px;
 	width: 60px;
 	cursor:pointer;

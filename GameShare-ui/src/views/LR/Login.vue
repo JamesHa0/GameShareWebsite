@@ -19,6 +19,7 @@
 <script>
 import { isNull } from '@/assets/js/myPublic.js'
 import axios from 'axios';
+import { ElMessage } from 'element-plus'
 
 export default {
     data(){
@@ -27,7 +28,6 @@ export default {
                 utel:null,
                 upsw:null,
             },
-
             rules:{
                 utel:{
                     required: true,
@@ -60,8 +60,6 @@ export default {
             },
         }
     },
-    created(){
-    },
     methods:{
         preLogin(){
             if(localStorage.getItem('isValidate') == 'false'){
@@ -69,7 +67,6 @@ export default {
                  console.log('跳过验证');
                  return
             }
-
             const utel = this.formData.utel;
             const upsw = this.formData.upsw;
             const _utel = this.rules.utel;
@@ -100,7 +97,6 @@ export default {
             this.formData,
             {
                 headers: {
-                    // 'Content-Type': 'application/json'
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             })
@@ -108,10 +104,17 @@ export default {
                 console.log(res);
                 if(res.data.code==200){
                     console.log('登录成功');
+                    ElMessage({
+                        message: '登录成功',
+                        type: 'success'
+                    })
                     localStorage.setItem('Token', res.data.data.Token);
                     this.$router.push('/');
                 }else{
-                    alert('登录失败');
+                    ElMessage({
+                        message: '登录失败',
+                        type: 'error'
+                    })
                 }
             })
         }
@@ -120,7 +123,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 
 </style>

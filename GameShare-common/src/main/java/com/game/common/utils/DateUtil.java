@@ -43,10 +43,9 @@ public class DateUtil
     public static String getSQLTimeNow(){
         return format(new Date(), YYYY_MM_DD_HH_MM_SS); // yyyy-MM-dd HH:mm:ss
     }
-
-    public static String getDate()
+    public static String getDateNow()
     {
-        return dateTimeNow(YYYY_MM_DD);
+        return format(new Date(), YYYY_MM_DD);
     }
 
     public static final String getTime()

@@ -1,8 +1,10 @@
 package com.game.web.controller;
 import com.game.common.core.domain.entity.User;
+import com.game.common.utils.Result;
 import com.game.dao.mapper.UserMapper;
 
-//import io.swagger.v3.oas.annotations.Operation;
+import com.game.dao.service.impl.UserServiceImpl;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -22,13 +24,21 @@ public class UserController {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private UserServiceImpl userService;
 
     @GetMapping("/{uid}")
 //    @PreAuthorize("hasRole('ROLE_USER')")
     @PreAuthorize("hasAuthority('user:manager')")
-//    @Operation(summary = "查询某用户的【单个】信息")
+    @Operation(summary = "查询某个用户的信息")
     public User listOneUser(@PathVariable String uid) {
         return userMapper.selectById(uid);
+    }
+
+    @PostMapping("/signIn/{uid}")
+    @Operation(summary = "用户每日签到")
+    public Result signIn(@PathVariable String uid) {
+        return userService.signIn(uid);
     }
 
     /**

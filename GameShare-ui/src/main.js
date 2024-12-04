@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import  '@/assets/js/myPublic.js'    // 自己写的public.js
+import { startLoading, endLoading } from '@js/myPublic.js'    // 自己写的public.js
 import ElementPlus from'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
@@ -10,12 +10,11 @@ import './mock'
 import router from './router'
 import store from './store'
 
-import { ElLoading } from 'element-plus'
-let elLoading = null //定义loading变量
+import { ElMessage } from 'element-plus'
 
 
 
-//请求拦截器。用于在每个axios的Header添加token，和服务器前缀
+// 请求拦截器。用于在每个axios的Header添加token，和服务器前缀
 axios.interceptors.request.use(
     config => {
         config.baseURL = 'http://localhost:8080/';   // 自动添加基础 URL
@@ -23,27 +22,42 @@ axios.interceptors.request.use(
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
-        startLoading()  // 开启加载动画
+        startLoading();  // 开启加载动画
         
         return config;
     },
     error => {
+        endLoading();
         return Promise.reject(error);
     }
 );
-
+// 响应拦截器
 axios.interceptors.response.use(
     response => {
-        if (response.status != 200) {
+        if(response.status == 401){
+            router.push({ path: '/login' })
+        } else if (response.status != 200) {
             router.push({ path: '/500' })   // 跳转错误页面
         }
 
-        endLoading()    // 结束加载动画
+        endLoading();    // 结束加载动画
         return response;
     },
     error => {
-        router.push({ path: '/500' })   // 跳转错误页面
-        endLoading()    // 结束加载动画
+        endLoading();    // 结束加载动画
+        console.log(error);
+        if (error.status == 401){
+            console.error('jwt为空或过期。')
+            ElMessage({
+                message: '登录信息失效，请重新登录',
+                type: 'error',
+				onClose: () => {
+					this.$router.push('/LR')
+				},
+            })
+        } else {
+            router.push({ path: '/500' })   // 跳转错误页面
+        }
         return Promise.reject(error);
     }
 )
@@ -61,26 +75,3 @@ app
     .use(router)
     .use(store)
     .mount('#app')
-
-
-
-
-
-
-
-
-
-//开始 加载loading
-let startLoading=()=>{
-    elLoading = ElLoading.service({
-    //   lock: true,
-    //   text: window.$Vue.$t('common.loading'),//加载动画的文字
-      background: 'rgba(0, 0, 0, 0.7)'//加载动画的背景
-    })
-  }
-  //结束 取消loading加载
-  let endLoading=()=>{
-    elLoading.close()
-  }
-
-

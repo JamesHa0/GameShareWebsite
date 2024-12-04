@@ -43,15 +43,8 @@ export default {
     Header,
     GameGallery,
   },
-  created() {
-    let Token = localStorage.getItem('Token');
-    this.uid = getToken(Token).sub;
-    // this.fetchUser(this.uid);
-  },
   data() {
       return {
-        uid:null,
-        user:null,
         //‘本站游戏’游戏数据
         data_1:[
             {
@@ -124,28 +117,10 @@ export default {
         ],
   }
   },
-
-  computed:{
-    ...mapState ([           
-      // 'count','todos', //映射 this.count 为 store.state.count
-    ]),
-  },
-  methods:{
-    // fetchUser(){
-    //   axios.get('/user/' + this.uid)
-    //   .then(response => {
-    //     this.user = response.data;
-    //     this.$store.dispatch('setUser', this.user);   // 触发action，异步提交mutation，往vuex中存入user
-    //   })
-    //   .catch(error => {
-    //     console.error('请求失败:', error);
-    //   });
-    // }
-  }
 };
 </script>
 
-<style>
+<style scoped>
 
 /**********<!-- shop（商品栏） -->***********/
 .shop{

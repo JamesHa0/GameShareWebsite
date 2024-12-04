@@ -37,7 +37,7 @@ const handleSearch = () => {
 };
 </script>
 
-<style>
+<style scoped>
 /****************<!--搜索框-->***************/
 .search-bar {
     position: relative;

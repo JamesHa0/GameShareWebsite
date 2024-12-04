@@ -1,10 +1,10 @@
 <template>
   <Header/>
-    <div v-if="user" class="container">
-		<div class="info_table">
-			<table>
+    <div v-if="user" class="background">
+		<div class="container">
+			<table class="info-table">
 				<tr>
-					<td class="table_head" colspan="2" style="width: 600px;height: 60px;">个人信息</td>
+					<td class="table-head" colspan="2" style="width: 600px;height: 60px;">个人信息</td>
 				</tr>
 				<tr>
 					<td>用户ID:</td>
@@ -29,7 +29,8 @@
 				<tr>
 					<td>拥有积分:</td>
 					<td>&emsp;&emsp;&emsp;<span class="pointNum">{{user.upoint }}</span>&emsp;&emsp;&emsp;
-					<span class="sign_in"  onclick='click_sign_in({{my:toJson(user)}})'  style="user-select: none;">点此签到</span></td>
+					<span class="sign-in"  @click='doSignIn()'>点此签到</span>
+					</td>
 				</tr>
 				<tr>
 					<td>购买的游戏:</td>
@@ -47,11 +48,11 @@
 </template>
 
 <script>
-import Header from '@/components/Header2.vue'
+import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
-
 import axios from 'axios'
 import { getToken } from '@/assets/js/myPublic.js'
+import { ElMessage } from 'element-plus'
 
 export default {
     components: {
@@ -60,18 +61,21 @@ export default {
     },
     data(){
         return {
-            uid:null,
             user:null,
+			jwt:null,
         }
     },
     created(){
-        this.uid = getToken().sub;
-        this.fetchUser();
+		try {
+			this.jwt = getToken();
+		} catch {
+			return;
+		}
+        this.getUser();
     },
-    
 	methods:{
-		fetchUser(){
-			axios.get('/user/' + this.uid)
+		getUser(){
+			axios.get('/user/' + this.jwt.sub)
 			.then(response => {
 				console.log('响应数据data : ', response.data);
 				this.user = response.data;
@@ -79,15 +83,37 @@ export default {
 			.catch(error => {
 				console.error('请求失败:', error);
 			});
+		},
+		doSignIn(){
+			axios.post('/user/signIn/'+this.user.uid)
+			.then(response=>{
+				console.debug('服务器响应为：')
+				console.debug(response);
+				const point = response.data.data.point;
+				if (response.data.code == 200){
+					this.user.upoint = parseInt(this.user.upoint) + point;
+					ElMessage({
+						message: `签到成功！获得${point}积分。`, 
+						type: 'success',
+					})
+				} else {
+					ElMessage({
+						message: response.data.message,
+						type: 'info',
+					})
+				}
+			})
+			.catch(error=>{
+				console.error('请求失败:', error);
+			})
 		}
 	}
 
 }
 </script>
 
-<style>
-
-.container {
+<style scoped>
+.background {
 	margin: 20px auto 0px;
 	background: #fff;
 	border-radius: 20px;
@@ -99,42 +125,34 @@ export default {
 	max-width: 100%;
 	min-height: 500px;
 }
-
-.info_table {
+.background > .container {
 	padding:50px 200px;
 }
-
-.info_table table {
+.info-table{
 	border-spacing: 0;
 	text-align: center;
 }
-
-.info_table table thead tr:nth-child(2n+1) {
-	background-color: #FAFAFA;
-}
-
-.info_table table tr {
+.info-table > tr {
 	height: 40px;
 	font-size: 14px;
 	color: #666666;
 	line-height: 14px;
 	font-weight: 400;
 }
-
-.info_table table tr:nth-child(2n) {
+.info-table > tr:nth-child(2n) {
 	background-color: #FAFAFA;
 }
-
-.info_table table .table_head {
+.info-table > .table-head {
 	font-size: 30px;
 	color: #666666;
 	line-height: 14px;
 	font-weight: 600;
 }
 
-.sign_in{
+.sign-in{
 	color:#ff80c0;
 	cursor:pointer;
+	user-select: none;
 }
 
 

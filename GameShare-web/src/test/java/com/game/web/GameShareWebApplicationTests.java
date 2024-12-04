@@ -11,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.Resource;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
@@ -55,6 +59,32 @@ class GameShareWebApplicationTests {
         System.out.println(iPage.getRecords());
         //当前页号
         System.out.println(iPage.getCurrent());
+    }
+
+    @Test
+    public void test(){
+//        List<String> list2 = new ArrayList<String>();
+//        list2.add("1");
+//        list2.add("2");
+//        Iterator<String> iterator = list2.iterator();
+//        while (iterator.hasNext()) {
+//            String item = iterator.next();
+//            if ("2".equals(item)) {
+//                iterator.remove();
+//            }
+//        }
+//        System.out.println(list2);
+
+        //反例：
+        List<String> list = new ArrayList<String>();
+        list.add("1");
+        list.add("2");
+        for (String item : list) {
+            if ("2".equals(item)) {
+                list.remove(item);
+            }
+        }
+        System.out.println(list);
     }
 
 }

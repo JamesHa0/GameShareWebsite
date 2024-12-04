@@ -77,7 +77,6 @@ public class GameServiceImpl implements GameService {
      * 点赞业务
      * @param uid 用户id
      * @param gid 游戏id
-     * @param action 点赞/取消点赞
      * @return Result
      */
     public Result doLike(String uid, String gid) {

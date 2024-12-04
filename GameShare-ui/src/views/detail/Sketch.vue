@@ -14,13 +14,13 @@ export default {
     props:['game'],
     computed:{
         range(){
-            return [2, 3, 4, 5];    // 截屏图片序号
+            return [2, 3, 4, 5];    // 截屏图片的序号
         }
     }
 }
 </script>
 
-<style>
+<style scoped>
 .gdescription {
     /*height: 500px;*/
 	clear: left;

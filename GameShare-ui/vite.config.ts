@@ -9,7 +9,9 @@ export default defineConfig({
       '@': '/src',
       
       '@game': '/src/assets/game',
-      '@images': '/src/assets/images',
+      '@img': '/src/assets/images',
+      '@css': '/src/assets/styles',
+      '@js': '/src/assets/js',
       
       '@comp': '/src/components',
     },

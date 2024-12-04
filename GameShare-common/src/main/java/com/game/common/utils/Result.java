@@ -21,7 +21,7 @@ public class Result {
 
     private Map<String,Object> data = new HashMap<>();
 
-    public Result(boolean success, Integer code, String message){
+    private Result(boolean success, Integer code, String message){
         this.success = success;
         this.code = code;
         this.message = message;
