@@ -17,8 +17,6 @@
 </template>
 
 
-
-
 <script>
 import Header from '@comp/Header.vue'
 import Footer from '@comp/Footer.vue'
@@ -55,11 +53,7 @@ export default {
         }
     },
     created(){
-		try {
-			this.jwt = getToken();
-		} catch {
-			return;
-		}
+		this.jwt = getToken();
         const uid = this.jwt.sub;
         const gid = this.$route.query.gid;
         if (gid === '0' || gid === undefined) {  //若查询参数gid为0或未定义，则路由至 /404

@@ -9,7 +9,10 @@
 	<!-- 中间的文本 -->
 	<section class="middle-text">
 		<router-link v-if="isAuth" to="/LR" >登录﹠注册</router-link>
-		<p v-else class="hello" title="xxx">欢迎您，{{ getName }}<a href="">登出</a></p>
+		<template v-else>
+			<p class="hello" :title="getName">欢迎您，{{ getName }} </p>
+			<p class="logout" @click="logout()">登出</p>
+		</template>
 	</section>
 
 	<!-- 最右侧的个人资料logo-->
@@ -32,22 +35,7 @@ export default {
 		}
 	},
 	created() {
-		// console.debug('Header.vue created()');
-		try {
-			this.jwt = getToken();
-		} catch {
-			// 所有页面出现jwt无效的异常，全都交给header页面处理（弹窗+重定向）
-			startLoading()
-			ElMessage({
-				message: 'Oops！登录状态异常，请重新登录。 ',
-				type: 'error',
-				onClose: () => {
-					endLoading()
-					this.$router.push('/LR')
-				},
-			})
-		}
-		// return;    	// 如后续不再可能报错（如：无后续代码），则无需用return中止程序防止意外执行
+		this.jwt = getToken();
 	},
 	computed: {
 		isAuth() {
@@ -55,6 +43,18 @@ export default {
 		},
 		getName() {
 			return this.jwt.uname
+		}
+	},
+	methods: {
+		logout() {
+			startLoading()
+			localStorage.removeItem('Token')
+			this.$router.push('/LR')
+			endLoading()
+			ElMessage({
+				message: '登出成功',
+				type: 'success'
+			})
 		}
 	}
 }
@@ -86,10 +86,16 @@ export default {
 .middle-text{
 	font-size:15px;
 	margin-left: 700px;
+	display: flex;
+	flex-direction: row;
 }
 .middle-text a{	/* 注意这里是router-link内置的a标签的样式，只能用后代选择器 */
 	padding-left:60px;
 	color:#ffffff;
+}
+.middle-text .logout{
+	padding-left:60px;
+	cursor: pointer;
 }
 .right-text a :hover {
 	color: #f10215;

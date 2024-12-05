@@ -109,8 +109,8 @@ export default {
 	  })
       .then(response => {
         if (response.status === 200) {
-			console.log("Response:", response);
-			console.log("Type of response.data is Blob? :", response.data instanceof Blob);
+			console.debug("Response:", response);
+			console.debug("Type of response.data is Blob? :", response.data instanceof Blob);
 			const url = window.URL.createObjectURL(new Blob([response.data]));	// 创建临时资源url
 			const link = document.createElement('a');
 			link.href = url;
@@ -125,7 +125,7 @@ export default {
       })
       .catch(error => {
 		console.error('下载请求失败：', error);
-		ElMessage.error('Oops！ 服务器错误，请联系管理员。错误信息：' + error.message)
+		ElMessage.error('Oops！ 服务器错误，下载异常！错误信息：' + error.message)
       });
     },
 	purchaseGame(){
@@ -148,7 +148,7 @@ export default {
 			}
 		})
 		.catch(error=>{
-			ElMessage.error('Oops！ 服务器错误，请联系管理员。错误信息：' + error.message)
+			ElMessage.error('Oops！ 服务器错误，购买失败！请联系管理员。错误信息：' + error.message)
 		})
 
     }

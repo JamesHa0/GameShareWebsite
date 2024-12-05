@@ -34,29 +34,24 @@ axios.interceptors.request.use(
 // 响应拦截器
 axios.interceptors.response.use(
     response => {
-        if(response.status == 401){
-            router.push({ path: '/login' })
-        } else if (response.status != 200) {
-            router.push({ path: '/500' })   // 跳转错误页面
-        }
-
         endLoading();    // 结束加载动画
         return response;
     },
     error => {
         endLoading();    // 结束加载动画
-        console.log(error);
+        ElMessage({
+            message: error,
+            type: 'info'
+        })
         if (error.status == 401){
             console.error('jwt为空或过期。')
+			router.push('/LR')
             ElMessage({
                 message: '登录信息失效，请重新登录',
-                type: 'error',
-				onClose: () => {
-					this.$router.push('/LR')
-				},
+                type: 'error'
             })
         } else {
-            router.push({ path: '/500' })   // 跳转错误页面
+            // router.push({ path: '/500' })   // 跳转错误页面
         }
         return Promise.reject(error);
     }
@@ -70,7 +65,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 app
     .use(ElementPlus)
-    import '@/assets/styles/myPublic.css'   // 自己写的css。放在elmentplus后面防止被覆盖
+    import '@/assets/styles/myPublic.css'   // 自定义css。放在elmentplus后面防止被覆盖
 app
     .use(router)
     .use(store)

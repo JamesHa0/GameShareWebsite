@@ -66,11 +66,7 @@ export default {
         }
     },
     created(){
-		try {
-			this.jwt = getToken();
-		} catch {
-			return;
-		}
+		this.jwt = getToken();
         this.getUser();
     },
 	methods:{

@@ -4,6 +4,7 @@ import com.game.common.core.domain.entity.Game;
 import com.game.common.core.domain.entity.Order;
 import com.game.common.core.domain.entity.User;
 import com.game.common.utils.FileUtil;
+import com.game.common.utils.PathUtil;
 import com.game.common.utils.Result;
 import com.game.common.utils.ResultCode;
 import com.game.dao.mapper.CommentMapper;
@@ -18,16 +19,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
 import java.util.List;
 
 @Service
 @Transactional  // 开启事务
 public class GameServiceImpl implements GameService {
 
-    @Value("${file.upload.dir}")
-    private String FILE_UPLOAD_DIRECTORY;
-    @Value("${file.download.dir}")
-    private String FILE_DOWNLOAD_DIRECTORY; // 替换为你的文件存储路径
+    private final Path FILE_UPLOAD_DIRECTORY = PathUtil.getGameResourcePath();
+    private final Path FILE_DOWNLOAD_DIRECTORY = FILE_UPLOAD_DIRECTORY;
 
     @Autowired
     private UserMapper userMapper;
@@ -103,14 +103,14 @@ public class GameServiceImpl implements GameService {
      * @description 2，上传文件
      */
     public Result uploadGame(MultipartFile game) {
-        System.err.println("待上传文件名：" + game.getOriginalFilename() +", 类型：" +game.getContentType() +", 上传地址：" +FILE_UPLOAD_DIRECTORY);
+        System.out.println("【上传】待上传文件名：" + game.getOriginalFilename() +", 类型：" +game.getContentType() +", 上传地址：" +FILE_UPLOAD_DIRECTORY);
 
         FileUtil.saveFile(game, FILE_UPLOAD_DIRECTORY);
         return Result.ok().message("游戏上传成功");
     }
 
     public Resource downloadGame(String fileName) {
-        System.err.println("准备下载文件：" + fileName +",地址：" + FILE_DOWNLOAD_DIRECTORY);
+        System.out.println("【下载】准备下载文件：" + fileName +",地址：" + FILE_DOWNLOAD_DIRECTORY);
 
         return FileUtil.downloadFile(fileName, FILE_DOWNLOAD_DIRECTORY);
     }

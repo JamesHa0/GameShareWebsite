@@ -8,34 +8,30 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.Objects;
 
 public class FileUtil {
-    public static String getFilePath(String fileName) {
-        return fileName.substring(0, fileName.lastIndexOf("/"));
-    }
-    public static String getFileType(String fileName) {
-        return fileName.substring(fileName.lastIndexOf(".") + 1);
-    }
 
-
-    public static void saveFile(MultipartFile multipartFile, String path) {
-        File dir=new File(path);
-        if(!dir.exists()){
-            boolean isOk = dir.mkdir();
-            if (!isOk) throw new RuntimeException("创建目录失败。文件保存中止。");
+    public static void saveFile(MultipartFile multipartFile, Path path) {
+        // 确保目录存在
+        try {
+            Files.createDirectories(path);
+        } catch (IOException e) {
+            throw new RuntimeException("创建目录失败。文件保存中止。", e);
         }
-        File file=new File(path + multipartFile.getOriginalFilename());
+
+        File file=new File(path.toFile(), Objects.requireNonNull(multipartFile.getOriginalFilename()));
         try {
             multipartFile.transferTo(file);
         } catch (IOException e) {
-            throw new RuntimeException("保存(save)文件失败。" + e);
+            throw new RuntimeException("保存文件失败。" + e);
         }
     }
     
-    public static Resource downloadFile(String fileName, String path){
-        Path filePath = Paths.get(path).resolve(StringUtils.cleanPath(fileName));
+    public static Resource downloadFile(String fileName, Path path){
+        Path filePath = path.resolve(StringUtils.cleanPath(fileName));
         Resource resource;
         try {
             resource = new UrlResource(filePath.toUri());
