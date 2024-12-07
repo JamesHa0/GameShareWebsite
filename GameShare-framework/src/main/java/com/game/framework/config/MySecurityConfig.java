@@ -15,37 +15,25 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class MySecurityConfig {
 
-    // 使用构造函数注入
-    private final MyUserDetailsServiceImpl userDetailsService;
-    private final MyPasswordEncoder passwordEncoder;
-
     // 通过构造函数注入依赖
-    public MySecurityConfig(MyUserDetailsServiceImpl userDetailsService, MyPasswordEncoder passwordEncoder) {
-        this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
+    public MySecurityConfig(UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder) {
     }
-/*
-    @Bean
-    public My00LoginAuthenticationProvider my00LoginAuthenticationProvider() {
-        return new My00LoginAuthenticationProvider(userDetailsService, passwordEncoder);
-    }
-*/
 
     @Bean
-    public My01JwtAuthenticationFilter my01JwtAuthenticationFilter() throws Exception {
-        return new My01JwtAuthenticationFilter();
+    public JwtAuthenticationFilter jwtAuthenticationFilter() throws Exception {
+        return new JwtAuthenticationFilter();
     }
     @Bean
-    public My04JwtAuthenticationEntryPoint my04JwtAuthenticationEntryPoint() {
-        return new My04JwtAuthenticationEntryPoint();
+    public JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint() {
+        return new JwtAuthenticationEntryPoint();
     }
     @Bean
-    public My04LoginSuccessHandler my04LoginSuccessHandler() {
-        return new My04LoginSuccessHandler();
+    public LoginSuccessHandler loginSuccessHandler() {
+        return new LoginSuccessHandler();
     }
     @Bean
-    public My04LoginFailureHandler my04LoginFailureHandler() {
-        return new My04LoginFailureHandler();
+    public LoginFailureHandler loginFailureHandler() {
+        return new LoginFailureHandler();
     }
 
 
@@ -56,7 +44,6 @@ public class MySecurityConfig {
             "/logout",        //登出
             "/captcha",        //验证码
             "/favicon.ico",
-//            "/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs", "/druid/**",
             "/v3/api-docs/**","/swagger**/**",
     };
 
@@ -65,20 +52,19 @@ public class MySecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        System.out.println("--------Security,启动！");
         http
                 .cors(cors -> cors.configurationSource(customCorsConfigurationSource))      // 解决security 跨域问题
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(my01JwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)     // 配置自定义JWT认证过滤器
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)     // 配置自定义JWT认证过滤器
                 .formLogin(form -> form
                         .usernameParameter("utel").passwordParameter("upsw")
                         .loginPage("/login")
-                        .successHandler(my04LoginSuccessHandler())      // 配置自定义登录成功处理器
-                        .failureHandler(my04LoginFailureHandler())      // 配置自定义登录失败处理器
+                        .successHandler(loginSuccessHandler())      // 配置自定义登录成功处理器
+                        .failureHandler(loginFailureHandler())      // 配置自定义登录失败处理器
                 )
                 .exceptionHandling(
-                        exception -> exception.authenticationEntryPoint(my04JwtAuthenticationEntryPoint())  // 配置自定义JWT认证失败处理器
+                        exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint())  // 配置自定义JWT认证失败处理器
                 )
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers(URL_WHITELIST).permitAll()

@@ -1,7 +1,24 @@
 # GameShareWebsite
 ## ———— 一个简单的大学课程设计Web项目
 
-<strong style="color:#009999">（ 注：readme.md于24年8月2日开始更新。）</strong>
+<strong style="color:#334499">（ 注：README.md于24年8月2日开始更新。）</strong>
+
+
+<br><br><br><br><br>
+> ### 更新日志
+- **更新日期**：2024年12月07日
+- **更新内容**： 
+- 引入axios的request封装，封装了axios的拦截器，封装了请求api和方法utils。
+- 将重写后的download方法挂载到了vue原型链上，方便后续调用。
+- 完成了用户订单查询页面。
+*  其他：
+  1. 更换link图标为自定义的小猪ico（复出！）
+  2. 新增依赖：    file-saver（v2.0.5，用于文件下载），js-cookie（v3.0.5，用于操作cookie）。
+  3. 调整了前后端部分文件的文件名和代码。
+*  经验：
+  1. 切记axios配置config的各参数是大小写敏感的，headers易误写成Headers，造成请求头无效的问题。
+##### 订单详情页演示如下：
+<img src="storage/README_pictures/订单详情页.gif" alt="订单详情页" width="600px">
 
 
 <br><br><br><br><br>
@@ -26,7 +43,7 @@
 <img src="storage/README_pictures/新版本签到积分概率实机测试.png" alt="新版本签到积分概率实机测试" width="200px">
 
 ##### 签到演示如下：
-<img src="storage/README_pictures/新版本签到演示.gif" alt="新版本签到演示" width="600px">
+<img src="storage/README_pictures/新版本签到演示.gif" alt="新版本签到演示" width="600px"></p>
 
 
 <br><br><br><br><br>

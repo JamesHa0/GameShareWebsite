@@ -87,8 +87,8 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { ElMessage } from 'element-plus'
+import { purchaseGame } from '@/api/game'
 
 export default {
   props:['user', 'game', 'order'],
@@ -102,55 +102,14 @@ export default {
       return this.game.gid.length<9   // <9表示是steam游戏
     },
 	downloadGame(){
-      axios({
-		method: 'get',
-		url: 'game/download/' + this.game.gid + '.zip',
-		responseType: 'blob',
-	  })
-      .then(response => {
-        if (response.status === 200) {
-			console.debug("Response:", response);
-			console.debug("Type of response.data is Blob? :", response.data instanceof Blob);
-			const url = window.URL.createObjectURL(new Blob([response.data]));	// 创建临时资源url
-			const link = document.createElement('a');
-			link.href = url;
-			link.setAttribute('download', `${this.game.gname}.zip`); 
-			document.body.appendChild(link);
-			link.click();
-			document.body.removeChild(link);
-			window.URL.revokeObjectURL(url);	// 释放资源
-        } else {
-			console.error('下载失败，状态码：', response.status);
-        }
-      })
-      .catch(error => {
-		console.error('下载请求失败：', error);
-		ElMessage.error('Oops！ 服务器错误，下载异常！错误信息：' + error.message)
-      });
+	  this.$download(`/game/download/${this.game.gid}.zip`, `${this.game.gname}.zip`);
     },
 	purchaseGame(){
-		console.log('正在购买游戏，请稍等……')
-		axios.post('/game/purchase/'+this.user.uid+'/'+this.game.gid)
-		.then(res=>{
-			console.log('服务器响应为：')
-			console.log(res);
-			if(res.status!=200){
-				
-			}
-			if(res.data.code==200){
-				this.$router.go(0);
-				ElMessage({
-					message: '购买成功。感谢您的购买！',
-					type: 'success',
-  				})
-			}else{
-				ElMessage.error('Oops！ 购买失败。'+res.data.message)
-			}
+		purchaseGame(this.user.uid, this.game.gid)
+		.then((res)=>{
+			this.$router.go(0);		// 刷新页面
+			ElMessage({ message: '购买成功。感谢您的购买！', type: 'success'} )
 		})
-		.catch(error=>{
-			ElMessage.error('Oops！ 服务器错误，购买失败！请联系管理员。错误信息：' + error.message)
-		})
-
     }
 
   }

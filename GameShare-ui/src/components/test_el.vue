@@ -1,13 +1,10 @@
 <template><!-- 同上 -->
-  <!-- <Header/> -->
-    <!-- <div class="background">{{getToken}}</div> -->
     <div class="sign-in"  @click="doSignIn()">点此签到</div>
 
 </template>
 
 <script>
   import Header from '@comp/Header.vue'
-  import { getToken } from '@js/myPublic.js';
   import { ElMessage } from 'element-plus'
 
   export default {
@@ -17,7 +14,7 @@
     // created() {
     //   console.debug('test_el.vue created()');
     //   try {
-    //     this.jwt = getToken();
+    //     this.jwt = getDecodedToken();
     //   } catch (error) {
     //     console.error('获取token失败：!!!!!!!!!!!!!!!!!!!', error);
     //     ElMessage({

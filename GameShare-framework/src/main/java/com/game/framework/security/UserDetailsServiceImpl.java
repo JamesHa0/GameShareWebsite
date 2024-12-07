@@ -21,7 +21,7 @@ import java.util.List;
  * 登录服务实现类型
  */
 @Component
-public class MyUserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired private UserMapper userMapper;
     @Autowired private RoleMapper roleMapper;
@@ -35,14 +35,14 @@ public class MyUserDetailsServiceImpl implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String utel) throws UsernameNotFoundException {
-        System.out.println("【找用户】调用loadUserByUsername方法，现在正在找该用户及其权限集合：");
+        System.out.println("【Loading User By Username...】调用loadUserByUsername方法，现在正在找该用户及其权限集合：");
 
         LambdaQueryWrapper<User> lqw=new LambdaQueryWrapper<>();
         lqw.eq(User::getUtel , utel);       //where utel=参数
         User user = userMapper.selectOne(lqw);
         if(user == null){
-            System.err.println("【找用户】用户不存在");
-            throw new UsernameNotFoundException("【找用户】用户不存在");
+            System.err.println("未找到该用户。");
+            throw new UsernameNotFoundException("未找到该用户");
         }
 
 //开始查询已登录用户的权限集合：
@@ -58,7 +58,7 @@ public class MyUserDetailsServiceImpl implements UserDetailsService {
         for (Permission m : permissionList){
             authorityList.add(m.getPermit());   //权限字符串描述，不需要加入前缀‘ROLE_’
         }
-        System.out.println("【找到了用户】登录者的权限列表为："+authorityList);
+//        System.out.println("登录者的权限列表为："+authorityList);
         org.springframework.security.core.userdetails.User userDetails =
                 new org.springframework.security.core.userdetails.User(
                         user.getUtel(),     //用户名

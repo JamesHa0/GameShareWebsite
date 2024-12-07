@@ -18,13 +18,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 
-public class My04LoginSuccessHandler implements AuthenticationSuccessHandler {
+public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     @Autowired private UserMapper userMapper;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        System.out.println("【04登录成功处理器】进入");
+        System.out.println("【Login success】");
 
         response.setContentType("application/json;charset=UTF-8");
         ServletOutputStream outputStream = response.getOutputStream();
@@ -35,10 +35,10 @@ public class My04LoginSuccessHandler implements AuthenticationSuccessHandler {
         claims.put("uname", user.getUname());
         claims.put("authorities", authentication.getAuthorities().toString());
         String jwt = JwtUtil.generateToken(user.getUid(), claims);
-        System.out.println("sub 是：" + JwtUtil.parseToken(jwt).getSubject());
+//        System.out.println("sub 是：" + JwtUtil.parseToken(jwt).getSubject());
         response.setHeader("authorization", jwt);
 
-        System.out.println("!**************【jwt过滤器】jwt生成成功，token：" + jwt);
+        System.out.println(">>> 【Login success】jwt生成成功，token：" + jwt);
         Result result = Result.ok().message("登录成功").data("Token", jwt);
 
         outputStream.write(JSONUtil.toJson(result).getBytes(StandardCharsets.UTF_8));

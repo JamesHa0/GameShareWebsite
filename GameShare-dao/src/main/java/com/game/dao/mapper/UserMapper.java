@@ -42,7 +42,7 @@ public interface UserMapper extends BaseMapper<User> {
                     @Result(property = "urole",column = "urole"),
                     @Result(property = "upoint",column = "upoint"),
                     @Result(property = "orders",javaType = List.class,column = "uid",       //声明为List类，参考列为uid
-                            one = @One(select = "com.game.mapper.OrderMapper.selectByUid"))      //声明其调用的哪个Mapper的哪个方法
+                            one = @One(select = "com.game.dao.mapper.OrderMapper.selectByUid"))      //声明其调用的哪个Mapper的哪个方法
             })
     User selectOneUserAndOrders(String uid);
 

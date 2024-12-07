@@ -29,11 +29,11 @@ public class Result {
     public static Result init() {return new Result();}
 
     public static Result ok() {
-        return new Result(true,ResultCode.SUCCESS,"success");
+        return new Result(true, ResultCode.SUCCESS, "success");
     }
 
     public static Result error() {
-        return new Result(false,ResultCode.ERROR,"error");
+        return new Result(false, ResultCode.ERROR,"error");
     }
 
     public Result success(Boolean success) {

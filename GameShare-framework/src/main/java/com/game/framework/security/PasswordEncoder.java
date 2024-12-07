@@ -1,15 +1,12 @@
 package com.game.framework.security;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MyPasswordEncoder implements PasswordEncoder {
+public class PasswordEncoder implements org.springframework.security.crypto.password.PasswordEncoder {
     /**
      * 对密码进行加密
-     * @param rawPassword
-     * @return
      */
     @Override
     public String encode(CharSequence rawPassword) {
@@ -23,7 +20,6 @@ public class MyPasswordEncoder implements PasswordEncoder {
      * @param encodedPassword，密文，是服务器中存储的
      * @return
      */
-
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
         return new BCryptPasswordEncoder().matches(rawPassword, encodedPassword);
@@ -31,6 +27,6 @@ public class MyPasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean upgradeEncoding(String encodedPassword) {
-        return PasswordEncoder.super.upgradeEncoding(encodedPassword);
+        return org.springframework.security.crypto.password.PasswordEncoder.super.upgradeEncoding(encodedPassword);
     }
 }

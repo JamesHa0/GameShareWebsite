@@ -5,7 +5,7 @@
         <!-- 封面模块 -->
         <Cover :user="user" :game="game" :order="order"/>
         <!-- 剪影模块 -->
-        <Sketch :game="game"/>
+        <!-- <Sketch :game="game"/> -->
         <!-- 反馈模块 -->
         <Feedback v-if="user" :user="user" :game="game" :order="order"
                 :isLiked="isLiked" :likeNum="likeNum"
@@ -23,9 +23,8 @@ import Footer from '@comp/Footer.vue'
 import Cover from './Cover.vue'
 import Sketch from './Sketch.vue'
 import Feedback from './Feekback.vue'
-
-import axios from 'axios';
-import { getToken } from '@/assets/js/myPublic.js'
+import { getDecodedToken } from '@/utils/auth.js'  
+import { getAllDetails } from '@/api/game'
 
 
 export default {
@@ -53,34 +52,31 @@ export default {
         }
     },
     created(){
-		this.jwt = getToken();
+		this.jwt = getDecodedToken();
         const uid = this.jwt.sub;
         const gid = this.$route.query.gid;
         if (gid === '0' || gid === undefined) {  //若查询参数gid为0或未定义，则路由至 /404
             this.$router.push('/404');
         } else {
-            this.getAllDetails(uid, gid)
+            this.setAllDetails(uid, gid)
         }
     },
     methods:{
-        getAllDetails(uid, gid){
-            axios.get('/game/details/'+uid+'/'+gid)
+        setAllDetails(uid, gid){
+            getAllDetails(uid, gid)
             .then(res=>{
                 console.debug('===> 游戏details 数据：')
-                console.debug(res.data.data);
-                this.user = res.data.data.user
-                this.game = res.data.data.game
-                this.order = res.data.data.order
+                console.debug(res.data);
+                this.user = res.data.user
+                this.game = res.data.game
+                this.order = res.data.order
                 // like:
-                this.isLiked = res.data.data.isLiked
-                this.likeNum = res.data.data.likeNum
+                this.isLiked = res.data.isLiked
+                this.likeNum = res.data.likeNum
                 // comment:
-                this.likedCids = res.data.data.likedCids
-                this.commentNum = res.data.data.commentNum
+                this.likedCids = res.data.likedCids
+                this.commentNum = res.data.commentNum
             })
-            .catch(error=>{
-                console.error('请求失败:', error);
-            });
         },
 
     }

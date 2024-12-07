@@ -5,7 +5,7 @@
         <table class="icon-table">
             <tr>
                 <td><img class="icon-img" @click="doLike()" :src="showLikeImg()"/></td>
-                <td><a href="#comment-input"><img class="icon-img" :src="constCImg"/></a></td>
+                <td><img class="icon-img" @click="showCommentModule = !showCommentModule" :src="constCImg"/></td>
             </tr>
             <tr>
                 <td>{{tempLikeNum }}</td>
@@ -15,7 +15,7 @@
     </article>
     
     <!-- 评论模块 --><br><br><br>
-    <article class="comment-module">
+    <article class="comment-module" v-show="showCommentModule">
         <!-- 标题 -->
         <div class="header">玩家评论：</div>
 
@@ -87,9 +87,10 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { isUndefined } from '@/assets/js/myPublic.js'
 import { ElMessage } from 'element-plus'
+import util from '@/utils/public'
+import { doLike } from '@/api/game'
+import { getCommentByPage, addComment, doCommentLike, doCommentReply } from '@/api/comment'
 
 export default {
     props:['user', 'game', 'order',
@@ -98,17 +99,18 @@ export default {
     ],
     data(){
         return{
+            showCommentModule: false,   // 默认不显示评论模块
             /*  const常量： */
-            currentPage: 1,// 当前页码
-            pageSize: 10,// 每页条数
+            currentPage: 1, // 当前页码
+            pageSize: 10,   // 每页条数
             constSofa: 'src/assets/images/sofa.png',// 沙发图案
             constCImg: 'src/assets/images/comment.png',
-            constLikeImg: {// 游戏点赞图标
+            constLikeImg: { // 游戏点赞图标
                 'off': 'src/assets/images/like.png',   // 点灭图标
                 'on': 'src/assets/images/like_yes.png',   // 点亮图标
             },
             constCommentReply: 'src/assets/images/comment_reply.png',// 回复图标
-            constCommentLikeImg: {// 单一评论点赞图标
+            constCommentLikeImg: {  // 单一评论点赞图标
                 'off': 'src/assets/images/comment_like.png', 
                 'on': 'src/assets/images/comment_like_yes.png', 
             },            
@@ -127,13 +129,12 @@ export default {
     },
     methods:{
         getCommentByPage(current, size){
-            axios.get('/comment/listByPage/'+this.game.gid+'/'+current+'/'+size)
+            getCommentByPage(this.game.gid, current, size)
             .then(res=>{
-                console.debug('=> 评论数据：')
-                console.debug(res.data.data.comments);
-                this.comments = res.data.data.comments
+                console.debug('===> 评论数据：')
+                console.debug(res.data.comments);
+                this.comments = res.data.comments
             })
-            .catch(error=>{console.error('请求失败:', error);})
         },
         handleCurrentChange(val){
             this.getCommentByPage(val, this.pageSize)
@@ -145,57 +146,25 @@ export default {
             return this.tempIsLiked ? this.constLikeImg.on : this.constLikeImg.off
         },
         doLike(){
-            axios.post('/game/doLike', {
-                uid: this.user.uid,
-                gid: this.game.gid,
-            },{
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            })
-            .then (response => {
-                if (response.status !== 200) {
-                    throw new Error('操作失败');
+            doLike(this.user.uid, this.game.gid)
+            .then(res=>{
+                const action = res.data.action
+                if (action==="doLike"){
+                    this.tempIsLiked = true
+                    this.tempLikeNum ++;	//更新赞数：+1
                 } else {
-                    const action = response.data.data.action
-                    if (action==="doLike"){
-                        this.tempIsLiked = true
-                        this.tempLikeNum ++;	//更新赞数：+1
-                    } else {
-                        this.tempIsLiked = false
-                        this.tempLikeNum --;
-                    }
+                    this.tempIsLiked = false
+                    this.tempLikeNum --;
                 }
             })
-            .catch (error => {
-                alert(`点赞操作异常：${error.message}`)
-	        })
         },
         doComment(){
-            axios.post('/comment/doComment', {
-                uid: this.user.uid,
-                gid: this.game.gid,
-                commentText: this.commentText
-            },{
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
+            addComment(this.user.uid, this.game.gid, this.commentText)
+            .then(res=>{
+                this.commentText = ''
+                ElMessage({ message: '评论成功', type: 'success' })
+                this.getCommentByPage(this.currentPage, this.pageSize)
             })
-            .then (response => {
-                if (response.status !== 200) {
-                   throw new Error('操作失败');
-                } else {
-                    this.commentText = ''
-                    ElMessage({
-                        message: '评论成功',
-                        type: 'success',
-                    })
-                    this.getCommentByPage(this.currentPage, this.pageSize)
-                }
-            })
-            .catch (error => {
-                alert(`评论操作异常：${error.message}`)
-	        })
         },
         getCStyle(comment){
             const cpath = comment.cpath
@@ -209,7 +178,7 @@ export default {
         showCLike(comment){
             const cid = comment.cid
             // 找内存中tempComments[cid].clike的值：
-            if(this.tempComments[cid] == undefined || this.tempComments[cid].clike == undefined){
+            if(util.isUndefined((this.tempComments[cid] || {}).clike)){
                 return comment.clike    // 不存在，则取数据库中的值；
             }else{
                 return this.tempComments[cid].clike    // 存在，取之。
@@ -218,7 +187,7 @@ export default {
         showCLikeImg(comment){
             const cid = comment.cid
             // 找内存中isLiked的值：（当前会话的点赞行为检验：isLiked值存在则证实了有过点赞操作，反之亦然）
-            if(this.tempComments[cid] == undefined || this.tempComments[cid].isLiked == undefined){
+            if(util.isUndefined((this.tempComments[cid] || {}).isLiked)){
                 // 不存在，则取数据库中值：
                 return this.likedCids.includes(cid) ? this.constCommentLikeImg.on : this.constCommentLikeImg.off
             }else{
@@ -228,41 +197,27 @@ export default {
         },
         doCLike(comment){
             const cid = comment.cid
-            axios.post('/comment/doLike', {
-                uid: this.user.uid,
-                gid: this.game.gid,
-                cid: comment.cid,
-            },{
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+            doCommentLike(this.user.uid, this.game.gid, comment.cid)
+            .then(res=>{
+                // 确保tempComments[cid]存在，若不存在，则创建之：
+                this.tempComments[cid] = this.tempComments[cid] || {}
+                // 给rawCid赋值：1，若是第一次点击，则赋值为数据库中的comment.clike；2，若是第二或更多次点击，则赋值为内存中的tempComments[cid].clike。
+                const rawCid = util.isUndefined(this.tempComments[cid].clike) ? comment.clike : this.tempComments[cid].clike;
+                if (res.data.action == "doLike"){  // 得知当前进行的是点赞操作
+                    this.tempComments[cid].clike = parseInt(rawCid) + 1;  // 改变点赞数
+                    this.tempComments[cid].isLiked = true;   // 改变点赞状态，连带改变亮灭图标
+                    console.debug('点赞成功');
+                } else {  // 取消赞操作
+                    this.tempComments[cid].clike = parseInt(rawCid) - 1;
+                    this.tempComments[cid].isLiked = false;
+                    console.debug('取消赞成功');
                 }
             })
-            .then(response => {
-                if (response.status !== 200) {
-                    throw new Error('操作失败');
-                }else{
-                    if (isUndefined(this.tempComments[cid])) this.tempComments[cid] = {}  // 确保tempComments[cid]存在
-                    // 给rawCid赋值：1，若是第一次点击，则赋值为数据库中的comment.clike；2，若是第二或更多次点击，则赋值为内存中的tempComments[cid].clike。
-                    const rawCid = isUndefined(this.tempComments[cid].clike) ? comment.clike : this.tempComments[cid].clike;
-                    if (response.data.data.action == "doLike"){  // 得知当前进行的是点赞操作
-                        this.tempComments[cid].clike = parseInt(rawCid) + 1  // 改变点赞数
-                        this.tempComments[cid].isLiked = true   // 点赞状态，连带改变亮灭图标
-                        console.log('点赞成功')
-                    } else {  // 取消赞操作
-                        this.tempComments[cid].clike = parseInt(rawCid) - 1
-                        this.tempComments[cid].isLiked = false
-                        console.log('取消赞成功')
-                    }
-                }
-            })
-            .catch(error=>{
-                alert(`点赞操作异常：${error.message}`)
-	        })
         },
         showCReply(comment){
-            const cid = comment.cid
+            const cid = comment.cid;
             // 找内存中isReplied的值：
-            if(this.tempComments[cid] == undefined || this.tempComments[cid].isReplied == undefined){
+            if(util.isUndefined((this.tempComments[cid] || {}).isReplied)){
                 return false    // 不存在，则取false；
             }else{
                 return this.tempComments[cid].isReplied    // 存在，取之。
@@ -270,7 +225,7 @@ export default {
         },
         enableCReply(comment){
             const cid = comment.cid
-            if (this.tempComments[cid] == undefined || this.tempComments[cid].isReplied == undefined){   // 不存在，则创建之。
+            if (util.isUndefined((this.tempComments[cid] || {}).isReplied)){   // 不存在，则创建之。
                 this.tempComments[cid] = {isReplied: true}
             } else {
                 this.tempComments[cid].isReplied = !this.tempComments[cid].isReplied
@@ -281,33 +236,23 @@ export default {
             event.preventDefault(); 
             let cid = comment.cid
             this.tempComments[cid].replyText = event.target.innerText
-            console.log(event.target.innerText)
+            console.debug(event.target.innerText)
         },
         doCReply(comment){
-            let cid = comment.cid
-            axios.post('/comment/doReply' , {
-                uid: this.user.uid,
-                gid: this.game.gid,
-                comment: this.tempComments[cid].replyText,
-                parentCid: comment.cid,
-                parentUid: comment.uid
-            },{
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
+            const cid = comment.cid
+            doCommentReply(
+                this.user.uid, 
+                this.game.gid, 
+                this.tempComments[cid].replyText, 
+                comment.cid, 
+                comment.uid
+            )
             .then(res=>{
                 this.tempComments[cid].isReplied = false
                 this.tempComments[cid].replyText = ''
-                ElMessage({
-                    message: '回复成功',
-                    type: 'success',
-                })
+                ElMessage({ message: '回复成功', type: 'success' })
                 this.getCommentByPage(this.currentPage, this.pageSize)
             })
-            .catch(error=>{
-                console.error('请求失败:', error);
-            });
         },
     }
 

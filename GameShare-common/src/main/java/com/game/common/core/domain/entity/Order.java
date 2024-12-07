@@ -53,6 +53,9 @@ public class Order {
 
 
 
-    @TableField(exist = false)  //订单所属用户；非表字段（测试用）
+    @TableField(exist = false)  //订单所属用户；非表字段
     private User user;
+
+    @TableField(exist = false)
+    private Game game;
 }

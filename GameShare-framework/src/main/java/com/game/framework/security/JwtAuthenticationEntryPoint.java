@@ -14,10 +14,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 
-public class My04JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        System.err.println("【04JWT认证失败处理器】进入…… jwt认证失败：jwt无效或为空。");
+        System.err.println("【Jwt EntryPoint】 jwt认证失败：jwt无效或为空。");
+
 
         response.setStatus(ResultCode.JWT_INVALID); // 设置状态码为 401
         response.setContentType("application/json;charset=UTF-8");

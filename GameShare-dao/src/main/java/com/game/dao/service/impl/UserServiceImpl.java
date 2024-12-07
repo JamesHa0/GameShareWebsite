@@ -2,6 +2,7 @@ package com.game.dao.service.impl;
 
 import com.game.common.utils.DateUtil;
 import com.game.common.utils.Result;
+import com.game.common.utils.ResultCode;
 import com.game.dao.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,14 +20,14 @@ public class UserServiceImpl {
         String date = DateUtil.getDateNow();
         // 检查是否已签到
         if (userMapper.queryIsSignedIn(uid, date) > 0){
-            return Result.error().code(250).message("今日已签到");
+            return Result.error().code(ResultCode.CONFLICT).message("今日已签到").data("action", "signIn");
         }
         // 获取积分，并入库
         Float point = Float.valueOf(getWeightedPoint());
         userMapper.risePoint(uid, point);
         // 签到表中插入数据
         userMapper.insertSignIn(uid, date);
-        return Result.ok().code(200).data("point", point);
+        return Result.ok().data("point", point);
     }
 
     private Integer getWeightedPoint(){

@@ -80,7 +80,7 @@ public class GameServiceImpl implements GameService {
      * @return Result
      */
     public Result doLike(String uid, String gid) {
-        String action = "";
+        String action;
         if (gameMapper.queryIsLiked(uid, gid) == 0){   // 记录中没有数据，故进行点赞操作
             action = "doLike";
             if (gameMapper.doLike(uid, gid) > 0) {
@@ -137,9 +137,8 @@ public class GameServiceImpl implements GameService {
         // 扣除余额
         userMapper.deductPoint(uid, game.getGprice());
         // 添加订单（标识为购买成功）
-        Order newOrder = new Order(uid, gid);
         orderMapper.insertOrder(new Order(uid, gid));
 
-        return Result.ok().message("购买成功。").data("order", newOrder);
+        return Result.ok().message("购买成功。");
     }
 }

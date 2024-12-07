@@ -33,7 +33,7 @@ const handleMouseLeave = () => {
 
 const handleSearch = () => {
   // 可以添加搜索功能的逻辑
-  console.log('Search initiated with input:', input.value?.value);
+  console.debug('Search initiated with input:', input.value?.value);
 };
 </script>
 

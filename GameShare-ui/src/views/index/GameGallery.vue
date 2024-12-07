@@ -5,7 +5,7 @@
         <section class="game-gallery">
             <article class="game-item" v-for="game in data" :key="game.id">
                 <figure>
-                    <router-link class="game-link" :to="'/detail?gid=' + game.gid">
+                    <router-link class="game-link" :to="{name: 'Detail', query: { gid: game.gid }}">
                         <img :src="game.img" :alt="game.name">
                     </router-link>
                     <figcaption class="game-name">{{game.name}}</figcaption>

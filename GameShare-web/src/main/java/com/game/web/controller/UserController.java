@@ -31,52 +31,15 @@ public class UserController {
 //    @PreAuthorize("hasRole('ROLE_USER')")
     @PreAuthorize("hasAuthority('user:manager')")
     @Operation(summary = "查询某个用户的信息")
-    public User listOneUser(@PathVariable String uid) {
-        return userMapper.selectById(uid);
+    public Result listOneUser(@PathVariable String uid) {
+        User user = userMapper.selectById(uid);
+        return Result.ok().data("user", user);
     }
 
-    @PostMapping("/signIn/{uid}")
+    @PostMapping("/signIn")
     @Operation(summary = "用户每日签到")
-    public Result signIn(@PathVariable String uid) {
+    public Result signIn(@RequestParam String uid) {
         return userService.signIn(uid);
     }
-
-    /**
-     * 获取单个用户 及其 所有订单
-     */
-    /*@GetMapping("/userAndOrders/{uid}")
-    @Operation(summary = "查询某用户的【单个】信息，并查询其【全部】订单")
-    public User listOneUserAndOrder(@PathVariable String uid) {
-        return userMapper.selectOneUserAndOrders(uid);
-    }*/
-
-    /**
-     * 获取所有用户和订单
-     */
-    /*@GetMapping("/allUsersAndOrders")
-    @Operation(summary = "查询【全部】用户，并查询其【全部】订单")
-    public List<User> listAllUsersAndOrders() {
-        return userMapper.selectAllUsersAndOrders();
-    }*/
-    /**
-     * 获取所有用户，分页查询
-     */
-//    @GetMapping("allUsersByPage")
-//    public IPage<User> listAllUsersByPage() {
-//        Page<User> page = new Page<>(3, 2);     //从第3页开始查询，每页显示2条记录。
-//        return userMapper.selectPage(page, null);
-//    }
-
-//    @PostMapping("/one")
-//    @Operation(summary = "增加单个用户")
-//    public Result addUser(@PathVariable User user) {        //这里试用了Result自定义返回类
-//        int i =userMapper.insert(user);
-//        if(i>=0){
-//            return Result.ok().data("操作","新增用户");
-//        }else {
-//            return Result.error().data("操作", "新增用户");
-//        }
-//    }
-
 
 }

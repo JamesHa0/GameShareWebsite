@@ -17,9 +17,11 @@
 </template>
 
 <script>
-import { isNull } from '@/assets/js/myPublic.js'
 import axios from 'axios';
 import { ElMessage } from 'element-plus'
+import util from '@/utils/public'
+import auth from '@/utils/auth'
+import { login } from '@/api/login'
 
 export default {
     data(){
@@ -63,8 +65,8 @@ export default {
     methods:{
         preLogin(){
             if(localStorage.getItem('isValidate') == 'false'){
-                 this.login();
-                 console.log('跳过验证');
+                 this.doLogin();
+                 console.debug('跳过验证');
                  return
             }
             const utel = this.formData.utel;
@@ -72,50 +74,33 @@ export default {
             const _utel = this.rules.utel;
             const _upsw = this.rules.upsw;
             let errorMsgs = [];
-            if(_utel.required && isNull(utel)) errorMsgs.push(this.messages.utel.required);    // 手机号不能为空
-            if(_upsw.required && isNull(upsw)) errorMsgs.push(this.messages.upsw.required);    // 密码不能为空
+            if(_utel.required && util.isNull(utel)) errorMsgs.push(this.messages.utel.required);    // 手机号不能为空
+            if(_upsw.required && util.isNull(upsw)) errorMsgs.push(this.messages.upsw.required);    // 密码不能为空
             
-            if(!isNull(utel))if(utel.length< _utel.rangelength[0] || utel.length> _utel.rangelength[1])    // 手机号长度不满足
+            if(!util.isNull(utel))if(utel.length< _utel.rangelength[0] || utel.length> _utel.rangelength[1])    // 手机号长度不满足
                 errorMsgs.push(this.messages.utel.rangelength);
-            if(!isNull(upsw))if(upsw.length< _upsw.rangelength[0] || upsw.length> _upsw.rangelength[1])    // 密码长度不满足
+            if(!util.isNull(upsw))if(upsw.length< _upsw.rangelength[0] || upsw.length> _upsw.rangelength[1])    // 密码长度不满足
                 errorMsgs.push(this.messages.upsw.rangelength);
 
-            if(!isNull(utel))if(!_utel.pattern.test(utel)) errorMsgs.push(this.messages.utel.pattern);   // 手机号格式不正确
-            if(!isNull(upsw))if(!_upsw.pattern.test(upsw)) errorMsgs.push(this.messages.upsw.pattern);   // 密码格式不正确
+            if(!util.isNull(utel))if(!_utel.pattern.test(utel)) errorMsgs.push(this.messages.utel.pattern);   // 手机号格式不正确
+            if(!util.isNull(upsw))if(!_upsw.pattern.test(upsw)) errorMsgs.push(this.messages.upsw.pattern);   // 密码格式不正确
 
 
             // 验证失败：报出错误信息 or 验证通过：提交表单
             if(errorMsgs.length>0){
                 alert(errorMsgs.join('\n'));
             }else{
-                this.login();
+                this.doLogin();
             }
 
         },
-        login(){
-            axios.post('/login', 
-            this.formData,
-            {
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            })
+        doLogin(){
+            login(this.formData)
             .then(res=>{
-                console.log(res);
-                if(res.data.code==200){
-                    console.log('登录成功');
-                    ElMessage({
-                        message: '登录成功',
-                        type: 'success'
-                    })
-                    localStorage.setItem('Token', res.data.data.Token);
-                    this.$router.push('/');
-                }else{
-                    ElMessage({
-                        message: '登录失败',
-                        type: 'error'
-                    })
-                }
+                console.debug('登录成功');
+                ElMessage({ message: '登录成功', type: 'success' })
+                auth.setToken(res.data.Token)
+                this.$router.push({name: 'Index'});
             })
         }
         

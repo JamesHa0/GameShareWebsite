@@ -10,14 +10,14 @@
 	<section class="middle-text">
 		<router-link v-if="isAuth" to="/LR" >登录﹠注册</router-link>
 		<template v-else>
-			<p class="hello" :title="getName">欢迎您，{{ getName }} </p>
+			<p :title="getName">欢迎您，{{ getName }} </p>
 			<p class="logout" @click="logout()">登出</p>
 		</template>
 	</section>
 
 	<!-- 最右侧的个人资料logo-->
 	 <section class="right-text">
-		<router-link to="/info" class="info">
+		<router-link :to="{name:'Info'}" class="info">
 			<img src="../assets/images/info.png" height="28px" title="个人资料" >
 		</router-link>
 	</section>
@@ -25,7 +25,8 @@
 </template>
 
 <script>
-import { getToken, startLoading, endLoading } from '@js/myPublic.js'
+import { getDecodedToken } from '@/utils/auth.js'
+import { startLoading, endLoading } from '@/utils/public.js'
 import { ElMessage } from 'element-plus'
 
 export default {
@@ -35,7 +36,7 @@ export default {
 		}
 	},
 	created() {
-		this.jwt = getToken();
+		this.jwt = getDecodedToken();
 	},
 	computed: {
 		isAuth() {
@@ -97,9 +98,8 @@ export default {
 	padding-left:60px;
 	cursor: pointer;
 }
-.right-text a :hover {
+.right-text a:hover {
 	color: #f10215;
-	color:#f22334;
 }
 
 /* <!-- info（个人信息） --> */

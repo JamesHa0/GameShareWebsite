@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { isNull } from '@/assets/js/myPublic.js'
+import { isNull } from '@/utils/public.js'
 import axios from 'axios'
 
 export default {
@@ -118,8 +118,8 @@ export default {
 	methods: {
 		preRegister(){
 			if(localStorage.getItem('isValidate') == 'false'){
-                 this.register();
-                 console.log('跳过验证');
+                 this.doRegister();
+                 console.debug('跳过验证');
                  return
             }
 
@@ -169,14 +169,15 @@ export default {
 
             // 验证失败：报出错误信息 or 验证通过：提交表单
             if(errorMsgs.length>0){
-				console.log(errorMsgs.join('!'));
+				console.debug(errorMsgs.join('!'));
                 alert(errorMsgs.join('\n'));
             }else{
-                this.register();
+                this.doRegister();
             }
 		},
-		register(){
+		doRegister(){
 			alert('校验成功')
+			return
 			axios.post('http://localhost:8080/register', 
 			this.formData,
 			{
@@ -185,9 +186,9 @@ export default {
 				}
 			})
 			.then(res=>{
-				console.log(res);
+				console.debug(res);
 				if(res.data.code==200){
-					console.log('注册成功');
+					console.debug('注册成功');
 					alert('注册成功')
 				}
 			})

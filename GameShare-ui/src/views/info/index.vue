@@ -4,7 +4,7 @@
 		<div class="container">
 			<table class="info-table">
 				<tr>
-					<td class="table-head" colspan="2" style="width: 600px;height: 60px;">个人信息</td>
+					<td class="table-head" colspan="2">个人信息</td>
 				</tr>
 				<tr>
 					<td>用户ID:</td>
@@ -28,17 +28,17 @@
 				</tr>
 				<tr>
 					<td>拥有积分:</td>
-					<td>&emsp;&emsp;&emsp;<span class="pointNum">{{user.upoint }}</span>&emsp;&emsp;&emsp;
-					<span class="sign-in"  @click='doSignIn()'>点此签到</span>
+					<td><span class="point-num">{{user.upoint }}</span>
+					<span class="sign-in"  @click='doSignIn()'>🪙点此签到</span>
 					</td>
 				</tr>
 				<tr>
 					<td>购买的游戏:</td>
-					<td><a href='#' >点此查看已购买的游戏</a></td>
+					<td class="go-order"><router-link :to="{ name: 'Order' }" >📜查看订单</router-link></td>
 				</tr>
 				<tr>
 					<td>地址:</td>
-					<td>{{user.uaddress }}</td>
+					<td>{{ user.uaddress }}</td>
 				</tr>
 			</table>
 		</div>
@@ -50,9 +50,9 @@
 <script>
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
-import axios from 'axios'
-import { getToken } from '@/assets/js/myPublic.js'
 import { ElMessage } from 'element-plus'
+import { getDecodedToken } from '@/utils/auth'
+import { getUser, doSignIn } from '@/api/user'
 
 export default {
     components: {
@@ -66,41 +66,25 @@ export default {
         }
     },
     created(){
-		this.jwt = getToken();
-        this.getUser();
+		this.jwt = getDecodedToken();
+        this.setUser();
     },
 	methods:{
-		getUser(){
-			axios.get('/user/' + this.jwt.sub)
-			.then(response => {
-				console.log('响应数据data : ', response.data);
-				this.user = response.data;
+		setUser(){
+			getUser(this.jwt.sub)
+			.then(res=>{
+				this.user = res.data.user;
 			})
-			.catch(error => {
-				console.error('请求失败:', error);
-			});
+		},
+		getUid(){
+			console.debug('prop uid is :', this.jwt.sub)
+			return this.jwt.sub;
 		},
 		doSignIn(){
-			axios.post('/user/signIn/'+this.user.uid)
-			.then(response=>{
-				console.debug('服务器响应为：')
-				console.debug(response);
-				const point = response.data.data.point;
-				if (response.data.code == 200){
-					this.user.upoint = parseInt(this.user.upoint) + point;
-					ElMessage({
-						message: `签到成功！获得${point}积分。`, 
-						type: 'success',
-					})
-				} else {
-					ElMessage({
-						message: response.data.message,
-						type: 'info',
-					})
-				}
-			})
-			.catch(error=>{
-				console.error('请求失败:', error);
+			doSignIn(this.user.uid)
+			.then(res=>{
+				this.user.upoint = parseInt(this.user.upoint) + res.data.point;
+				ElMessage({ message: `签到成功！获得${res.data.point}积分。`, type: 'success', })
 			})
 		}
 	}
@@ -138,18 +122,28 @@ export default {
 .info-table > tr:nth-child(2n) {
 	background-color: #FAFAFA;
 }
-.info-table > .table-head {
+.table-head {
+	width: 600px;
+	height: 40px;
 	font-size: 30px;
 	color: #666666;
 	line-height: 14px;
 	font-weight: 600;
 }
-
-.sign-in{
+.point-num {
+	color: #cccc00;
+}
+.sign-in {
+	position: relative;
+	left: 20px;
 	color:#ff80c0;
 	cursor:pointer;
 	user-select: none;
 }
-
+.go-order a{
+	color:#00c8ff;
+	cursor:pointer;
+	user-select: none;
+}
 
 </style>

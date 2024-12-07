@@ -13,11 +13,11 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 
-public class My04LoginFailureHandler implements AuthenticationFailureHandler {
+public class LoginFailureHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        System.out.println("【04登录失败处理器】进入");
+        System.out.println("【Login Fail】");
 
         httpServletResponse.setContentType("application/json;charset=UTF-8");
         ServletOutputStream outputStream = httpServletResponse.getOutputStream();

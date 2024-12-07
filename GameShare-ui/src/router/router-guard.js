@@ -1,7 +1,7 @@
 import { ElMessage } from "element-plus";
 import store from "@/store";
-import { isNull, parseJwt } from "@js/myPublic.js";
-import { endLoading, startLoading } from "../assets/js/myPublic";
+import { isNull, startLoading, endLoading } from '@/utils/public.js'
+import { getDecodedToken } from '@/utils/auth.js'  
 
 function beforeEachGuard(to, from, next) {
     const token = localStorage.getItem("Token")
@@ -17,7 +17,7 @@ function beforeEachGuard(to, from, next) {
         } else {
             let decodedToken = null
             try {
-                decodedToken = parseJwt(token)
+                decodedToken = getDecodedToken()
                 if (decodedToken.exp < Date.now() / 1000) { // 过期
                     startLoading()
                     next('/LR')
