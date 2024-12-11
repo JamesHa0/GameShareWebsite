@@ -9,15 +9,11 @@
         </section>
 </template>
 
-<script>
-export default {
-    props:['game'],
-    computed:{
-        range(){
-            return [2, 3, 4, 5];    // 截屏图片的序号
-        }
-    }
-}
+<script setup>
+import { ref } from 'vue'
+const { game } = defineProps(['game']);
+const range = ref([2, 3, 4, 5]);    // 剪影图片的序号
+
 </script>
 
 <style scoped>

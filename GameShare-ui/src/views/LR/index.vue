@@ -88,7 +88,7 @@ a {
     height:750px;
 }
 
-.container >>>.form-container form {
+.container :deep() .form-container form {
     background:#fff;
     display:flex;
     flex-direction:column;
@@ -99,7 +99,7 @@ a {
     /* text-align:center; */
 }
 
-.container >>>.form-container input {
+.container :deep() .form-container input {
     background:#eee;
     border:none;
     padding:12px 15px;
@@ -107,7 +107,7 @@ a {
     width:300px;
     outline:none;
 }
-.container >>>button {
+.container :deep() button {
     border-radius:15px;
     border:1px solid #20b2aa ;
     background:#20b2aa;
@@ -121,24 +121,24 @@ a {
     transition:transform 80ms ease-in;
     cursor:pointer;
 }
-.container >>>button:active {
+.container :deep() button:active {
     transform:scale(.90);
 }
-.container >>>button:focus {
+.container :deep() button:focus {
     outline:none;
 }
-.container >>>.form-container {
+.container :deep() .form-container {
     position:absolute;
     top:0;
     height:100%;
     transition:all .6s ease-in-out;
 }
-.container >>>.sign-in {
+.container :deep() .sign-in {
     left:0;
     width:50%;
     z-index:2;
 }
-.container >>>.sign-up {
+.container :deep() .sign-up {
     left:0;
     width:50%;
     z-index:1;

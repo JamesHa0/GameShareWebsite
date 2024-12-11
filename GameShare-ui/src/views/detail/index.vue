@@ -5,7 +5,7 @@
         <!-- 封面模块 -->
         <Cover :user="user" :game="game" :order="order"/>
         <!-- 剪影模块 -->
-        <!-- <Sketch :game="game"/> -->
+        <Sketch :game="game"/>
         <!-- 反馈模块 -->
         <Feedback v-if="user" :user="user" :game="game" :order="order"
                 :isLiked="isLiked" :likeNum="likeNum"
@@ -16,8 +16,9 @@
     <Footer/>
 </template>
 
-
-<script>
+<script setup>
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 import Header from '@comp/Header.vue'
 import Footer from '@comp/Footer.vue'
 import Cover from './Cover.vue'
@@ -25,63 +26,40 @@ import Sketch from './Sketch.vue'
 import Feedback from './Feekback.vue'
 import { getDecodedToken } from '@/utils/auth.js'  
 import { getAllDetails } from '@/api/game'
+import util from '@/utils/public'
 
+let user = ref(null)
+let game = ref(null)
+let order = ref(null)
+let isLiked = ref(null)
+let likeNum = ref(null)
+let likedCids = ref(null)
+let commentNum = ref(null)
+let jwt = ref(getDecodedToken())
 
-export default {
-    components:{
-        Header,
-        Footer,
-        Cover,
-        Sketch,
-        Feedback,
-    },
-    props:['data'],      //接收组件参数
-    data(){
-        return{
-            user:null,
-            game:null,
-            order:null,
-            // like:
-            isLiked:null,
-            likeNum:null,
-            // comment:
-            likedCids:null,
-            commentNum:null,
-            // jwt (from localStorage):
-            jwt:null,
-        }
-    },
-    created(){
-		this.jwt = getDecodedToken();
-        const uid = this.jwt.sub;
-        const gid = this.$route.query.gid;
-        if (gid === '0' || gid === undefined) {  //若查询参数gid为0或未定义，则路由至 /404
-            this.$router.push('/404');
-        } else {
-            this.setAllDetails(uid, gid)
-        }
-    },
-    methods:{
-        setAllDetails(uid, gid){
-            getAllDetails(uid, gid)
-            .then(res=>{
-                console.debug('===> 游戏details 数据：')
-                console.debug(res.data);
-                this.user = res.data.user
-                this.game = res.data.game
-                this.order = res.data.order
-                // like:
-                this.isLiked = res.data.isLiked
-                this.likeNum = res.data.likeNum
-                // comment:
-                this.likedCids = res.data.likedCids
-                this.commentNum = res.data.commentNum
-            })
-        },
-
-    }
+const route = useRoute()
+const uid = jwt.value.sub
+const gid = route.query.gid
+if (gid === '0' || util.isUndefined(gid)) {  //若查询参数gid为0或未定义，则路由至 /404
+    route.push('/404');
 }
+
+getAllDetails(uid, gid)
+.then(res => {
+    user.value = res.data.user
+    game.value = res.data.game
+    order.value = res.data.order
+    // like:
+    isLiked.value = res.data.isLiked
+    likeNum.value = res.data.likeNum
+    // comment:
+    likedCids.value = res.data.likedCids
+    commentNum.value = res.data.commentNum
+})
+
+
 </script>
+
 
 <style scoped>
 .detail{

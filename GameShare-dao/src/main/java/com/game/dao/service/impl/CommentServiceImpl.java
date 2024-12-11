@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-
 
 @Service
 @Transactional
@@ -20,10 +18,9 @@ public class CommentServiceImpl {
     private com.game.dao.mapper.CommentMapper commentMapper;
 
     public Result getCommentByPage(String gid, Integer pageNum, Integer pageSize){
-//        Page<Comment> page = Page.of(pageNum, pageSize);
-//        QueryWrapper<Comment> queryWrapper = new QueryWrapper<>();
-//        queryWrapper.eq("gid", gid);
-        return Result.ok().data("comments", commentMapper.getCommentByPageWithCTE(gid, pageNum, pageSize));
+        Page<Comment> page = Page.of(pageNum, pageSize);
+        Integer offset = (pageNum - 1) * pageSize;
+        return Result.ok().data("comments", commentMapper.getCommentByPageWithCTE(gid, offset, pageSize));
     }
 
     public Result doCommentLike(String uid, String gid, String cid){

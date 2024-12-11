@@ -1,22 +1,22 @@
 <template>
-	<article v-if="user!=null && game!=null" class="gcover">
-      	<div class="gtitle">{{game.gzhname}}</div>
+	<article v-if="isMount()" class="gcover">
+      	<div class="gtitle">{{ game.gzhname }}</div>
       	<hr/>
 		<img :src="'/src/assets/game/' + game.gid + '/1.jpg'"/>
 
 		<!-- 基本游戏信息 -->
 		<table class="topTable">
-			<tr><td>游戏名：</td><td>{{game.gname}}</td></tr>
-			<tr><td>游戏类型：</td><td>{{game.gtag}}</td></tr>
+			<tr><td>游戏名：</td><td>{{ game.gname }}</td></tr>
+			<tr><td>游戏类型：</td><td>{{ game.gtag }}</td></tr>
 			<tr><td>价格：</td>
 			<td>
-				<div v-if="isSteam()">{{game.gprice}}RMB</div>
-				<div v-else>{{game.gprice}}积分</div>
+				<div v-if="isSteam()">{{ game.gprice }}RMB</div>
+				<div v-else>{{ game.gprice }}积分</div>
 			</td>
 			</tr>
-			<tr><td>制造商：</td><td>{{game.gdeveloper }}</td></tr>
-			<tr><td>发行商：</td><td>{{game.gpublisher }}</td></tr>
-			<tr><td>发行日期：</td><td>{{game.grelease_date }}<p v-if="game.grelease_date==null">game.grelease_date的值为null</p></td></tr>
+			<tr><td>制造商：</td><td>{{ game.gdeveloper }}</td></tr>
+			<tr><td>发行商：</td><td>{{ game.gpublisher }}</td></tr>
+			<tr><td>发行日期：</td><td>{{ game.greleaseDate }}</td></tr>
 		</table>
         
 
@@ -39,9 +39,9 @@
 				<td v-if="order == null">尚未购买</td>
 				<td v-else>您已购买此游戏</td>
 			</tr>
-			<template  v-if="order == null"><!-- 尚未购买 -->
+			<template v-if="order == null"><!-- 尚未购买 -->
 				<tr>
-					<td>是否购买？<br/><span style="color:#777777;font-size:12px">剩余积分:{{user.upoint }}</span></td>
+					<td>是否购买？<br/><span style="color:#777777;font-size:12px">剩余积分:{{ user.upoint }}</span></td>
 					<td><div class="btn">
 					<a @click="showDialog = true">
 					<img src="/src/assets/images/yes.png"/></a></div></td>
@@ -50,7 +50,7 @@
 			<template v-else><!-- 业已购买 -->
 				<tr>
 					<td>订单编号:</td>
-					<td>{{order.onumber }}</td>
+					<td>{{ order.onumber }}</td>
 				</tr>
 				<tr>
 					<td>是否立即下载？</td>
@@ -68,54 +68,59 @@
     align-center
 	v-model="showDialog"
   >
-    <span>确定购买游戏{{game.gname}}?</span><br>
-	<span style="color:#777777;font-size:12px">（价格：{{game.gprice}}积分）</span>
+    <span>确定购买游戏{{ game.gname }}?</span><br>
+	<span style="color:#777777;font-size:12px">（价格：{{ game.gprice }}积分）</span>
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="showDialog = false">
           取消
         </el-button>
-        <el-button type="primary" @click="showDialog = false;purchaseGame()">
+        <el-button type="primary" @click="showDialog = false;bugGame()">
           确定
         </el-button>
       </div>
     </template>
   </el-dialog>
 
-	
-  
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { purchaseGame } from '@/api/game'
+import util from '@/utils/public'
+import { download } from '@/utils/request'
 
-export default {
-  props:['user', 'game', 'order'],
-  data() {
-    return {
-      showDialog: false,
-    }
-  },
-  methods:{
-    isSteam(){
-      return this.game.gid.length<9   // <9表示是steam游戏
-    },
-	downloadGame(){
-	  this.$download(`/game/download/${this.game.gid}.zip`, `${this.game.gname}.zip`);
-    },
-	purchaseGame(){
-		purchaseGame(this.user.uid, this.game.gid)
-		.then((res)=>{
-			this.$router.go(0);		// 刷新页面
-			ElMessage({ message: '购买成功。感谢您的购买！', type: 'success'} )
-		})
-    }
+const { user, game, order } = defineProps({
+	user: Object, 
+	game: Object, 
+	order: Object
+})
+let showDialog = ref(false);
 
-  }
-
+let isMount = () =>{
+	// console.debug('isMount:', user, game, !util.isNull(user) && !util.isNull(game));
+	return !util.isNull(user) && !util.isNull(game);
 }
+
+const isSteam = () => {
+    return game.gid.length<9   // <9表示是steam游戏
+}
+
+const downloadGame = () => {
+	download(`/game/download/${game.gid}.zip`, `${game.gname}.zip`);
+}
+
+const bugGame = () => {
+	purchaseGame(user.uid, game.gid)
+	.then((res)=>{
+		this.$router.go(0);		// 刷新页面
+		ElMessage({ message: '购买成功。感谢您的购买！', type: 'success'} )
+	})
+}
+
 </script>
+
 
 <style scoped>
 .gtitle {

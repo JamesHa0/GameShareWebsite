@@ -34,6 +34,7 @@ public interface CommentMapper extends BaseMapper<Comment> {
             left JOIN user _u ON c.parent_uid = _u.uid
             JOIN user u ON c.uid = u.uid
           WHERE
+            c.gid = #{gid} AND
             c.parent_uid IS NULL -- 从顶级评论开始
           UNION ALL
           SELECT
@@ -55,9 +56,10 @@ public interface CommentMapper extends BaseMapper<Comment> {
             JOIN user u2 ON c2.uid = u2.uid
             JOIN CommentCTE cc ON c2.parent_cid = cc.cid
         )
-        SELECT * FROM CommentCTE order BY CommentCTE.cpath;
+        SELECT * FROM CommentCTE order BY CommentCTE.cpath limit #{limit} OFFSET #{offset};
     """)
-    List<Comment> getCommentByPageWithCTE(String gid, Integer pageNum, Integer pageSize);
+    List<Comment> getCommentByPageWithCTE(String gid, Integer offset, Integer limit);
+
 
     @Select("select cid from game_comment_like where uid = #{uid} and gid = #{gid}")
     List<String> queryLikedCommentIds(String uid, String gid);

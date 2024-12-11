@@ -29,7 +29,7 @@
 				<tr>
 					<td>拥有积分:</td>
 					<td><span class="point-num">{{user.upoint }}</span>
-					<span class="sign-in"  @click='doSignIn()'>🪙点此签到</span>
+					<span class="sign-in"  @click='signIn()'>🪙点此签到</span>
 					</td>
 				</tr>
 				<tr>
@@ -47,50 +47,34 @@
   <Footer/>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
 import Header from '@/components/Header.vue'
 import Footer from '@/components/Footer.vue'
 import { ElMessage } from 'element-plus'
 import { getDecodedToken } from '@/utils/auth'
 import { getUser, doSignIn } from '@/api/user'
 
-export default {
-    components: {
-         Header,
-         Footer,
-    },
-    data(){
-        return {
-            user:null,
-			jwt:null,
-        }
-    },
-    created(){
-		this.jwt = getDecodedToken();
-        this.setUser();
-    },
-	methods:{
-		setUser(){
-			getUser(this.jwt.sub)
-			.then(res=>{
-				this.user = res.data.user;
-			})
-		},
-		getUid(){
-			console.debug('prop uid is :', this.jwt.sub)
-			return this.jwt.sub;
-		},
-		doSignIn(){
-			doSignIn(this.user.uid)
-			.then(res=>{
-				this.user.upoint = parseInt(this.user.upoint) + res.data.point;
-				ElMessage({ message: `签到成功！获得${res.data.point}积分。`, type: 'success', })
-			})
-		}
-	}
+let jwt = ref(null)
+jwt.value = getDecodedToken();
 
+let user = ref(null)
+getUser(jwt.value.sub)
+.then(res=>{
+	user.value = res.data.user;
+})
+
+const signIn = () =>{
+	doSignIn(user.value.uid)
+	.then(res=>{
+		user.value.upoint = parseInt(user.value.upoint) + res.data.point;
+		ElMessage({ message: `签到成功！获得${res.data.point}积分。`, type: 'success', })
+	})
 }
+
 </script>
+
+
 
 <style scoped>
 .background {

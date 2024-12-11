@@ -15,18 +15,15 @@
     </div>
 </template>
 
-<script>
-export default {
-    props:[ //注册属性名
-        'title',    //标题，例如“高分神作”
-        'data'      //数据对象数组，例如[{name:"弹丸论破",img:"xxx.jpg"},{...}]
-    ],
-        
-}
+<script setup>
+const props = defineProps({
+    title: String,    //标题，例如“高分神作”
+    data: Array,     //数据对象数组，例如[{name:"弹丸论破",img:"xxx.jpg"},{...}]
+})
+
 </script>
 
 <style scoped>
-
 /************************<!-- 游戏一览 -->*********************/
 .game-box{
     width: 1200px;

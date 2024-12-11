@@ -4,7 +4,7 @@
     <article class="icon">
         <table class="icon-table">
             <tr>
-                <td><img class="icon-img" @click="doLike()" :src="showLikeImg()"/></td>
+                <td><img class="icon-img" @click="doLikeAction()" :src="showLikeImg()"/></td>
                 <td><img class="icon-img" @click="showCommentModule = !showCommentModule" :src="constCImg"/></td>
             </tr>
             <tr>
@@ -34,23 +34,23 @@
             <img v-if="comments == null" class="sofa" :src="constSofa" draggable="false">
             <!-- 循环遍历所有评论 -->
             <article v-for="comment in comments" :key="comment.cid"
-                    class="single-comment" :style="getCStyle(comment)">	    
+                    class="single-comment" :style="showCommentStyle(comment)">	    
                 
                 <!-- 评论信息 -->
                 <section class="comment-info">
-                    <div class="observer">{{comment.uname}} <span v-if="comment.parentUname"><span style="font-size: 15px;color: #ccc;">&nbsp;回复&nbsp;</span>{{comment.parentUname }}</span> ：</div>
+                    <div class="commenter">{{comment.uname}}<span v-if="comment.parentUname"><span class="literal-reply">回复</span>{{comment.parentUname }}</span> ：</div>
                     <article class="info-right-items">
                         <time class="time">[{{comment.ctime }}]</time>
-                        <img class="reply" :class="{ 'disable': comment.delFlag==2 ? true : false }" @click="enableCReply(comment)"   :src="constCommentReply"/>
-                        <img class="like" :class="{ 'disable': comment.delFlag==2 ? true : false }" @click="doCLike(comment)" :src="showCLikeImg(comment)"/>
-                        <div class="like-num"  >{{ showCLike(comment)}}</div>
+                        <img class="reply" :class="{ 'disable': comment.delFlag==2 ? true : false }" @click="enableCommentReply(comment)" :src="constCommentReply"/>
+                        <img class="like" :class="{ 'disable': comment.delFlag==2 ? true : false }" @click="doCommentLikeAction(comment)" :src="showCommentLikeImg(comment)"/>
+                        <div class="like-num"  >{{ showCommentLike(comment)}}</div>
                     </article>
                 </section>
                 <!-- 评论内容 -->
-                <section class="comment-text" v-if="comment.delFlag == '2'" style="display:block;color:#d0d0d0" >该评论已被删除！</section >
-                <section class="comment-text" v-else style="display:block"> {{comment.comment }}</section>
+                <section class="comment-text" v-if="comment.delFlag == '2'" style="color:#d0d0d0" >该评论已被删除！</section >
+                <section class="comment-text" v-else> {{comment.comment }}</section>
                 <!-- 回复区 -->
-                <section v-if="showCReply(comment)">
+                <section v-show="showCommentReply(comment)">
                     <el-divider content-position="left">回复 Ta：</el-divider>
                     <el-container>
                         <el-main class="reply-container">
@@ -62,7 +62,7 @@
                         <el-aside width="70px">
                             <el-button class="reply-btn"
                                 type="primary" 
-                                @click="doCReply(comment)">回复</el-button>
+                                @click="doReply(comment)">回复</el-button>
                         </el-aside>
                     </el-container>
                 </section>
@@ -86,177 +86,173 @@
 </main>
 </template>
 
-<script>
-import { ElMessage } from 'element-plus'
-import util from '@/utils/public'
+<script setup>
+import { ref } from 'vue';
+import { ElMessage } from 'element-plus';
+import util from '@/utils/public';
 import { doLike } from '@/api/game'
-import { getCommentByPage, addComment, doCommentLike, doCommentReply } from '@/api/comment'
+import { getCommentByPage, addComment, doCommentLike, doCommentReply } from '@/api/comment';
 
-export default {
-    props:['user', 'game', 'order',
-        'isLiked', 'likeNum',
-        'likedCids', 'commentNum'
-    ],
-    data(){
-        return{
-            showCommentModule: false,   // 默认不显示评论模块
-            /*  const常量： */
-            currentPage: 1, // 当前页码
-            pageSize: 10,   // 每页条数
-            constSofa: 'src/assets/images/sofa.png',// 沙发图案
-            constCImg: 'src/assets/images/comment.png',
-            constLikeImg: { // 游戏点赞图标
-                'off': 'src/assets/images/like.png',   // 点灭图标
-                'on': 'src/assets/images/like_yes.png',   // 点亮图标
-            },
-            constCommentReply: 'src/assets/images/comment_reply.png',// 回复图标
-            constCommentLikeImg: {  // 单一评论点赞图标
-                'off': 'src/assets/images/comment_like.png', 
-                'on': 'src/assets/images/comment_like_yes.png', 
-            },            
-            /*  数据库数据： */
-            comments: null,
-            /*  临时数据： */
-            tempIsLiked: this.isLiked,
-            tempLikeNum: this.likeNum,
-            tempComments: {},   // comments对象的临时数组，随用随改；包含属性：clike、isLiked
-            /* 表单数据： */
-            commentText: '',
-        }
-    },
-    created(){
-        this.getCommentByPage(this.currentPage, this.pageSize)
-    },
-    methods:{
-        getCommentByPage(current, size){
-            getCommentByPage(this.game.gid, current, size)
-            .then(res=>{
-                console.debug('===> 评论数据：')
-                console.debug(res.data.comments);
-                this.comments = res.data.comments
-            })
-        },
-        handleCurrentChange(val){
-            this.getCommentByPage(val, this.pageSize)
-        },
-        handleSizeChange(val){
-            this.getCommentByPage(this.currentPage, val)
-        },
-        showLikeImg(){
-            return this.tempIsLiked ? this.constLikeImg.on : this.constLikeImg.off
-        },
-        doLike(){
-            doLike(this.user.uid, this.game.gid)
-            .then(res=>{
-                const action = res.data.action
-                if (action==="doLike"){
-                    this.tempIsLiked = true
-                    this.tempLikeNum ++;	//更新赞数：+1
-                } else {
-                    this.tempIsLiked = false
-                    this.tempLikeNum --;
-                }
-            })
-        },
-        doComment(){
-            addComment(this.user.uid, this.game.gid, this.commentText)
-            .then(res=>{
-                this.commentText = ''
-                ElMessage({ message: '评论成功', type: 'success' })
-                this.getCommentByPage(this.currentPage, this.pageSize)
-            })
-        },
-        getCStyle(comment){
-            const cpath = comment.cpath
-            let padding = null  // 每条评论的缩进宽度（px）
-            let sharpNum = cpath.length - cpath.replace(/#/g, '').length
-            if(sharpNum > 4)
-                sharpNum = 4
-            padding = cpath == null? 0 : sharpNum*60+20
-            return  'padding-left:' + padding + 'px'
-        },
-        showCLike(comment){
-            const cid = comment.cid
-            // 找内存中tempComments[cid].clike的值：
-            if(util.isUndefined((this.tempComments[cid] || {}).clike)){
-                return comment.clike    // 不存在，则取数据库中的值；
-            }else{
-                return this.tempComments[cid].clike    // 存在，取之。
-            }
-        },
-        showCLikeImg(comment){
-            const cid = comment.cid
-            // 找内存中isLiked的值：（当前会话的点赞行为检验：isLiked值存在则证实了有过点赞操作，反之亦然）
-            if(util.isUndefined((this.tempComments[cid] || {}).isLiked)){
-                // 不存在，则取数据库中值：
-                return this.likedCids.includes(cid) ? this.constCommentLikeImg.on : this.constCommentLikeImg.off
-            }else{
-                // 存在，则取之
-                return this.tempComments[cid].isLiked ? this.constCommentLikeImg.on : this.constCommentLikeImg.off
-            }
-        },
-        doCLike(comment){
-            const cid = comment.cid
-            doCommentLike(this.user.uid, this.game.gid, comment.cid)
-            .then(res=>{
-                // 确保tempComments[cid]存在，若不存在，则创建之：
-                this.tempComments[cid] = this.tempComments[cid] || {}
-                // 给rawCid赋值：1，若是第一次点击，则赋值为数据库中的comment.clike；2，若是第二或更多次点击，则赋值为内存中的tempComments[cid].clike。
-                const rawCid = util.isUndefined(this.tempComments[cid].clike) ? comment.clike : this.tempComments[cid].clike;
-                if (res.data.action == "doLike"){  // 得知当前进行的是点赞操作
-                    this.tempComments[cid].clike = parseInt(rawCid) + 1;  // 改变点赞数
-                    this.tempComments[cid].isLiked = true;   // 改变点赞状态，连带改变亮灭图标
-                    console.debug('点赞成功');
-                } else {  // 取消赞操作
-                    this.tempComments[cid].clike = parseInt(rawCid) - 1;
-                    this.tempComments[cid].isLiked = false;
-                    console.debug('取消赞成功');
-                }
-            })
-        },
-        showCReply(comment){
-            const cid = comment.cid;
-            // 找内存中isReplied的值：
-            if(util.isUndefined((this.tempComments[cid] || {}).isReplied)){
-                return false    // 不存在，则取false；
-            }else{
-                return this.tempComments[cid].isReplied    // 存在，取之。
-            }
-        },
-        enableCReply(comment){
-            const cid = comment.cid
-            if (util.isUndefined((this.tempComments[cid] || {}).isReplied)){   // 不存在，则创建之。
-                this.tempComments[cid] = {isReplied: true}
-            } else {
-                this.tempComments[cid].isReplied = !this.tempComments[cid].isReplied
-            }
+// Constants
+const constSofa = 'src/assets/images/sofa.png';
+const constCImg = 'src/assets/images/comment.png';
+const constLikeImg = {
+  'off': 'src/assets/images/like.png',
+  'on': 'src/assets/images/like_yes.png',
+};
+const constCommentReply = 'src/assets/images/comment_reply.png';
+const constCommentLikeImg = {
+  'off': 'src/assets/images/comment_like.png',
+  'on': 'src/assets/images/comment_like_yes.png',
+};
 
-        },
-        updateReplyContext(event, comment){
-            event.preventDefault(); 
-            let cid = comment.cid
-            this.tempComments[cid].replyText = event.target.innerText
-            console.debug(event.target.innerText)
-        },
-        doCReply(comment){
-            const cid = comment.cid
-            doCommentReply(
-                this.user.uid, 
-                this.game.gid, 
-                this.tempComments[cid].replyText, 
-                comment.cid, 
-                comment.uid
-            )
-            .then(res=>{
-                this.tempComments[cid].isReplied = false
-                this.tempComments[cid].replyText = ''
-                ElMessage({ message: '回复成功', type: 'success' })
-                this.getCommentByPage(this.currentPage, this.pageSize)
-            })
-        },
+// Props
+const props = defineProps({
+  user: Object,
+  game: Object,
+  order: Object,
+  isLiked: Boolean,
+  likeNum: Number,
+  likedCids: Array,
+  commentNum: Number
+});
+
+// Reactive variables
+const showCommentModule = ref(false);
+const comments = ref([]);
+const tempIsLiked = ref(props.isLiked);
+const tempLikeNum = ref(props.likeNum);
+const tempComments = ref([]);
+const commentText = ref('');
+
+// Pagination
+const currentPage = ref(1);
+const pageSize = ref(10);
+
+// Get comments
+const getComment = (page, size) => {
+  getCommentByPage(props.game.gid, page, size)
+    .then(res => {
+      comments.value = res.data.comments;
+    });
+};
+
+// Initial comments
+getComment(currentPage.value, pageSize.value);
+
+// Pagination handlers
+const handleCurrentChange = (val) => {
+  getComment(val, pageSize.value);
+};
+
+const handleSizeChange = (val) => {
+  getComment(currentPage.value, val);
+};
+
+// Like handling
+const showLikeImg = () => {
+  return tempIsLiked.value ? constLikeImg.on : constLikeImg.off;
+};
+
+const doLikeAction = () => {
+  doLike(props.user.uid, props.game.gid)
+    .then(res => {
+      const action = res.data.action;
+      if (action === "doLike") {
+        tempIsLiked.value = true;
+        tempLikeNum.value++;
+      } else {
+        tempIsLiked.value = false;
+        tempLikeNum.value--;
+      }
+    });
+};
+
+// Comment handling
+const doComment = () => {
+  addComment(props.user.uid, props.game.gid, commentText.value)
+    .then(res => {
+      commentText.value = '';
+      ElMessage({ message: '评论成功', type: 'success' });
+      getComment(currentPage.value, pageSize.value);
+    });
+};
+
+// Comment style
+const showCommentStyle = (comment) => { // 根据cpath属性，计算该评论的padding-left样式
+  const cpath = comment.cpath;
+  let padding = cpath == null ? 0 : (cpath.length - cpath.replace(/#/g, '').length > 4 ? 4 : cpath.length - cpath.replace(/#/g, '').length) * 60 + 20;
+  return `padding-left: ${padding}px`;
+};
+
+/// Comment like handling
+const showCommentLike = (comment) => {
+  return util.isUndefined(tempComments.value[comment.cid]?.clike)   // 当前会话内尚未点击过,
+    ? comment.clike   // 则返回数据库中的点赞数;
+    : tempComments.value[comment.cid].clike;  // 否则返回内存中记录的点赞数。
+};
+
+const showCommentLikeImg = (comment) => {
+  let isLiked = false;
+  if (util.isUndefined(tempComments.value[comment.cid]?.isLiked)) {  // 当前会话内尚未点击过，
+    isLiked = props.likedCids.includes(comment.cid);   // 则返回数据库中的点赞状态;
+  } else {  // 点击过，
+    isLiked = tempComments.value[comment.cid].isLiked;  // 则返回内存中记录的点赞状态。
+  }
+  return isLiked ? constCommentLikeImg.on : constCommentLikeImg.off;  // 根据布尔值返回对应的图片地址常量。
+};
+
+const doCommentLikeAction = (comment) => {
+  const cid = comment.cid;
+  doCommentLike(props.user.uid, props.game.gid, comment.cid)
+    .then(res => {
+      tempComments.value[cid] = tempComments.value[cid] || {};
+      const rawCid = util.isUndefined(tempComments.value[cid].clike) ? comment.clike : tempComments.value[cid].clike;
+      if (res.data.action === "doLike") {
+        tempComments.value[cid].clike = parseInt(rawCid) + 1;
+        tempComments.value[cid].isLiked = true;
+      } else {
+        tempComments.value[cid].clike = parseInt(rawCid) - 1;
+        tempComments.value[cid].isLiked = false;
+      }
+    });
+};
+
+/// Comment reply handling
+const enableCommentReply = (comment) => {
+  const cid = comment.cid;
+  if (util.isUndefined(tempComments.value[cid])) { // 对象不存在，
+    tempComments.value[cid] = { isOpenedBox: true };  // 则新建对象及其属性；
+  } else if (util.isUndefined(tempComments.value[cid].isOpenedBox)) { // 属性不存在，
+    tempComments.value[cid].isOpenedBox = true; // 则新建属性；
+  } else {  // 属性已存在，
+    tempComments.value[cid].isOpenedBox = !tempComments.value[cid].isOpenedBox; // 则属性值取反。
+  }
+};
+
+const showCommentReply = (comment) => {
+    if (util.isUndefined(tempComments.value[comment.cid]?.isOpenedBox)) { // 属性值不存在，
+        return false; // 则不显示回复框；
+    } else {  // 属性值存在，
+        return tempComments.value[comment.cid]?.isOpenedBox;  // 则根据属性值判断是否显示回复框。
     }
+};
 
-}
+const updateReplyContext = (event, comment) => {  // 用于回复框内文字的反射动作
+  event.preventDefault();
+  tempComments.value[comment.cid].replyText = event.target.innerText;
+};
+
+const doReply = (comment) => {  // 回复评论
+  const cid = comment.cid;
+  doCommentReply(props.user.uid, props.game.gid, tempComments.value[cid].replyText, comment.cid, comment.uid)
+    .then(res => {
+      tempComments.value[cid].isOpenedBox = false;
+      tempComments.value[cid].replyText = '';
+      ElMessage({ message: '回复成功', type: 'success' });
+      getComment(currentPage.value, pageSize.value);
+    });
+};
 </script>
 
 <style scoped>
@@ -298,13 +294,6 @@ export default {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     margin: 30px auto;
-/*     position: fixed; 固定定位在视口中 */
-/*     top: 0; 顶部固定 */
-/*     left: 0; 左侧固定，根据需要调整 */
-/*     right: 0; 右侧固定，根据需要调整 */
-/*     background: rgba(0,0,0,0.5); 背景色 */
-/*     z-index: 100; 确保在其他内容的上方 */
-/*     box-shadow: 0 2px 4px rgba(0,0,0,0.1); 添加阴影，提升层次感 */
 }
 .comment-release > .title {
 	font-size: 25px;
@@ -346,6 +335,12 @@ export default {
     display: flex;
     flex-direction: column;
 }
+.literal-reply{
+    display: inline-block;
+    margin: 0 3px 0 3px;
+    font: 12px 'Microsoft YaHei';
+    color: #ccc;
+}
 .comments-container > .sofa{
 	width:800px;
 }
@@ -366,7 +361,7 @@ export default {
     flex-direction: row;
     justify-content: space-between;
 }
-.comment-info > .observer {
+.comment-info > .commenter {
     font-size: 1em;
     font-weight: bold;
     color: #333;
@@ -395,8 +390,8 @@ export default {
     transition: transform 0.3s; /* 平滑变化效果 */
 }
 .info-right-items > .like-num {
-    font-size: 0.9em; /* 字体大小略小 */
-    color: #888; /* 较浅的字体颜色 */
+    font-size: 0.9em;
+    color: #888; 
     white-space: nowrap; /* 防止换行 */
     position: relative;
     margin-left: -6px
@@ -427,8 +422,8 @@ export default {
     overflow: auto; 
 }
 .reply-box:focus {
-  outline: none; /* 移除焦点时的轮廓线 */
-  border-color: #007bff; /* 当聚焦时改变边框颜色 */
+  outline: none;
+  border-color: #007bff;
 }
 .reply-btn{
     margin-left: 5px;
@@ -441,7 +436,7 @@ export default {
     padding: 30px;
 }
 
-/************************动态生成的css样式*******/
+/************************动态生成的样式*******/
 /* 点赞图标选中状态 */
 .is-liked {
     filter: brightness(0.8); /* 调整亮度 */
